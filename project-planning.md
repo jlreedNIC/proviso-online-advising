@@ -1,0 +1,93 @@
+# Project Overview
+
+This document is intended to give an overview of what the project will require as well as the database layout.
+
+## Course Requirements
+
+**Description:** It has been long known that academic advising is a vital component of college students' academic 
+success which assures institutional commitment to them, increases academic integrity, helps reduce attrition 
+rates,  improves  GPA,  results  in  higher  student  satisfaction  and  makes  students  feel  valued.  Advising  is 
+essentially personalized and helps maintain a trusted relationship between an institution and a student through 
+the adviser in an intimate way. This relationship and the benefits it embody becomes valuable only when both 
+the advisor and the student are well informed about the choices they make together about the student's future. 
+However, curricular advising takes up a significant amount of time for both students and faculty. Given the 
+prerequisite graph of courses, and one's career goals, the course selections every semester should be almost 
+deterministic. Yet, no great tools exist to advise students automatically. In this project, we explore the design 
+and implementation of such an advising system that can serve as a blue-print for a smart advising system. Our 
+goal is to design a smart advising system that can accommodate career goals into the program planning.
+Your system must include the following features, and all the source code should be hosted on GitHub with 
+proper documentation and shared with the instructor:
+1. A graphical user interface for students and advisor using which they can plan course selections. (30%)
+2. The concept of career graphs, course hierarchy, qualification to course mapper, and course suggestion 
+graph will need to be implemented. (30%)
+3. The eye-catching visual interfaces must be implemented for visualizing all the graphs. (30%)
+4. Host the system on a server using a web interface for both the admins and the users.
+
+## Roadmap
+
+- user login (implement if time)
+- dashboard
+  - shows current degree (and degree progress)
+  - shows current course map
+  - if career object has been set up, show that
+  - show future plan if set up
+- set up future plan
+  - load/choose career objective
+    - load skills needed for objective
+    - load skills to map to courses to take
+  - show what courses are needed to obtain career objective
+    - ie CS360 gives SQL, PHP, front-end skills
+    - show in order of pre-reqs
+  - give general course plan (if time)
+  - plan course schedule (implement if time)
+    - this includes planning with university schedule (ie times and instructors)
+
+## Table Layout
+
+user table
+    userID (primary key)
+    first_name
+    last_name
+    grade
+    user_name (ie reed5204)
+    password
+
+courses table
+    courseID (primary key)
+    course_name
+    dept (ie computer science)
+    course number (150 from CS150)
+
+skills table
+    skillID (primary key)
+    name (ie java)
+    class (ie high level programming language)
+
+career table
+    careerID (primary key)
+    name
+    pay
+    company
+    position_level (ie entry level, management etc)
+
+RELATIONSHIP TABLES
+taken (user, courses)
+    userID
+    courseID
+
+will_take (user, courses)
+    userID
+    courseID
+
+course_skills (skills, courses)
+    courseID
+    skillID
+
+career_skills (skills, careers)
+    careerID
+    skillID
+
+prereqs (course to course)
+    courseID
+    requires_courseID
+

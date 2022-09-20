@@ -23,7 +23,13 @@ graph will need to be implemented. (30%)
 3. The eye-catching visual interfaces must be implemented for visualizing all the graphs. (30%)
 4. Host the system on a server using a web interface for both the admins and the users.
 
-## Roadmap
+## Tools
+-HTML
+-JavaScript/libraries
+-CSS
+-Apache mysql
+
+## Developement plan
 
 - user login (implement if time)
 - dashboard
@@ -41,7 +47,7 @@ graph will need to be implemented. (30%)
   - give general course plan (if time)
   - plan course schedule (implement if time)
     - this includes planning with university schedule (ie times and instructors)
-
+    
 ## Table Layout
 
 user table
@@ -91,3 +97,14 @@ prereqs (course to course)
     courseID
     requires_courseID
 
+## Our skills 
+-Knowledge of C, C#, C++, some HTML 5. 
+
+## Skills Needed
+-Mysql, javascript, HTML 5, CSS.
+
+## Timeline
+Week 1: Setup github, html template, mysql server.
+Week 2: Setup javascript libraries, and basic html design for course registration.
+Week 3: Start on career graphs using javascript, and continue with html basic html design for course registration/student dashboard. 
+Week 4: Start adding mysql databases and generating data with graphs/html ui. 

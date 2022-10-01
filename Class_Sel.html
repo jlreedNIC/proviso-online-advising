@@ -30,6 +30,12 @@
     text-align: center;
 }
 
+.row{
+ margin-top:20px;
+
+ 
+}
+
     </style>
 </head>
 <body>
@@ -43,7 +49,7 @@
 
             <h2>Select courses</h2>
 
-            <div class="row" style="text-align: center;" >
+            <div class="row" style="text-align: center; padding: 10px 5px " >
 
                 <div class="medium-6 columns" >
                     <select 
@@ -92,7 +98,7 @@
                         </select>
                 </div>
 				
-				<div class="row" style="text-align:" >
+				<div class="row" style="text-align: padding: 200px 5px" >
 
                 <div class="medium-6 columns" >
                     <select 
@@ -117,7 +123,55 @@
                         </select>
                 </div>
                
+	<div class="row" style="text-align: padding: 200px 5px" >
 
+                <div class="medium-6 columns" >
+                    <select 
+					
+						style="height: 50px; width: 500px;"
+					   
+                        name="ca"
+                        class="cascadingDropDown "
+                        
+                        data-group="product-1"
+                        data-target="make"
+                        data-url="./assets/data/make.json"
+                        data-replacement="container1"
+
+                        >
+                        <option value="">Select category</option>
+                        <option value="1">Shoes</option>
+                        <option value="2">T-shirts</option>
+                        <option value="3">Jeans</option>
+                        <option value="4">Hats</option>
+                    
+                        </select>
+                </div>
+
+	<div class="row" style="text-align: padding: 200px 5px" >
+
+                <div class="medium-6 columns" >
+                    <select 
+					
+						style="height: 50px; width: 500px;"
+					   
+                        name="ca"
+                        class="cascadingDropDown "
+                        
+                        data-group="product-1"
+                        data-target="make"
+                        data-url="./assets/data/make.json"
+                        data-replacement="container1"
+
+                        >
+                        <option value="">Select category</option>
+                        <option value="1">Shoes</option>
+                        <option value="2">T-shirts</option>
+                        <option value="3">Jeans</option>
+                        <option value="4">Hats</option>
+                    
+                        </select>
+                </div>
 
                 <div class="medium-6 columns" style="text-align: center;>
                     <select
@@ -130,8 +184,9 @@
                         data-replacement="container1"
                         data-url="./assets/data/final.json"
                         data-final
-                        disabled
+                        
                         >
+						
                         </select>
                 </div>
 
@@ -145,7 +200,7 @@
                         type="submit"
                         class="small button"
                         value="Submit"
-                        Disabled
+                       
                     >
 
                 </div>

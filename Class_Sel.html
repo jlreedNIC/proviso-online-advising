@@ -41,9 +41,9 @@
 
         <form>
 
-            <h2>Product 1</h2>
+            <h2>Select courses</h2>
 
-            <div class="row" style="text-align: center; >
+            <div class="row" style="text-align: center;" >
 
                 <div class="medium-6 columns" >
                     <select 
@@ -91,46 +91,35 @@
                         <option value="5">Belts</option>
                         </select>
                 </div>
+				
+				<div class="row" style="text-align:" >
 
-                <div class="medium-6 columns">
-                    <select
-                        name="make"
-                        class="cascadingDropDown"
-
+                <div class="medium-6 columns" >
+                    <select 
+					
+						style="height: 50px; width: 500px;"
+					   
+                        name="ca"
+                        class="cascadingDropDown "
+                        
                         data-group="product-1"
-                        data-id="make"
-                        data-target="colour"
-                        data-url="./assets/data/colour.json"
+                        data-target="make"
+                        data-url="./assets/data/make.json"
                         data-replacement="container1"
-                        data-default-label="Select make"
 
-                        disabled
                         >
+                        <option value="">Select category</option>
+                        <option value="1">Shoes</option>
+                        <option value="2">T-shirts</option>
+                        <option value="3">Jeans</option>
+                        <option value="4">Hats</option>
+                    
                         </select>
                 </div>
+               
 
-            </div>
 
-            <div class="row">
-
-                <div class="medium-6 columns">
-                    <select
-                        name="colour"
-                        class="cascadingDropDown"
-
-                        data-group="product-1"
-                        data-id="colour"
-                        data-target="size"
-                        data-url="./assets/data/size.json"
-                        data-replacement="container1"
-                        data-default-label="Select colour"
-
-                        disabled
-                        >
-                        </select>
-                </div>
-
-                <div class="medium-6 columns">
+                <div class="medium-6 columns" style="text-align: center;>
                     <select
                         name="size"
                         class="cascadingDropDown"
@@ -148,15 +137,15 @@
 
             </div>
 
-            <div class="row">
+            <div class="row" style="text-align: center;>
 
                 <div class="large-4 medium-6 columns large-offset-4 medium-offset-3">
 
                     <input
                         type="submit"
                         class="small button"
-                        value="ADD TO BASKET"
-                        disabled
+                        value="Submit"
+                        Disabled
                     >
 
                 </div>
@@ -165,101 +154,6 @@
 
         </form>
 
-
-        <div
-            class="panel cascadingContainer"
-            data-replacement-container="container1"
-            data-default-content="To see results please make your selection using menus above."
-            ></div>
-
-        <div class="divider"></div>
-
-
-        <form>
-
-
-            <h2>Product 2</h2>
-
-
-            <div class="row">
-
-                <div class="medium-6 columns">
-                    <select
-                            name="category"
-                            class="cascadingDropDown"
-
-                            data-group="product-2"
-                            data-target="make"
-                            data-url="./assets/data/make.json"
-                            data-replacement="container2"
-
-                            >
-                        <option value="">Select category</option>
-                        <option value="1">Shoes</option>
-                        <option value="2">T-shirts</option>
-                        <option value="3">Jeans</option>
-                        <option value="4">Hats</option>
-                        <option value="5">Belts</option>
-                    </select>
-                </div>
-
-                <div class="medium-6 columns">
-                    <select
-                            name="make"
-                            class="cascadingDropDown"
-
-                            data-group="product-2"
-                            data-id="make"
-                            data-target="colour"
-                            data-url="./assets/data/colour.json"
-                            data-replacement="container2"
-                            data-default-label="Select make"
-
-                            disabled
-                            >
-                    </select>
-                </div>
-
-            </div>
-
-            <div class="row">
-
-                <div class="medium-6 columns">
-                    <select
-                            name="colour"
-                            class="cascadingDropDown"
-
-                            data-group="product-2"
-                            data-id="colour"
-                            data-target="size"
-                            data-url="./assets/data/size.json"
-                            data-replacement="container2"
-                            data-default-label="Select colour"
-
-                            disabled
-                            >
-                    </select>
-                </div>
-
-                <div class="medium-6 columns">
-                    <select
-                            name="size"
-                            class="cascadingDropDown"
-
-                            data-group="product-2"
-                            data-id="size"
-                            data-url="./assets/data/final.json"
-                            data-replacement="container2"
-                            data-default-label="Select size"
-
-                            disabled
-                            >
-                    </select>
-                </div>
-
-            </div>
-
-        </form>
 
         <div
             class="panel cascadingContainer"

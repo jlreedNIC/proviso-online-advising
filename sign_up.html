@@ -1,0 +1,138 @@
+<!DOCTYPE html>  
+<html>  
+    <head>  
+        <meta name="viewport" content="width=device-width, initial-scale=1">  
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        <style>
+            body{  
+                font-family: Calibri, Helvetica, sans-serif;  
+                background-color: rgb(41, 38, 25);  
+            }
+
+            .container {  
+                padding: 50px;  
+                background-color: rgb(231, 200, 25);  
+            }  
+            
+            input[type=text], input[type=password], textarea {  
+                width: 100%;  
+                padding: 15px;  
+                margin: 5px 0 22px 0;  
+                display: inline-block;  
+                border: none;  
+                background: #f1f1f1;  
+            }
+
+            input[type=text]:focus, input[type=password]:focus {  
+                background-color: lightgrey;  
+                outline: none;  
+            }
+
+            div {  
+                padding: 10px 0;  
+            }  
+
+            hr {  
+                border: 1px solid #f1f1f1;  
+                margin-bottom: 25px;  
+            }
+
+            .registerbtn {  
+                background-color: black;  
+                color: white;  
+                padding: 16px 20px;  
+                margin: 8px 0;  
+                border: none;  
+                cursor: pointer;  
+                width: 100%;  
+                opacity: 0.9;  
+            }
+
+            .registerbtn:hover {  
+                opacity: 1;  
+            }  
+        </style>  
+    </head>  
+
+    <body>  
+
+        <!-- fix nav bar style -->
+    <!-- Navbar -->
+    <div class="w3-top">
+        <div class="w3-bar w3-cyan w3-card w3-left-align w3-large" style="background-color: black !important; color: white !important">
+            <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-light-gray w3-large w3-red" href="javascript:void(0);" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
+            <a href="index.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-light-gray">Home</a>
+            <a href= Class_Reg.html class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-light-gray" >Course Register</a>
+            <a href="career.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-light-gray">Career</a>
+            <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-light-gray">Degree</a>
+            <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-light-gray">Course Mapper</a>
+            <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-light-gray">Course outcomes</a>
+            <a href="sign_up.html" class="w3-bar-item w3-button w3-padding-large w3-light-gray" style="background-color: rgb(231, 200, 25) !important">Sign Up</a>
+        </div>
+  
+        <!-- Navbar on small screens -->
+        <!-- <div id="navDemo" class="w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium w3-large">
+            <a href="#" class="w3-bar-item w3-button w3-padding-large">Careers</a>
+            <a href="#" class="w3-bar-item w3-button w3-padding-large">Degree</a>
+            <a href="#" class="w3-bar-item w3-button w3-padding-large">Course Mapper</a>
+            <a href="#" class="w3-bar-item w3-button w3-padding-large">Course outcomes</a>
+        </div> -->
+    </div>
+
+    <!-- /* find out how to put lower on page */ -->
+    <!-- <div><center><h1>User Sign-Up</h1></center></div> -->
+
+    <header class="w3-container w3-cyan w3-center" style="padding:128px 16px; background-color: rgb(231, 200, 25) !important">
+        <h1 class="w3-margin w3-jumbo">Sign-Up</h1>
+        <p class="w3-large">
+            sign up instructions can go here.
+        </p>
+        <!-- <p class="w3-xlarge">Student</p>
+        <p class="w3-large">
+          Jane Doe <br>
+          Sophomore
+        </p> -->
+        <!-- <button class="w3-button w3-black w3-padding-large w3-large w3-margin-top">Get Started</button> -->
+    </header>
+
+    <fieldset>
+    <form method="post" action="sign_up.php">  
+        <div class="container">  
+            <!-- <center>  <h1 style="padding:20px"> Sign-Up</h1> </center>   -->
+            <!-- <hr>   -->
+            <label> First Name: </label>   
+            <input type="text" name="firstname" placeholder= "first name" size="15" required />   
+            
+            <label> Last Name: </label>    
+            <input type="text" name="lastname" placeholder="last name" size="15"required />
+
+            <label> User Name: </label>    
+            <input type="text" name="username" placeholder="user name" size="15"required />
+
+            <label> Password: </label>    
+            <input type="password" name="password"  size="15"required />
+
+            <div>
+                <label for="email"><b>Email</b></label>  
+                <input type="text" placeholder="Enter Email" name="email" required>
+            </div>
+
+            <div>  
+                <label> Gender : </label><br>  
+                <input type="radio" value="Male" name="gender" checked > Male   
+                <input type="radio" value="Female" name="gender"> Female     
+            </div> 
+
+            <div>
+                <label> Role: </label><br>  
+                <input type="radio" value="advisor" name="role" checked > Advisor   
+                <input type="radio" value="student" name="role"> Student <br><br>
+            </div>
+            
+            <button type="submit" class="registerbtn">Continue</button>
+        </div>  
+    </form> 
+    </fieldset>
+    
+    </body>  
+</html>  

@@ -1,137 +1,111 @@
 <!DOCTYPE html>  
 <html>  
     <head>  
-        <title>Sign Up</title>
+        <title>Register</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">  
-        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-        <style>
-            body{  
-                font-family: Calibri, Helvetica, sans-serif;  
-                background-color: rgb(41, 38, 25);  
-            }
-
-            .container {  
-                padding: 50px;  
-                background-color: rgb(231, 200, 25);  
-            }  
-            
-            input[type=text], input[type=password], textarea {  
-                width: 100%;  
-                padding: 15px;  
-                margin: 5px 0 22px 0;  
-                display: inline-block;  
-                border: none;  
-                background: #f1f1f1;  
-            }
-
-            input[type=text]:focus, input[type=password]:focus {  
-                background-color: lightgrey;  
-                outline: none;  
-            }
-
-            div {  
-                padding: 10px 0;  
-            }  
-
-            hr {  
-                border: 1px solid #f1f1f1;  
-                margin-bottom: 25px;  
-            }
-
-            .registerbtn {  
-                background-color: black;  
-                color: white;  
-                padding: 16px 20px;  
-                margin: 8px 0;  
-                border: none;  
-                cursor: pointer;  
-                width: 100%;  
-                opacity: 0.9;  
-            }
-
-            .registerbtn:hover {  
-                opacity: 1;  
-            }  
-        </style>  
+        <!-- <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"> -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link href="mycss.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
     </head>  
 
     <body>  
+        <!-- Navbar -->
+        <nav class="navbar navbar-dark bg-dark navbar-expand-lg nav-pills" style="background-color:black !important">
+            <span class="navbar-brand mb-0 h1" style="color:rgb(231, 200, 25)"><strong>ProViso Online Advising</strong></span>
 
-        <!-- fix nav bar style -->
-    <!-- Navbar -->
-    <div class="w3-top">
-        <div class="w3-bar w3-cyan w3-card w3-left-align w3-large" style="background-color: black !important; color: white !important">
-            <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-light-gray w3-large w3-red" href="javascript:void(0);" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
-            <a href="index.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-light-gray">Home</a>
-            <a href= Class_Reg.html class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-light-gray" >Course Register</a>
-            <a href="career.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-light-gray">Career</a>
-            <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-light-gray">Degree</a>
-            <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-light-gray">Course Mapper</a>
-            <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-light-gray">Course outcomes</a>
-            <a href="sign_up.html" class="w3-bar-item w3-button w3-padding-large w3-light-gray" style="background-color: rgb(231, 200, 25) !important">Sign Up</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <div class="navbar-nav">
+                    <a href="index.html" class="nav-item nav-link my-nav-item">Home</a>
+                    <a href="degree_overview.html" class="nav-item nav-link my-nav-item">Degree Overview</a>
+                    <a href="career.html" class="nav-item nav-link my-nav-item">Career Overview</a>
+
+                    <a href= Class_Reg.html class="nav-item nav-link my-nav-item" >Course Register</a>
+                    <a href="#" class="nav-item nav-link my-nav-item disabled">Course Mapper</a>
+                    <a href="#" class="nav-item nav-link my-nav-item disabled">Course outcomes</a>
+                    <a href="sign_up.html" class="nav-item active nav-link my-nav-item">Register</a>
+                </div>
+            </div>
+
+            <div style="color:white">
+                logout goes here
+            </div>
+        </nav>
+
+        <div style="background-color: rgb(39, 39, 39); color:white; padding: 10px;">
+            Hello $first_name.
         </div>
-  
-        <!-- Navbar on small screens -->
-        <!-- <div id="navDemo" class="w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium w3-large">
-            <a href="#" class="w3-bar-item w3-button w3-padding-large">Careers</a>
-            <a href="#" class="w3-bar-item w3-button w3-padding-large">Degree</a>
-            <a href="#" class="w3-bar-item w3-button w3-padding-large">Course Mapper</a>
-            <a href="#" class="w3-bar-item w3-button w3-padding-large">Course outcomes</a>
-        </div> -->
-    </div>
 
-    <!-- /* find out how to put lower on page */ -->
-    <!-- <div><center><h1>User Sign-Up</h1></center></div> -->
+        <header style="padding:100px; text-align: center;">
+            <h1>Register</h1>
+            <p>
+                Please register to use the online advising system.
+            </p>
+            <hr>
+        </header>
 
-    <header class="w3-container w3-cyan w3-center" style="padding:128px 16px; background-color: rgb(231, 200, 25) !important">
-        <h1 class="w3-margin w3-jumbo">Sign-Up</h1>
-        <p class="w3-large">
-            sign up instructions can go here.
-        </p>
-        <!-- <p class="w3-xlarge">Student</p>
-        <p class="w3-large">
-          Jane Doe <br>
-          Sophomore
-        </p> -->
-        <!-- <button class="w3-button w3-black w3-padding-large w3-large w3-margin-top">Get Started</button> -->
-    </header>
+        <!-- registration form -->
+        <form method="post" action="php_scripts/sign_up.php">  
+            <div class="container-fluid" style="width:80%">  
+                <div class="row">
+                    <div class="col-md-6">
+                        <label> First Name: </label>   
+                        <input type="text" name="firstname" class="form-control" placeholder= "first name" size="15" required /> 
+                    </div>  
+                
+                    <div class="col-md-6">
+                        <label> Last Name: </label>    
+                        <input type="text" name="lastname" class="form-control" placeholder="last name" size="15"required />
+                    </div>
+                </div>
 
-    <form method="post" action="php_scripts/sign_up.php">  
-        <div class="container">  
-            <!-- <center>  <h1 style="padding:20px"> Sign-Up</h1> </center>   -->
-            <!-- <hr>   -->
-            <label> First Name: </label>   
-            <input type="text" name="firstname" placeholder= "first name" size="15" required />   
-            
-            <label> Last Name: </label>    
-            <input type="text" name="lastname" placeholder="last name" size="15"required />
+                <div class="row">
+                    <div class="col-md-6">
+                        <label> User Name: </label>    
+                        <input type="text" name="username" class="form-control" placeholder="user name" size="15"required 
+                        data-bs-toggle="tooltip" data-bs-placement="top" title="Please use your university NetID"/>
+                    </div>
 
-            <label> User Name: </label>    
-            <input type="text" name="username" placeholder="user name" size="15"required />
+                    <div class="col-md-6">
+                        <label> Password: </label>    
+                        <input type="password" name="password" class="form-control" placeholder="password" size="15"required 
+                        data-bs-toggle="tooltip" data-bs-placement="top" title="Password must contain 1 number, 1 capital, and 1 symbol"/>
+                    </div>
+                </div>
 
-            <label> Password: </label>    
-            <input type="password" name="password"  size="15"required />
+                <div class="form-group">
+                    <label for="email">Email:</label>  
+                    <input type="email" class="form-control" placeholder="Enter Email" name="email" size="15" required
+                    data-bs-toggle="tooltip" data-bs-placement="top" title="Please use your university email">
+                </div>
 
-            <div>
-                <label for="email"><b>Email</b></label>  
-                <input type="email" placeholder="Enter Email" name="email" required>
-            </div>
+                <div>  
+                    <label> Gender : </label><br>  
+                    <input type="radio" value="Male" name="gender" checked > Male   
+                    <input type="radio" value="Female" name="gender"> Female     
+                </div> 
 
-            <div>  
-                <label> Gender : </label><br>  
-                <input type="radio" value="Male" name="gender" checked > Male   
-                <input type="radio" value="Female" name="gender"> Female     
-            </div> 
-
-            <div>
-                <label> Role: </label><br>  
-                <input type="radio" value="advisor" name="role" checked > Advisor   
-                <input type="radio" value="student" name="role"> Student <br><br>
-            </div>
-            
-            <button type="submit" class="registerbtn">Continue</button>
-        </div>  
-    </form> 
+                <div>
+                    <label> Role: </label><br>  
+                    <input type="radio" value="advisor" name="role" checked > Advisor   
+                    <input type="radio" value="student" name="role"> Student <br><br>
+                </div>
+                
+                <button type="submit" class="registerbtn">Continue</button>
+            </div>  
+        </form> 
     
     </body>  
 </html>  
+
+<!-- Tooltip enable script  -->
+<script>
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {return new bootstrap.Tooltip(tooltipTriggerEl)})
+</script>

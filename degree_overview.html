@@ -1,0 +1,158 @@
+<!--
+    This webpage will show an overview of what is already planned out. There will be other pages to edit what courses a user wants to take.
+ -->
+
+<!DOCTYPE html>  
+<html>  
+    <head>  
+        <title>Degree</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">  
+        <!-- <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"> -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link href="mycss.css" rel="stylesheet">
+        
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+
+        <style>
+            body {
+                background-color: white;
+            }
+        </style>
+    </head>
+
+    <body>  
+        <!-- Navbar -->
+        <nav class="navbar navbar-dark bg-dark navbar-expand-lg nav-pills" style="background-color:black !important">
+            <span class="navbar-brand mb-0 h1" style="color:rgb(231, 200, 25)"><strong>ProViso Online Advising</strong></span>
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <div class="navbar-nav">
+                    <a href="index.html" class="nav-item nav-link my-nav-item">Home</a>
+                    <a href="degree_overview.html" class="active nav-item  nav-link my-nav-item">Degree Overview</a>
+                    <a href="career.html" class="nav-item nav-link my-nav-item">Career Overview</a>
+
+                    <a href= Class_Reg.html class="nav-item nav-link my-nav-item" >Course Register</a>
+                    <a href="#" class="nav-item nav-link my-nav-item disabled">Course Mapper</a>
+                    <a href="#" class="nav-item nav-link my-nav-item disabled">Course outcomes</a>
+                    <a href="sign_up.html" class="nav-item nav-link my-nav-item">Register</a>
+                </div>
+            </div>
+
+            <div style="color:white">
+                logout goes here
+            </div>
+        </nav>
+
+        <div style="background-color: rgb(39, 39, 39); color:white; padding: 10px;">
+            Hello $first_name.
+        </div>
+
+        <header style="padding:80px; text-align: center;">
+            <h1>
+                Degree Overview
+            </h1>
+            <hr style="border: 1px solid black;">
+        </header>
+        
+
+        <div class="container-fluid" style="width:80%">
+            <div class="card my-card shadow p-3 mb-5 bg-white rounded">
+                <div class="card-body">
+                    <h2>Bachelor of Science Computer Science (BSCS)</h2>
+                    Career Goal: <span style="font-size: x-large">$career </span><a href="#">Change Career Goal</a><br>
+                    Credits: 128/132
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid" style="width: 80%">
+            <div class="card my-card shadow p-3 mb-5 bg-white rounded">
+                
+                <div class="card-body">
+                    <h2>Courses</h2>
+                    <table class="table table-hover">
+                        <div>
+                            Legend:
+                            <i class="fa fa-square-o" aria-hidden="true"></i> Not Completed
+                            <i class="fa fa-check-square-o" aria-hidden="true"></i> Completed
+                            <i class="fa fa-plus-square-o" aria-hidden="true"></i> Added by Career Goal
+                        </div>
+                        <thead class="table-dark">
+                            <tr>
+                                <th scope="col" class="table-icon"> </th>
+                                <th scope="col">Course Number</th>
+                                <th scope="col">Course Name</th>
+                                <th scope="col" class="table-skills">Skills</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                
+                                <td><i class="fa fa-square-o" aria-hidden="true"></i></td>
+                                <td>CS 120</td>
+                                <td>Computer Science I (4)</td>
+                                <td> 
+                                    <span class="badge badge-info" style="background-color:black">C++</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row"><i class="fa fa-check-square-o" aria-hidden="true"></i></th>
+                                <td>CS 470</td>
+                                <td>Artificial Intelligence (3)</td>
+                                <td> 
+                                    <span class="badge badge-info" style="background-color:black">Artificial Intelligence</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row"><i class="fa fa-plus-square-o" aria-hidden="true"></i></th>
+                                <td>CS 360</td>
+                                <td>Database Systems (3)</td>
+                                <td> 
+                                    <span class="badge badge-info" style="background-color:black">HTML5</span>
+                                    <span class="badge badge-info" style="background-color:black">SQL</span>
+                                    <span class="badge badge-info" style="background-color:black">MySQL</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row"><i class="fa fa-plus-square-o" aria-hidden="true"></i></th>
+                                <td>CS 383</td>
+                                <td>Software Engineering (4)</td>
+                                <td> 
+                                    <span class="badge badge-info" style="background-color:black">Software Design</span>
+                                    <span class="badge badge-info" style="background-color:black">Unity</span>
+                                    <span class="badge badge-info" style="background-color:black">C#</span>
+                                    <span class="badge badge-info" style="background-color:black">GitHub</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row"><i class="fa fa-check-square-o" aria-hidden="true"></i></th>
+                                <td>CS XXX</td>
+                                <td>Generic Class (credits)</td>
+                                <td> 
+                                    <span class="badge badge-info" style="background-color:black">skill</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                        
+                    </table>
+                </div>
+            </div>
+        </div>
+    
+    </body>  
+</html>  
+
+<!-- Tooltip enable script  -->
+<script>
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {return new bootstrap.Tooltip(tooltipTriggerEl)})
+</script>

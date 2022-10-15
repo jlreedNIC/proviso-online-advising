@@ -1,3 +1,38 @@
+<!-- PHP code to establish connection with the localserver -->
+<?php
+
+// Username is root
+// Riley Walsh
+// lab_5
+// 10/07/2022
+$user = 'root';
+$password = '';
+
+// Database name is UserDatabase
+$database = 'career';
+
+// Server is localhost with
+// port number 3306
+$servername='localhost:3306';
+$mysqli = new mysqli($servername, $user,
+				$password, $database);
+
+// Checking for connections
+if ($mysqli->connect_error) {
+	die('Connect Error (' .
+	$mysqli->connect_errno . ') '.
+	$mysqli->connect_error);
+}
+
+
+// SQL query to select data from database
+$sql = " SELECT * FROM users";
+$result = $mysqli->query($sql);
+
+$mysqli->close();
+
+?>
+
 <!DOCTYPE HTML>
 
 <html>
@@ -31,13 +66,22 @@
             </div>
 
         <div id="left">
+		
+		<?php
+				// LOOP TILL END OF DATA
+				while($rows=$result->fetch_assoc())
+				{
+<?php echo $rows['Classes'];?>
+
+			?>
 
             <ul id="organisation">
                 <li class="company"><em><a href="http://www.capricasoftware.co.uk">Caprica Software</a></em>
                     <ul>
                         <li>Mark Lee<br/><span class='title'>Overlord</span>
                         <ul>
-                            <li>Sales<br/>
+                            <li><br/>
+					
                                 <ul>
                                     <li>Richard Toole<br/><span class='title'>Minion</span></li>
                                     <li>Noah Scruples<br/><span class='title'>Minion</span></li>
@@ -69,7 +113,9 @@
                     </ul>
                 </li>
             </ul>
-        
+        <?php
+				}
+			?>
         </div>
 
         

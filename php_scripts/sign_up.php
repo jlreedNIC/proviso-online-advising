@@ -13,7 +13,7 @@ $email = $_POST['email'];
 $gender = $_POST['gender'];
 
 $sql = "INSERT INTO students
-        (first_name, last_name, user_name, password, email, gender)
+        (firstName, lastName, userName, password, email, gender)
         VALUES ('$firstname', '$lastname', '$username', '$password', '$email', '$gender')";
 
 $rs = mysqli_query($con, $sql);

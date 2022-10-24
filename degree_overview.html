@@ -18,6 +18,12 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
 
+        <!-- flowchart -->
+        <script src="https://www.cssscript.com/demo/dynamic-flow-chart-library-with-createjs-flowjs/lib/createjs-2015.05.21.min.js"></script>
+        <script src="https://www.cssscript.com/demo/dynamic-flow-chart-library-with-createjs-flowjs/src/flow.js"></script>
+        <script src="https://www.cssscript.com/demo/dynamic-flow-chart-library-with-createjs-flowjs/src/flowitem.js"></script>
+        <script src="https://www.cssscript.com/demo/dynamic-flow-chart-library-with-createjs-flowjs/src/flowconnector.js"></script>
+
         <style>
             body {
                 background-color: white;
@@ -40,7 +46,7 @@
                     <a href="degree_overview.html" class="active nav-item  nav-link my-nav-item">Degree Overview</a>
                     <a href="career.html" class="nav-item nav-link my-nav-item">Career Overview</a>
 
-                    <a href= Class_Reg.html class="nav-item nav-link my-nav-item" >Course Register</a>
+                    <a href= Class_Reg.php class="nav-item nav-link my-nav-item" >Course Register</a>
                     <a href="#" class="nav-item nav-link my-nav-item disabled">Course Mapper</a>
                     <a href="#" class="nav-item nav-link my-nav-item disabled">Course outcomes</a>
                     <a href="sign_up.html" class="nav-item nav-link my-nav-item">Register</a>
@@ -147,6 +153,15 @@
                 </div>
             </div>
         </div>
+
+        <div class="container-fluid" style="width:80%">
+            <div class="card my-card shadow p-3 mb-5 bg-white rounded">
+                <div class="card-body">
+                    <h2> sample course layout</h2>
+                    <canvas id="demo" width="500" height="300"></canvas>
+                </div>
+            </div>
+        </div>
     
     </body>  
 </html>  
@@ -155,4 +170,21 @@
 <script>
     var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
     var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {return new bootstrap.Tooltip(tooltipTriggerEl)})
+</script>
+
+<script>
+    // query for each class
+    // query what that class is a prereq of
+    // start building chart
+
+    var e = [
+        [{id: "CS 121", next: ["CS 210", "CS 240", "CS 270"]}], //{id: "z1", empty: true, next: undefined}, {id: "z1", empty: true, next: undefined}],
+        [{id: "CS 210", next: ["CS 383"]}, {id: "CS 240", next: ["CS 383"]},  {id: "CS 270", next: ["CS 383"]}],
+        [{id: "CS 383", next: undefined}]//, {id: "Software Engineering", next: undefined}, {{id: "z3", empty: true, next: undefined}],
+    ];
+
+    // new flowjs("demo", d).draw();
+    new flowjs("demo", e).draw();
+
+
 </script>

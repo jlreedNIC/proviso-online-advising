@@ -99,12 +99,10 @@
                 <a href="#" class="nav-item nav-link my-nav-item disabled">Course Mapper</a>
                 <a href="#" class="nav-item nav-link my-nav-item disabled">Course outcomes</a>
                 <a href="sign_up.html" class="nav-item nav-link my-nav-item">Register</a>
+				 <a href="#" class="nav-item nav-link my-nav-item">Logout</a>
             </div>
         </div>
 
-        <div style="color:white">
-            logout goes here
-        </div>
     </nav>
 
     <div style="background-color: rgb(39, 39, 39); color:white; padding: 10px;">

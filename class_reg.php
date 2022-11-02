@@ -126,7 +126,32 @@ Course :
 <option value="MSCS">MSCS</option> 
 <option value="BSCE">BSCE</option>   
 </select>  
-</div>  
+</div>
+  
+<div>  
+<label>   
+University  
+</label>   
+  
+<select>  
+<option value="UI">University of Idaho</option>  
+<option value="NIC">North Idaho College</option>  
+<option value="Boise">Boise State</option> 
+</select>  
+</div>
+ 
+<div>  
+<label>   
+Career 
+</label>   
+  
+<select>  
+<option value="S">Software Engineer</option>  
+<option value="It">Information Technology</option>  
+<option value="Web">Web developer</option> 
+</select>  
+</div> 
+
 <div>  
 <label>   
 Gender :  

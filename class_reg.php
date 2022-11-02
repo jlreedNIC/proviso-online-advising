@@ -105,9 +105,6 @@
 
     </nav>
 
-    <div style="background-color: rgb(39, 39, 39); color:white; padding: 10px;">
-        Hello $first_name.
-    </div>
     
 <form>  
   <div class="container">  
@@ -302,7 +299,7 @@ Current Address :
     </div>
 
 </div>
-<button type="submit"  class="registerbtn" onclick="window.location.href='https://www.w3docs.com';">Continue</button>
+<button type="submit"  class="registerbtn" onclick="window.location.href='sign_up_success.html';">Continue</button>
  
 </body>  
 </html>  

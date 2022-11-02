@@ -1,0 +1,83 @@
+body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
+.navbar,h1,button {font-family: "Montserrat", sans-serif}
+
+body{  
+    /* font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; */
+    /* font-family: Calibri, Helvetica, sans-serif;   */
+    background-color: rgb(231, 200, 25);  
+    
+}
+
+.my-nav-item {
+    /* padding: 15px; */
+    /* padding-left: 20px;
+    padding-right: 20px; */
+    color: white;
+    font-size: large;
+}
+
+.my-card {
+    background-color: white;
+    box-shadow: 10px;
+}
+
+.table-icon {
+    width: 10%;
+}
+
+.table-skills {
+    width:50%;
+}
+
+.navbar-nav > .active  {
+    background-color:rgb(231, 200, 25) !important; 
+    color:black !important;
+}
+
+.navbar .navbar-nav .nav-link:hover {
+    background-color: rgb(255, 232, 100);
+    color: black;
+}
+
+/* .container-fluid {  
+    padding: 50px;  
+    background-color: rgb(231, 200, 25);  
+}   */
+
+input[type=text], input[type=password], textarea, input[type=email] {  
+    width: 100%;  
+    padding: 15px;  
+    margin: 5px 0 22px 0;  
+    display: inline-block;  
+    border: none;  
+    background: #f1f1f1;  
+}
+
+input[type=text]:focus, input[type=password]:focus {  
+    background-color: lightgrey;  
+    outline: none;  
+}
+
+div {  
+    padding: 10px 0;  
+}  
+
+hr {  
+    border: 1px solid #f1f1f1;  
+    margin-bottom: 25px;  
+}
+
+.registerbtn {  
+    background-color: black;  
+    color: white;  
+    padding: 16px 20px;  
+    margin: 8px 0;  
+    border: none;  
+    cursor: pointer;  
+    width: 100%;  
+    opacity: 1;  
+}
+
+.registerbtn:hover {  
+    opacity: 0.9;  
+} 

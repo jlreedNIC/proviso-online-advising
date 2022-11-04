@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 29, 2022 at 08:51 PM
+-- Generation Time: Nov 04, 2022 at 02:53 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -31,15 +31,16 @@ CREATE TABLE `careers` (
   `CareerID` int(11) NOT NULL,
   `Company` text NOT NULL,
   `Pay` int(11) NOT NULL,
-  `Position_Name` text NOT NULL
+  `Position_Name` text NOT NULL,
+  `Des` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `careers`
 --
 
-INSERT INTO `careers` (`CareerID`, `Company`, `Pay`, `Position_Name`) VALUES
-(1, 'Micron', 59000, 'Software Developer');
+INSERT INTO `careers` (`CareerID`, `Company`, `Pay`, `Position_Name`, `Des`) VALUES
+(1, 'Micron', 59000, 'Software Developer', 'Software developers conceive of, design, and build computer programs. Some develop new applications for mobile or desktop use, while others build underlying operating systems. Either way, software developers identify user needs, build programs, test out new software, and make improvements.');
 
 -- --------------------------------------------------------
 
@@ -53,6 +54,25 @@ CREATE TABLE `courses` (
   `Course_Num` int(11) NOT NULL,
   `Department` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `degree`
+--
+
+CREATE TABLE `degree` (
+  `Degree_ID` int(11) NOT NULL,
+  `Name` text NOT NULL,
+  `Description` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `degree`
+--
+
+INSERT INTO `degree` (`Degree_ID`, `Name`, `Description`) VALUES
+(1, 'Bachelors of Computer Science', 'This program prepares you to design, develop and test computing systems for a variety of purposes. Become proficient in various operating systems, programming languages and techniques and computer architecture with many opportunities to practice your skills on real-world projects. Students may specialize in the area that best supports their interests and goals.');
 
 -- --------------------------------------------------------
 

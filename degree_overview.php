@@ -22,9 +22,11 @@ if ($mysqli->connect_error) {
 
 // SQL query to select data from database $sql = " SELECT * FROM degree, careers,student_take ";
 
-$sql = " SELECT * FROM student_take,careers,degree";
-$result = $mysqli->query($sql);
+$sql = " SELECT * FROM student_take";
+$sqll= " SELECT * FROM degree,careers";
 
+$result = $mysqli->query($sql);
+$answer = $mysqli->query($sqll);
 $mysqli->close();
 
 ?>
@@ -125,10 +127,20 @@ $mysqli->close();
             <div class="card my-card shadow p-3 mb-5 bg-white rounded">
                 <div class="card-body">
 				
-                    <h2>Bachelor of Science Computer Science (BSCS)</h2>
-                    Career Goal: <span style="font-size: x-large">Software Developer </span><a href="#">Change Career Goal</a><br>
-                    Credits: 128/132
-					
+                  
+					<?php
+				// LOOP TILL END OF DAT
+				while ($rows=$answer->fetch_assoc())
+				{
+
+			?>
+			<h2><?php echo $rows['Name'];?></h2>
+			 Career Goal: <span style="font-size: x-large"><?php echo $rows['Position_Name'];?></span><a href="#"> Change Career Goal</a><br>
+			  Credits: 128/132
+			<?php
+				}
+		
+			?>	
                 </div>
             </div>
         </div>

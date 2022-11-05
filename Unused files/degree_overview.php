@@ -1,5 +1,10 @@
+
 <?php
 
+// Username is root
+// Riley Walsh
+// lab_5
+// 10/07/2022
 $user = 'root';
 $password = '';
 
@@ -20,9 +25,9 @@ if ($mysqli->connect_error) {
 }
 
 
-// SQL query to select data from database $sql = " SELECT * FROM degree, careers,student_take ";
+// SQL query to select data from database
+$sql = " SELECT * FROM degree, careers,student_take";
 
-$sql = " SELECT * FROM student_take,careers,degree";
 $result = $mysqli->query($sql);
 
 $mysqli->close();
@@ -40,6 +45,7 @@ $mysqli->close();
         
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
         <!-- Fonts -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
@@ -121,17 +127,23 @@ $mysqli->close();
         </header>
         
 
-       <div class="container-fluid" style="width:80%">
+        <div class="container-fluid" style="width:80%">
             <div class="card my-card shadow p-3 mb-5 bg-white rounded">
                 <div class="card-body">
-				
-                    <h2>Bachelor of Science Computer Science (BSCS)</h2>
-                    Career Goal: <span style="font-size: x-large">Software Developer </span><a href="#">Change Career Goal</a><br>
+				<?php
+				// LOOP TILL END OF DATA
+				while($rows=$result->fetch_assoc())
+				{
+
+
+			?>
+                    <h2><?php echo $rows['Name'];?></h2>
+                    Career Goal: <span style="font-size: x-large"><?php echo $rows['Position_Name'];?> </span><a href="#">Change Career Goal</a><br>
                     Credits: 128/132
-					
                 </div>
             </div>
         </div>
+
         <div class="container-fluid" style="width: 80%">
             <div class="card my-card shadow p-3 mb-5 bg-white rounded">
                 
@@ -156,26 +168,15 @@ $mysqli->close();
                     </tr>
                 </thead>
                 <tbody>
-               <?php
-				// LOOP TILL END OF DATA
-				while($rows=$result->fetch_assoc())
-				{
-
-
-			?>
+                
                     <tr>
                         <td ><i class="fa fa-check-square-o" aria-hidden="true"></i></td>
-						<td><?php echo $rows['Course_Number'];?></td>
-						<td><?php echo $rows['Course_Name'];?></td>
-						<td><?php echo $rows['Skill'];?></td>
-				
+                        <td><?php echo $rows['Course_Number'];?></td>
+                        <td ><?php echo $rows['Course_Name'];?></td>
+                        <td ><?php echo $rows['Skill'];?></td>
+                     
                     </tr>
-			
            				
-		<?php
-				}
-		
-			?>	
 						<!--
                         <thead class="table-dark">
                             <tr>
@@ -240,7 +241,9 @@ $mysqli->close();
                 </div>
             </div>
         </div>
-
+<?php
+				}
+			?>
         <div class="container-fluid" style="width:80%">
             <div class="card my-card shadow p-3 mb-5 bg-white rounded">
                 <div class="card-body">

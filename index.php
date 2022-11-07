@@ -79,9 +79,11 @@ $mysqli->close();
 <body>  
 <?php
     // load navbar and header
-    // figure out how to pass variables in to set active page on navbar
-    require('navbar.php');
-    require('header.php');
+    include('navbar.php');
+    Navbar("home");
+
+    include('header.php');
+    NameHeader("Jane Doe");
 ?>
 
 <!-- Header <img class="center-fit" src="img/notebook.jpg" >-->

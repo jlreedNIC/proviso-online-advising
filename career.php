@@ -57,7 +57,6 @@ $mysqli->close();
         <?php
         include('templates/header.php');
         include('templates/navbar.php');
-        include('templates/footer.php');
         Navbar("career");
         NameHeader("Jane Doe");
         ?>

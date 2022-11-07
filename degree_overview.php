@@ -32,7 +32,8 @@ $mysqli->close();
 require("php_scripts/db_connection.php");
 // query for course table
 $con = OpenCon();
-$qry = "select * from classes";
+$qry = "select * from courses
+        order by Course_Num";
 
 $rs = mysqli_query($con, $qry);
 
@@ -44,10 +45,11 @@ while($row = mysqli_fetch_array($rs, MYSQLI_ASSOC))
 }
 
 // query for graph
-$qry = "select prereq.prereqID, p.department as pdept, p.classNumber as pnum, p.name as pname, p.credits as pcred, prereq.classID, c.department, c.classNumber, c.name, c.credits
+$qry = "select prereq.Prereq_ID, p.Department as pdept, p.Course_Num as pnum, p.Course_Name as pname, p.Credits as pcred, 
+        prereq.Course_ID, c.Department, c.Course_Num, c.Course_Name, c.Credits
         from prereq 
-        join classes as p on prereq.prereqID=p.classID
-        join classes as c on prereq.classID=c.classID";
+        join courses as p on prereq.Prereq_ID=p.Course_ID
+        join courses as c on prereq.Course_ID=c.Course_ID";
 
 $rs = mysqli_query($con, $qry);
 
@@ -173,7 +175,7 @@ CloseCon($con);
                     <table class="table bg-white" id="myTable">
                         <thead class="bg-dark text-light">
                             <tr>
-                                <th></th>
+                                <th class="table-icon"></th>
                                 <th>Course Number</th>
                                 <th>Course Name</th>
                                 <th class="table-skills">Skills</th>
@@ -188,12 +190,12 @@ CloseCon($con);
                                 {
 			                ?>
                             <tr>
-                                <td ><i class="fa fa-check-square-o" aria-hidden="true"></i></td>
-                                <td><?php echo $data[$i]['classNumber']; //$rows['Course_Number'];?></td>
-                                <td><?php echo $data[$i]['name']." (".$data[$i]['credits'].")";//$rows['Course_Name'];?></td>
+                                <td><i class="fa fa-check-square-o" aria-hidden="true"></i></td>
+                                <td><?php echo $data[$i]['Department']." ".$data[$i]['Course_Num'];?></td>
+                                <td><?php echo $data[$i]['Course_Name']." (".$data[$i]['Credits'].")";?></td>
                                 <td>
                                     <span class="badge badge-info" style="background-color:black">
-                                        <?php echo 'skills'//$rows['Skill'];?>
+                                        <?php echo 'skills';?>
                                     </span>
                                 </td>
 
@@ -201,66 +203,7 @@ CloseCon($con);
 		                    <?php
 				                }
 		                    ?>	
-						<!--
-                        <thead class="table-dark">
-                            <tr>
-                                <th scope="col" class="table-icon"> </th>
-                                <th scope="col">Course Number</th>
-                                <th scope="col">Course Name</th>
-                                <th scope="col" class="table-skills">Skills</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                
-                                <td><i class="fa fa-square-o" aria-hidden="true"></i></td>
-                                <td>CS 120</td>
-                                <td>Computer Science I (4)></td>
-                                <td> 
-                                    <span class="badge badge-info" style="background-color:black">C++</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row"><i class="fa fa-check-square-o" aria-hidden="true"></i></th>
-                                <td>CS 470</td>
-                                <td>Artificial Intelligence (3)</td>
-                                <td> 
-                                    <span class="badge badge-info" style="background-color:black">Artificial Intelligence</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row"><i class="fa fa-plus-square-o" aria-hidden="true"></i></th>
-                                <td>CS 360</td>
-                                <td>Database Systems (3)</td>
-                                <td> 
-                                    <span class="badge badge-info" style="background-color:black">HTML5</span>
-                                    <span class="badge badge-info" style="background-color:black">SQL</span>
-                                    <span class="badge badge-info" style="background-color:black">MySQL</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row"><i class="fa fa-plus-square-o" aria-hidden="true"></i></th>
-                                <td>CS 383</td>
-                                <td>Software Engineering (4)</td>
-                                <td> 
-                                    <span class="badge badge-info" style="background-color:black">Software Design</span>
-                                    <span class="badge badge-info" style="background-color:black">Unity</span>
-                                    <span class="badge badge-info" style="background-color:black">C#</span>
-                                    <span class="badge badge-info" style="background-color:black">GitHub</span>
-									
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row"><i class="fa fa-check-square-o" aria-hidden="true"></i></th>
-                                <td>CS XXX</td>
-                                <td>Generic Class (credits)</td>
-                                <td> 
-                                    <span class="badge badge-info" style="background-color:black">skill</span>
-                                </td>
-                            </tr>
-							--->
                         </tbody>
-                        
                     </table>
                 </div>
             </div>
@@ -309,7 +252,7 @@ CloseCon($con);
     for(i=0; i<passedArray.length; i++)
     {
         g.addPaths([
-            [passedArray[i]['pnum'], passedArray[i]['classNumber']]
+            [passedArray[i]['pnum'], passedArray[i]['Course_Num']]
         ]);
     }
     new flowjs.DiFlowChart("demo", g).draw();

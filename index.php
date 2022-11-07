@@ -23,6 +23,10 @@ if ($mysqli->connect_error) {
 	$mysqli->connect_error);
 }
 
+// we should keep database connection variables in a separate script
+// require('php_scripts/db_connection.php');
+// $mysqli = OpenCon();
+
 
 // SQL query to select data from database
 $sql = " SELECT * FROM degree, careers";
@@ -72,45 +76,23 @@ $mysqli->close();
   </style>
 </head>
 
-<body>
-
-  <!-- Navbar -->
-  <nav class="navbar navbar-dark bg-dark navbar-expand-lg nav-pills" style="background-color:black !important">
-    <span class="navbar-brand mb-0 h1" style="color:rgb(231, 200, 25)"><strong>ProViso Online Advising</strong></span>
-
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    
-    <div class="collapse navbar-collapse" id="navbarNav">
-        <div class="navbar-nav">
-            <a href="index.html" class="active nav-item nav-link my-nav-item">Home</a>
-            <a href="degree_overview.html" class="nav-item nav-link my-nav-item">Degree Overview</a>
-            <a href="career.html" class="nav-item nav-link my-nav-item">Career Overview</a>
-
-            <a href= Class_Reg.php class="nav-item nav-link my-nav-item" >Course Register</a>
-            <a href="#" class="nav-item nav-link my-nav-item disabled">Course Mapper</a>
-            <a href="#" class="nav-item nav-link my-nav-item disabled">Course outcomes</a>
-            <a href="sign_up.html" class="nav-item nav-link my-nav-item">Register</a>
-			 <a href="#" class="nav-item nav-link my-nav-item">Logout</a>
-        </div>
-    </div>
-
-  </nav>
-
-<div style="background-color: rgb(39, 39, 39); color:white; padding: 10px;">
-    Hello John Doe
-</div>
+<body>  
+<?php
+    // load navbar and header
+    // figure out how to pass variables in to set active page on navbar
+    require('navbar.php');
+    require('header.php');
+?>
 
 <!-- Header <img class="center-fit" src="img/notebook.jpg" >-->
 <header class="w3-container w3-cyan w3-center " style="padding:128px 16px; background-image: url('img/ccc.jpg')  !important">
 
-  <h1 class="w3-margin w3-jumbo" style="color:white">Dashboard</h1>
-  <p style="color:white" class="w3-xlarge">Student</p>
-  <p style="color:white" class="w3-large">
-    John Doe <br>
-    Sophomore
-  </p>
+    <h1 class="w3-margin w3-jumbo" style="color:white">Dashboard</h1>
+    <p style="color:white" class="w3-xlarge">Student</p>
+    <p style="color:white" class="w3-large">
+        John Doe <br>
+        Sophomore
+    </p>
 </header>
 
 <!-- First Grid -->
@@ -195,6 +177,7 @@ $mysqli->close();
     <i class="fa fa-twitter w3-hover-opacity"></i>
     <i class="fa fa-linkedin w3-hover-opacity"></i>
  </div>
+ <p>Created by Riley Walsh and Jordan Reed. All rights reserved.</p>
  <!-- <p></p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></p> -->
 </footer>
 

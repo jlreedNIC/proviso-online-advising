@@ -81,3 +81,10 @@ hr {
 .registerbtn:hover {  
     opacity: 0.9;  
 } 
+
+.my_footer {
+    color: black;
+    padding: 20px;
+    text-align: center;
+    opacity: 0.5;
+}

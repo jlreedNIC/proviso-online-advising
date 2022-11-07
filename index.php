@@ -51,6 +51,7 @@ $mysqli->close();
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  
 
   <style>
     body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
@@ -79,10 +80,10 @@ $mysqli->close();
 <body>  
 <?php
     // load navbar and header
-    include('navbar.php');
+    include('templates/navbar.php');
     Navbar("home");
 
-    include('header.php');
+    include('templates/header.php');
     NameHeader("Jane Doe");
 ?>
 
@@ -166,11 +167,7 @@ $mysqli->close();
     <h1 class="w3-margin w3-xlarge">Quote of the day: live life</h1>
 </div>
 
-
- 
-
-<!-- Footer -->
-<footer class="w3-container w3-padding-64 w3-center w3-opacity">  
+<!-- <footer class="w3-container w3-padding-64 w3-center w3-opacity">  
   <div class="w3-xlarge w3-padding-32">
     <i class="fa fa-facebook-official w3-hover-opacity"></i>
     <i class="fa fa-instagram w3-hover-opacity"></i>
@@ -181,7 +178,16 @@ $mysqli->close();
  </div>
  <p>Created by Riley Walsh and Jordan Reed. All rights reserved.</p>
  <!-- <p></p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></p> -->
-</footer>
+</footer> -->
+ 
+
+<!-- Footer -->
+<?php
+include('templates/footer.php');
+Footer();
+?>
+
+
 
 <script>
 // Used to toggle the menu on small screens when clicking on the menu button

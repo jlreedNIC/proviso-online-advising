@@ -123,8 +123,8 @@ CloseCon($con);
 
     <body>  
         <?php 
-            include("navbar.php");
-            include("header.php");
+            include("templates/navbar.php");
+            include("templates/header.php");
             Navbar("degree");
             NameHeader("Jane Doe");
         ?>
@@ -275,6 +275,10 @@ CloseCon($con);
             </div>
         </div>
     
+        <?php
+        include('templates/footer.php');
+        Footer();
+        ?>
     </body>  
 </html>  
 

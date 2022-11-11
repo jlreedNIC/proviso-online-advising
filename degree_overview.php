@@ -24,11 +24,10 @@ if ($mysqli->connect_error) {
 
 $sql = " SELECT * FROM student_take";
 $sqll= " SELECT * FROM degree,careers";
-$sql3= " SELECT * FROM full_degree";
 
 $result = $mysqli->query($sql);
 $answer = $mysqli->query($sqll);
-$result3 = $mysqli->query($sql3);
+
 
 $mysqli->close();
 

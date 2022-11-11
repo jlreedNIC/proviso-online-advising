@@ -57,12 +57,14 @@ user table
     grade
     user_name (ie reed5204)
     password
+    degree (foreign key)
 
 courses table
     courseID (primary key)
     course_name
     dept (ie computer science)
     course number (150 from CS150)
+    credits
 
 skills table
     skillID (primary key)
@@ -76,7 +78,7 @@ career table
     company
     position_level (ie entry level, management etc)
 
-RELATIONSHIP TABLES
+### RELATIONSHIP TABLES
 taken (user, courses)
     userID
     courseID
@@ -96,6 +98,38 @@ career_skills (skills, careers)
 prereqs (course to course)
     courseID
     requires_courseID
+
+### Degree Requirement Tables
+
+degrees
+    degreeID (primary key)
+    degree_name
+    degree_level
+    description
+
+categories
+    catID (primary key)
+    category (ie humanities, or natural science)
+
+degree_classes_req
+    degreeID (foreign key)
+    courseID (foreign key)
+
+degree_min_grade_reg
+    degreeID (foreign key)
+    courseID (foreign key)
+    grade
+lists courses that a degree requires a minimum grade in (most likely a C or better)
+
+degree_category_requirements
+    degreeID (foreign key)
+    category (foreign key)
+    credits_required
+
+degree_category_accepted_courses
+    degreeID (foreign key)
+    categoryID (foreign key)
+    accepted_courses (foreign key)
 
 ## Our skills 
 -Knowledge of C, C#, C++, some HTML 5. 

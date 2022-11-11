@@ -24,9 +24,12 @@ if ($mysqli->connect_error) {
 
 $sql = " SELECT * FROM student_take";
 $sqll= " SELECT * FROM degree,careers";
+$sql3= " SELECT * FROM full_degree";
 
 $result = $mysqli->query($sql);
 $answer = $mysqli->query($sqll);
+$result3 = $mysqli->query($sql3);
+
 $mysqli->close();
 
 require("php_scripts/db_connection.php");
@@ -85,8 +88,8 @@ CloseCon($con);
         <script src="https://www.cssscript.com/demo/dynamic-flow-chart-library-with-createjs-flowjs/src/flowitem.js"></script>
         <script src="https://www.cssscript.com/demo/dynamic-flow-chart-library-with-createjs-flowjs/src/flowconnector.js"></script> -->
 
-        <script type="text/javascript" src="flowjs/lib/createjs-2015.05.21.min.js"></script>
-        <script type="text/javascript" src="flowjs/flow.min.js"></script>
+        <script type="text/javascript" src="flowjs-master/lib/createjs-2015.05.21.min.js"></script>
+        <script type="text/javascript" src="flowjs-master/flow.min.js"></script>
 
         <style>
             body {
@@ -212,16 +215,37 @@ CloseCon($con);
         <div class="container-fluid" style="width:80%">
             <div class="card my-card shadow p-3 mb-5 bg-white rounded">
                 <div class="card-body">
-                    <h2> sample course layout</h2>
-                    <canvas id="demo" width="500" height="300"></canvas>
+                    <h2> Sample Course Layout</h2>
+                    <canvas id="demo" width="500" height="300">
+
+                    <?php
+                    include('templates/footer.php');
+                    Footer();
+                    ?>
+
+
+                    </canvas>
+                  
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="container-fluid" style="width:80%">
+            <div class="card my-card shadow p-3 mb-5 bg-white rounded">
+                <div class="card-body">
+                    <h2> Full Degree</h2>
+                    <canvas id="demo" width="500" height="100"></canvas>
+        
+                    <iframe src="jquery/dog.html" height="400" width="1000" title="Iframe Example"></iframe>
                 </div>
             </div>
         </div>
     
-        <?php
-        include('templates/footer.php');
-        Footer();
-        ?>
+        
+
+        
     </body>  
 </html>  
 
@@ -233,6 +257,7 @@ CloseCon($con);
 
 <script>
     // query for each class
+    //
     // query what that class is a prereq of
     // start building chart
 

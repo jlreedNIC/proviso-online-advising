@@ -134,123 +134,50 @@ CloseCon($con);
         <?php 
             include("templates/navbar.php");
             include("templates/header.php");
-            Navbar("degree");
+            Navbar("NA");
             NameHeader("Jane Doe");
         ?>
 
 
         <header style="padding:80px; text-align: center;">
             <h1>
-                Degree Overview
+                Sample Course Timeline
             </h1>
             <hr style="border: 1px solid black;">
         </header>
+
+        <div class="container-fluid" style="width:80%">
+            <a href="degree_overview.php">Back to Degree Overview</a>
+        </div>
         
 
-       <div class="container-fluid" style="width:80%">
+        <div class="container-fluid" style="width:80%">
             <div class="card my-card shadow p-3 mb-5 bg-white rounded">
                 <div class="card-body">
-				
-                  
-					<?php
-				// LOOP TILL END OF DAT
-				while ($rows=$answer->fetch_assoc())
-				{
-
-			?>
-			<h2><?php echo $rows['Name'];?></h2>
-			 Career Goal: <span style="font-size: x-large"><?php echo $rows['Position_Name'];?></span><a href="#"> Change Career Goal</a><br>
-			  Credits: 128/132
-			<?php
-				}
-		
-			?>	
-                </div>
-            </div>
-        </div>
-
-        <div class="container-fluid" style="width: 80%">
-            <div class="card my-card shadow p-3 mb-5 bg-white rounded">
-                <div class="card-body">
-                    <h2>Courses</h2>
                     <div class="row">
+                        <div> <h2>Freshman Year</h2> </div>
                         <div class="col-md-6">
-                            Legend:
-                            <i class="fa fa-square-o" aria-hidden="true"></i> Not Completed
-                            <i class="fa fa-check-square-o" aria-hidden="true"></i> Completed
-                            <i class="fa fa-plus-square-o" aria-hidden="true"></i> Added by Career Goal
+                            <h4> Fall</h4>
+                            <canvas id="ffall" width="500" height="300">
+                            </canvas>
                         </div>
-                        <div class="col-md-6" style="text-align: right">
-                            <a href="suggested_course_plan.php">Suggested Course Plan</a>
+
+                        <div class="col-md-6">
+                            <h4> Spring</h4>
+                            <canvas id="fspring" width="500" height="300">
+                            </canvas>
                         </div>
                     </div>
-						
-                    <table class="table bg-white" id="myTable">
-                        <thead class="bg-dark text-light">
-                            <tr>
-                                <th class="table-icon"></th>
-                                <th>Course Number</th>
-                                <th>Course Name</th>
-                                <th class="table-skills">Skills</th>
-                            
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                                // LOOP TILL END OF DATA
-                                // while($rows=$result->fetch_assoc())
-                                for($i=0; $i<$size; $i++)
-                                {
-			                ?>
-                            <tr>
-                                <td><i class="fa fa-check-square-o" aria-hidden="true"></i></td>
-                                <td><?php echo $data[$i]['Department']." ".$data[$i]['Course_Num'];?></td>
-                                <td><?php echo $data[$i]['Course_Name']." (".$data[$i]['Credits'].")";?></td>
-                                <td>
-                                    <span class="badge badge-info" style="background-color:black">
-                                        <?php echo 'skills';?>
-                                    </span>
-                                </td>
-
-                            </tr>
-		                    <?php
-				                }
-		                    ?>	
-                        </tbody>
-                    </table>
                 </div>
             </div>
         </div>
 
-        <div class="container-fluid" style="width:80%">
-            <div class="card my-card shadow p-3 mb-5 bg-white rounded">
-                <div class="card-body">
-                    <h2> Sample Course Layout</h2>
-                    <canvas id="demo" width="500" height="300">
-                    </canvas>
-                  
-                </div>
-            </div>
-        </div>
-
-
-
-        <div class="container-fluid" style="width:80%">
-            <div class="card my-card shadow p-3 mb-5 bg-white rounded">
-                <div class="card-body">
-                    <h2> Full Degree</h2>
-                    <canvas id="demo" width="500" height="100"></canvas>
-        
-                    <iframe src="jquery/dog.html" height="400" width="1000" title="Iframe Example"></iframe>
-                </div>
-            </div>
-        </div>
     
-        
         <?php
             include('templates/footer.php');
             Footer();
         ?>
+
         
     </body>  
 </html>  
@@ -285,7 +212,7 @@ CloseCon($con);
             [passedArray[i]['pnum'], passedArray[i]['Course_Num']]
         ]);
     }
-    new flowjs.DiFlowChart("demo", g).draw();
+    new flowjs.DiFlowChart("ffall", g).draw();
 
 
 </script>

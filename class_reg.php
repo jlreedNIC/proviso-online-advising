@@ -6,7 +6,8 @@
     $mysqli = OpenCon();
 
     // get data from database
-    $query = "select * from classes";
+    $query = "select * from courses
+              order by Course_Num";
     // echo $query;
     $rs = mysqli_query($mysqli, $query);
     // print_r($rs);
@@ -192,7 +193,7 @@ Current Address :
                             $i = 0;
 						    while($i < $size)
 						    {
-                                echo "<option value='{$data[$i]['classID']}'>{$data[$i]['department']} {$data[$i]['classNumber']} {$data[$i]['name']}</option>";
+                                echo "<option value='{$data[$i]['Course_ID']}'>{$data[$i]['Department']} {$data[$i]['Course_Num']}  {$data[$i]['Course_Name']}</option>";
                                 $i++;
                             }
 						?>
@@ -227,7 +228,7 @@ Current Address :
                                 $i = 0;
                                 while($i < $size)
                                 {
-                                    echo "<option value='{$data[$i]['classID']}'>{$data[$i]['department']} {$data[$i]['classNumber']} {$data[$i]['name']}</option>";
+                                    echo "<option value='{$data[$i]['Course_ID']}'>{$data[$i]['Department']} {$data[$i]['Course_Num']}  {$data[$i]['Course_Name']}</option>";
                                     $i++;
                                 }
                             ?>
@@ -261,7 +262,7 @@ Current Address :
                                     $i = 0;
                                     while($i < $size)
                                     {
-                                        echo "<option value='{$data[$i]['classID']}'>{$data[$i]['department']} {$data[$i]['classNumber']} {$data[$i]['name']}</option>";
+                                        echo "<option value='{$data[$i]['Course_ID']}'>{$data[$i]['Department']} {$data[$i]['Course_Num']}  {$data[$i]['Course_Name']}</option>";
                                         $i++;
                                     }
                                 ?>
@@ -294,7 +295,7 @@ Current Address :
                                         $i = 0;
                                         while($i < $size)
                                         {
-                                            echo "<option value='{$data[$i]['classID']}'>{$data[$i]['department']} {$data[$i]['classNumber']} {$data[$i]['name']}</option>";
+                                            echo "<option value='{$data[$i]['Course_ID']}'>{$data[$i]['Department']} {$data[$i]['Course_Num']}  {$data[$i]['Course_Name']}</option>";
                                             $i++;
                                         }
                                     ?>

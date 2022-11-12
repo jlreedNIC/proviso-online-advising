@@ -13,9 +13,9 @@ function Navbar($location)
     
     <div class="collapse navbar-collapse" id="navbarNav">
         <div class="navbar-nav">
-            <a href="#" class=" <?php if($location == "home") echo "active" ?> nav-item nav-link my-nav-item">Home</a>
-            <a href="#" class=" <?php if($location == "degree") echo "active" ?> nav-item nav-link my-nav-item">Degree Map</a>
-            <a href="#" class=" <?php if($location == "career") echo "active" ?> nav-item nav-link my-nav-item">Student Degree Map</a>
+            <a href="Adv_Index.php" class=" <?php if($location == "home") echo "active" ?>  nav-item nav-link my-nav-item">Home</a>
+            <a href="Adv_Degree.php" class="<?php if($location == "degree") echo "active" ?>  nav-item nav-link my-nav-item">Degree Map</a>
+            <a href="#" class=" nav-item nav-link my-nav-item">Student Degree Map</a>
 
             <a href="#" class=" <?php if($location == "course_register") echo "active" ?> nav-item nav-link my-nav-item" >Course Catalog</a>
             <a href="#" class="nav-item nav-link my-nav-item disabled">Course Mapper</a>

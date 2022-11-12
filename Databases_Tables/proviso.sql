@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 12, 2022 at 01:12 AM
+-- Generation Time: Nov 12, 2022 at 04:52 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -40,7 +40,6 @@ CREATE TABLE `careers` (
 --
 
 INSERT INTO `careers` (`CareerID`, `Company`, `Pay`, `Position_Name`, `Des`) VALUES
-(1, 'Micron', 59000, 'Software Developer', 'Software developers conceive of, design, and build computer programs. Some develop new applications for mobile or desktop use, while others build underlying operating systems. Either way, software developers identify user needs, build programs, test out new software, and make improvements.'),
 (1, 'Micron', 59000, 'Software Developer', 'Software developers conceive of, design, and build computer programs. Some develop new applications for mobile or desktop use, while others build underlying operating systems. Either way, software developers identify user needs, build programs, test out new software, and make improvements.');
 
 -- --------------------------------------------------------
@@ -90,7 +89,6 @@ CREATE TABLE `degree` (
 --
 
 INSERT INTO `degree` (`Degree_ID`, `Name`, `Description`) VALUES
-(1, 'Bachelors of Computer Science', 'This program prepares you to design, develop and test computing systems for a variety of purposes. Become proficient in various operating systems, programming languages and techniques and computer architecture with many opportunities to practice your skills on real-world projects. Students may specialize in the area that best supports their interests and goals.'),
 (1, 'Bachelors of Computer Science', 'This program prepares you to design, develop and test computing systems for a variety of purposes. Become proficient in various operating systems, programming languages and techniques and computer architecture with many opportunities to practice your skills on real-world projects. Students may specialize in the area that best supports their interests and goals.');
 
 -- --------------------------------------------------------
@@ -290,14 +288,6 @@ INSERT INTO `skills` (`Skill_ID`, `Skill_Name`) VALUES
 (4, 'Python'),
 (5, 'Java'),
 (6, 'HTML'),
-(7, 'PHP'),
-(8, 'MLA'),
-(1, 'C'),
-(2, 'C++'),
-(3, 'C#'),
-(4, 'Python'),
-(5, 'Java'),
-(6, 'HTML'),
 (7, 'PHP');
 
 -- --------------------------------------------------------
@@ -332,20 +322,8 @@ INSERT INTO `students` (`userID`, `userName`, `password`, `email`, `firstName`, 
 CREATE TABLE `student_take` (
   `Course_ID` int(11) NOT NULL,
   `Skill_ID` int(11) NOT NULL,
-  `Career_ID` int(11) NOT NULL,
-  `Course_Name` text NOT NULL,
-  `Course_Num` int(11) NOT NULL,
-  `Department` text NOT NULL,
-  `Credits` int(11) NOT NULL
+  `Career_ID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `student_take`
---
-
-INSERT INTO `student_take` (`Course_ID`, `Skill_ID`, `Career_ID`, `Course_Name`, `Course_Num`, `Department`, `Credits`) VALUES
-(0, 0, 1, 'Oral Communication', 101, 'General Education', 3),
-(0, 2, 1, 'Computer Science', 120, 'CS', 4);
 
 --
 -- Indexes for dumped tables

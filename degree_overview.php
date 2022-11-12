@@ -222,7 +222,7 @@ CloseCon($con);
             </div>
         </div>
 
-        <div class="container-fluid" style="width:80%">
+        <!-- <div class="container-fluid" style="width:80%">
             <div class="card my-card shadow p-3 mb-5 bg-white rounded">
                 <div class="card-body">
                     <h2> Sample Course Layout</h2>
@@ -231,7 +231,7 @@ CloseCon($con);
                   
                 </div>
             </div>
-        </div>
+        </div> -->
 
 
 
@@ -276,16 +276,16 @@ CloseCon($con);
     // new flowjs("demo", d).draw();
     // new flowjs("demo", e).draw();
 
-    var passedArray = <?php echo json_encode($graph); ?>;
+    // var passedArray = <?php //echo json_encode($graph); ?>;
 
-    var g = new flowjs.DiGraph();
-    for(i=0; i<passedArray.length; i++)
-    {
-        g.addPaths([
-            [passedArray[i]['pnum'], passedArray[i]['Course_Num']]
-        ]);
-    }
-    new flowjs.DiFlowChart("demo", g).draw();
+    // var g = new flowjs.DiGraph();
+    // for(i=0; i<passedArray.length; i++)
+    // {
+    //     g.addPaths([
+    //         [passedArray[i]['pnum'], passedArray[i]['Course_Num']]
+    //     ]);
+    // }
+    // new flowjs.DiFlowChart("demo", g).draw();
 
 
 </script>

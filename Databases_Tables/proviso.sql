@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 12, 2022 at 04:52 AM
+-- Generation Time: Nov 12, 2022 at 09:23 AM
 -- Server version: 10.4.24-MariaDB
--- PHP Version: 8.1.6
+-- PHP Version: 8.0.19
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -70,7 +70,14 @@ INSERT INTO `courses` (`Course_ID`, `Course_Name`, `Course_Num`, `Department`, `
 (7, 'System Software', 270, 'CS', 3),
 (8, 'Database Systems', 360, 'CS', 4),
 (9, 'Theory of Computation', 385, 'CS', 3),
-(10, 'Compiler Design', 445, 'CS', 4);
+(10, 'Compiler Design', 445, 'CS', 4),
+(11, 'Calculus I', 170, 'MATH', 4),
+(12, 'Calculus II', 175, 'MATH', 4),
+(13, 'Discrete Mathematics', 176, 'MATH', 3),
+(14, 'Linear Algebra', 330, 'MATH', 3),
+(15, 'Probability and Statistics', 301, 'STAT', 3),
+(16, 'Organisms and Environments', 114, 'BIOL', 4),
+(17, 'General Chemistry I', 111, 'CHEM', 4);
 
 -- --------------------------------------------------------
 
@@ -89,6 +96,7 @@ CREATE TABLE `degree` (
 --
 
 INSERT INTO `degree` (`Degree_ID`, `Name`, `Description`) VALUES
+(1, 'Bachelors of Computer Science', 'This program prepares you to design, develop and test computing systems for a variety of purposes. Become proficient in various operating systems, programming languages and techniques and computer architecture with many opportunities to practice your skills on real-world projects. Students may specialize in the area that best supports their interests and goals.'),
 (1, 'Bachelors of Computer Science', 'This program prepares you to design, develop and test computing systems for a variety of purposes. Become proficient in various operating systems, programming languages and techniques and computer architecture with many opportunities to practice your skills on real-world projects. Students may specialize in the area that best supports their interests and goals.');
 
 -- --------------------------------------------------------
@@ -123,6 +131,13 @@ CREATE TABLE `degree_categories` (
   `Category` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `degree_categories`
+--
+
+INSERT INTO `degree_categories` (`CategoryID`, `Category`) VALUES
+(1, 'Natural Science with Lab');
+
 -- --------------------------------------------------------
 
 --
@@ -135,6 +150,14 @@ CREATE TABLE `degree_category_accepted_courses` (
   `CategoryID` int(11) NOT NULL,
   `Accepted_Courses` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `degree_category_accepted_courses`
+--
+
+INSERT INTO `degree_category_accepted_courses` (`_ID`, `DegreeID`, `CategoryID`, `Accepted_Courses`) VALUES
+(1, 1, 1, 17),
+(2, 1, 1, 16);
 
 -- --------------------------------------------------------
 
@@ -149,6 +172,13 @@ CREATE TABLE `degree_category_req` (
   `CreditsReq` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `degree_category_req`
+--
+
+INSERT INTO `degree_category_req` (`Deg_Cat_ReqID`, `DegreeID`, `CategoryID`, `CreditsReq`) VALUES
+(1, 1, 1, 8);
+
 -- --------------------------------------------------------
 
 --
@@ -160,6 +190,27 @@ CREATE TABLE `degree_classes_req` (
   `DegreeID` int(11) NOT NULL,
   `Course_ID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `degree_classes_req`
+--
+
+INSERT INTO `degree_classes_req` (`Degree_CourseID`, `DegreeID`, `Course_ID`) VALUES
+(1, 1, 2),
+(2, 1, 3),
+(3, 1, 8),
+(4, 1, 1),
+(6, 1, 4),
+(7, 1, 5),
+(8, 1, 6),
+(9, 1, 7),
+(10, 1, 9),
+(11, 1, 11),
+(12, 1, 12),
+(13, 1, 13),
+(14, 1, 15),
+(15, 1, 14),
+(16, 1, 10);
 
 -- --------------------------------------------------------
 
@@ -173,6 +224,16 @@ CREATE TABLE `degree_min_grade_req` (
   `Course_ID` int(11) NOT NULL,
   `MinGrade` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `degree_min_grade_req`
+--
+
+INSERT INTO `degree_min_grade_req` (`Min_GradeID`, `DegreeID`, `Course_ID`, `MinGrade`) VALUES
+(1, 1, 2, 'C'),
+(2, 1, 3, 'C'),
+(3, 1, 4, 'C'),
+(4, 1, 5, 'C');
 
 -- --------------------------------------------------------
 
@@ -264,7 +325,10 @@ INSERT INTO `prereq` (`PreID`, `Prereq_ID`, `Course_ID`) VALUES
 (10, 3, 6),
 (11, 4, 6),
 (12, 5, 10),
-(13, 9, 10);
+(13, 9, 10),
+(14, 11, 12),
+(15, 11, 14),
+(16, 12, 15);
 
 -- --------------------------------------------------------
 
@@ -330,6 +394,12 @@ CREATE TABLE `student_take` (
 --
 
 --
+-- Indexes for table `careers`
+--
+ALTER TABLE `careers`
+  ADD PRIMARY KEY (`CareerID`);
+
+--
 -- Indexes for table `courses`
 --
 ALTER TABLE `courses`
@@ -371,8 +441,8 @@ ALTER TABLE `degree_category_req`
 --
 ALTER TABLE `degree_classes_req`
   ADD PRIMARY KEY (`Degree_CourseID`),
-  ADD KEY `degree foreign key` (`DegreeID`),
-  ADD KEY `course foreign key` (`Course_ID`);
+  ADD KEY `course foreign key` (`Course_ID`),
+  ADD KEY `degree foreign key` (`DegreeID`);
 
 --
 -- Indexes for table `degree_min_grade_req`
@@ -392,6 +462,12 @@ ALTER TABLE `prereq`
   ADD KEY `PrereqID_2` (`Prereq_ID`);
 
 --
+-- Indexes for table `skills`
+--
+ALTER TABLE `skills`
+  ADD PRIMARY KEY (`Skill_ID`);
+
+--
 -- Indexes for table `students`
 --
 ALTER TABLE `students`
@@ -402,10 +478,16 @@ ALTER TABLE `students`
 --
 
 --
+-- AUTO_INCREMENT for table `careers`
+--
+ALTER TABLE `careers`
+  MODIFY `CareerID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `courses`
 --
 ALTER TABLE `courses`
-  MODIFY `Course_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `Course_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `degrees`
@@ -417,37 +499,43 @@ ALTER TABLE `degrees`
 -- AUTO_INCREMENT for table `degree_categories`
 --
 ALTER TABLE `degree_categories`
-  MODIFY `CategoryID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `CategoryID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `degree_category_accepted_courses`
 --
 ALTER TABLE `degree_category_accepted_courses`
-  MODIFY `_ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `degree_category_req`
 --
 ALTER TABLE `degree_category_req`
-  MODIFY `Deg_Cat_ReqID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Deg_Cat_ReqID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `degree_classes_req`
 --
 ALTER TABLE `degree_classes_req`
-  MODIFY `Degree_CourseID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Degree_CourseID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `degree_min_grade_req`
 --
 ALTER TABLE `degree_min_grade_req`
-  MODIFY `Min_GradeID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Min_GradeID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `prereq`
 --
 ALTER TABLE `prereq`
-  MODIFY `PreID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `PreID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+
+--
+-- AUTO_INCREMENT for table `skills`
+--
+ALTER TABLE `skills`
+  MODIFY `Skill_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `students`
@@ -463,30 +551,30 @@ ALTER TABLE `students`
 -- Constraints for table `degree_category_accepted_courses`
 --
 ALTER TABLE `degree_category_accepted_courses`
-  ADD CONSTRAINT `degree_category_accepted_courses_ibfk_1` FOREIGN KEY (`DegreeID`) REFERENCES `degrees` (`DegreeID`),
-  ADD CONSTRAINT `degree_category_accepted_courses_ibfk_2` FOREIGN KEY (`CategoryID`) REFERENCES `degree_categories` (`CategoryID`),
+  ADD CONSTRAINT `degree_category_accepted_courses_ibfk_1` FOREIGN KEY (`DegreeID`) REFERENCES `degrees` (`degreeID`),
+  ADD CONSTRAINT `degree_category_accepted_courses_ibfk_2` FOREIGN KEY (`CategoryID`) REFERENCES `degree_categories` (`categoryID`),
   ADD CONSTRAINT `degree_category_accepted_courses_ibfk_3` FOREIGN KEY (`Accepted_Courses`) REFERENCES `courses` (`Course_ID`);
 
 --
 -- Constraints for table `degree_category_req`
 --
 ALTER TABLE `degree_category_req`
-  ADD CONSTRAINT `degree_category_req_ibfk_1` FOREIGN KEY (`CategoryID`) REFERENCES `degree_categories` (`CategoryID`),
-  ADD CONSTRAINT `degree_category_req_ibfk_2` FOREIGN KEY (`DegreeID`) REFERENCES `degrees` (`DegreeID`);
+  ADD CONSTRAINT `degree_category_req_ibfk_1` FOREIGN KEY (`CategoryID`) REFERENCES `degree_categories` (`categoryID`),
+  ADD CONSTRAINT `degree_category_req_ibfk_2` FOREIGN KEY (`DegreeID`) REFERENCES `degrees` (`degreeID`);
 
 --
 -- Constraints for table `degree_classes_req`
 --
 ALTER TABLE `degree_classes_req`
   ADD CONSTRAINT `course foreign key` FOREIGN KEY (`Course_ID`) REFERENCES `courses` (`Course_ID`),
-  ADD CONSTRAINT `degree foreign key` FOREIGN KEY (`DegreeID`) REFERENCES `degrees` (`DegreeID`);
+  ADD CONSTRAINT `degree foreign key` FOREIGN KEY (`DegreeID`) REFERENCES `degrees` (`degreeID`);
 
 --
 -- Constraints for table `degree_min_grade_req`
 --
 ALTER TABLE `degree_min_grade_req`
   ADD CONSTRAINT `degree_min_grade_req_ibfk_1` FOREIGN KEY (`Course_ID`) REFERENCES `courses` (`Course_ID`),
-  ADD CONSTRAINT `degree_min_grade_req_ibfk_2` FOREIGN KEY (`DegreeID`) REFERENCES `degrees` (`DegreeID`);
+  ADD CONSTRAINT `degree_min_grade_req_ibfk_2` FOREIGN KEY (`DegreeID`) REFERENCES `degrees` (`degreeID`);
 
 --
 -- Constraints for table `prereq`

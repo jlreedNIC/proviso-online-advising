@@ -1,66 +1,139 @@
 <?php
 
-$user = 'root';
-$password = '';
-
-// Database name is UserDatabase
-$database = 'proviso';
-
-// Server is localhost with
-// port number 3306
-$servername='localhost:3306';
-$mysqli = new mysqli($servername, $user,
-				$password, $database);
-
-// Checking for connections
-if ($mysqli->connect_error) {
-	die('Connect Error (' .
-	$mysqli->connect_errno . ') '.
-	$mysqli->connect_error);
-}
-
-
-// SQL query to select data from database $sql = " SELECT * FROM degree, careers,student_take ";
-
-$sql = " SELECT * FROM student_take";
-$sqll= " SELECT * FROM degree,careers";
-
-$result = $mysqli->query($sql);
-$answer = $mysqli->query($sqll);
-
-
-$mysqli->close();
-
 require("php_scripts/db_connection.php");
 // query for course table
 $con = OpenCon();
-$qry = "select * from courses
-        order by Course_Num";
 
-$rs = mysqli_query($con, $qry);
+// can get all courses req
+// can get prereqs of all courses req
+// if coursesID is in prereqs, then add path(prereq, course)
+// else add path(course)
+
+// query to grab all specified course requirements
+$req_courses_qry = "select DegreeID, courses.Course_ID, Course_Name, Department, Course_Num
+                    from degree_classes_req
+                    join courses on degree_classes_req.Course_ID=courses.Course_ID
+                    where DegreeID=1
+                    order by Course_Num";
+
+$req_prereqs_qry = "select dc.Course_Name as dcName, dc.Department as dcDept, dc.Course_Num as dcNum, c.Course_Name as pName, c.Course_Num as pNum, c.Department as pDept
+                    from
+                    (select DegreeID, courses.Course_ID, Course_Name, Department, Course_Num
+                    from degree_classes_req
+                    join courses on degree_classes_req.Course_ID=courses.Course_ID
+                    where DegreeID=1) as dc
+                    join prereq as p on dc.Course_ID=p.Course_ID
+                    join courses as c on p.Prereq_ID=c.Course_ID";
+
+$rs1 = mysqli_query($con, $req_courses_qry);
+$rs2 = mysqli_query($con, $req_prereqs_qry);
 
 $size = 0;
-while($row = mysqli_fetch_array($rs, MYSQLI_ASSOC))
+while($row = mysqli_fetch_array($rs1, MYSQLI_ASSOC))
 {
-    $data[$size] = $row;
+    $rCourses[$size] = $row;
     $size++;
 }
 
-// query for graph
-$qry = "select prereq.Prereq_ID, p.Department as pdept, p.Course_Num as pnum, p.Course_Name as pname, p.Credits as pcred, 
-        prereq.Course_ID, c.Department, c.Course_Num, c.Course_Name, c.Credits
-        from prereq 
-        join courses as p on prereq.Prereq_ID=p.Course_ID
-        join courses as c on prereq.Course_ID=c.Course_ID";
-
-$rs = mysqli_query($con, $qry);
-
-$gSize = 0;
-while($row = mysqli_fetch_array($rs, MYSQLI_ASSOC))
+$size = 0;
+while($row = mysqli_fetch_array($rs2, MYSQLI_ASSOC))
 {
-    $graph[$gSize] = $row;
-    $gSize++;
+    $rPrereqs[$size] = $row;
+    $size++;
 }
+
+$i = 0;
+$min = 100;
+$max = 200;
+while($max < 600)
+// for($num = 200; $num < 600; $num += 100)
+{
+    $req_courses = "select Course_Name, Department, Course_Num
+                    from degree_classes_req
+                    join courses on degree_classes_req.Course_ID=courses.Course_ID
+                    where DegreeID=1 and Course_Num < ".$max." and Course_Num > ".$min."
+                    order by Course_Num";
+    
+    $req_prereqs = "select dc.Course_Name as dcName, dc.Department as dcDept, dc.Course_Num as dcNum, c.Course_Name as pName, c.Course_Num as pNum, c.Department as pDept
+                    from
+                    (select DegreeID, courses.Course_ID, Course_Name, Department, Course_Num
+                    from degree_classes_req
+                    join courses on degree_classes_req.Course_ID=courses.Course_ID
+                    where DegreeID=1) as dc
+                    join prereq as p on dc.Course_ID=p.Course_ID
+                    join courses as c on p.Prereq_ID=c.Course_ID
+                    where dc.Course_Num < ".$max." and dc.Course_Num > ".$min." and c.Course_Num > ".$min;
+    
+    $courses[$i] = mysqli_query($con, $req_courses);
+    $prereqs[$i] = mysqli_query($con, $req_prereqs);
+
+    $i += 1;
+    $min += 100;
+    $max += 100;
+}
+
+
+$size = 0;
+while($row = mysqli_fetch_array($courses[0], MYSQLI_ASSOC))
+{
+    $freshman_courses[$size] = $row;
+    $size++;
+}
+
+$size = 0;
+while($row = mysqli_fetch_array($prereqs[0], MYSQLI_ASSOC))
+{
+    $freshman_prereqs[$size] = $row;
+    $size++;
+}
+
+$size = 0;
+while($row = mysqli_fetch_array($courses[1], MYSQLI_ASSOC))
+{
+    $sophomore_courses[$size] = $row;
+    $size++;
+}
+
+$size = 0;
+$sophomore_prereqs = [];
+while($row = mysqli_fetch_array($prereqs[1], MYSQLI_ASSOC))
+{
+    $sophomore_prereqs[$size] = $row;
+    $size++;
+}
+if($sophomore_prereqs == null) echo "empty";
+
+
+$size = 0;
+while($row = mysqli_fetch_array($courses[2], MYSQLI_ASSOC))
+{
+    $junior_courses[$size] = $row;
+    $size++;
+}
+
+$size = 0;
+$junior_prereqs = [];
+while($row = mysqli_fetch_array($prereqs[2], MYSQLI_ASSOC))
+{
+    $junior_prereqs[$size] = $row;
+    $size++;
+}
+
+$size = 0;
+while($row = mysqli_fetch_array($courses[3], MYSQLI_ASSOC))
+{
+    $senior_courses[$size] = $row;
+    $size++;
+}
+
+$size = 0;
+$senior_prereqs = [];
+while($row = mysqli_fetch_array($prereqs[3], MYSQLI_ASSOC))
+{
+    $senior_prereqs[$size] = $row;
+    $size++;
+}
+
 CloseCon($con);
 
 ?>
@@ -81,12 +154,6 @@ CloseCon($con);
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
 
-        <!-- flowchart -->
-        <!-- <script src="https://www.cssscript.com/demo/dynamic-flow-chart-library-with-createjs-flowjs/lib/createjs-2015.05.21.min.js"></script>
-        <script src="https://www.cssscript.com/demo/dynamic-flow-chart-library-with-createjs-flowjs/src/flow.js"></script>
-        <script src="https://www.cssscript.com/demo/dynamic-flow-chart-library-with-createjs-flowjs/src/flowitem.js"></script>
-        <script src="https://www.cssscript.com/demo/dynamic-flow-chart-library-with-createjs-flowjs/src/flowconnector.js"></script> -->
-
         <!-- the following script will make graph work on Riley's comp -->
         <!-- <script type="text/javascript" src="flowjs-master/lib/createjs-2015.05.21.min.js"></script>
         <script type="text/javascript" src="flowjs-master/flow.min.js"></script> -->
@@ -99,34 +166,6 @@ CloseCon($con);
             body {
                 background-color: white;
             }
-			
-			 @media only screen and (max-width:800px) {
-            #no-more-tables tbody,
-            #no-more-tables tr,
-            #no-more-tables td {
-                display: block;
-            }
-            #no-more-tables thead tr {
-                position: absolute;
-                top: -9999px;
-                left: -9999px;
-            }
-            #no-more-tables td {
-                position: relative;
-                padding-left: 50%;
-                border: none;
-                border-bottom: 1px solid #eee;
-            }
-            #no-more-tables td:before {
-                content: attr(data-title);
-                position: absolute;
-                left: 6px;
-                font-weight: bold;
-            }
-            #no-more-tables tr {
-                border-bottom: 1px solid #ccc;
-            }
-        }
         </style>
     </head>
 
@@ -150,21 +189,64 @@ CloseCon($con);
             <a href="degree_overview.php">Back to Degree Overview</a>
         </div>
         
+        <div class="container-fluid" style="width:80%">
+            <div class="card my-card shadow p-3 mb-5 bg-white rounded">
+                <div class="card-body">
+                    <div> <h2>Four Year Plan</h2> </div>
+                        <canvas id="allyears" width="1200" height="600"></canvas>
+                </div>
+            </div>
+        </div>
 
         <div class="container-fluid" style="width:80%">
             <div class="card my-card shadow p-3 mb-5 bg-white rounded">
                 <div class="card-body">
-                    <div class="row">
+                    <!-- <div class="row"> -->
                         <div> <h2>Freshman Year</h2> </div>
+                            <canvas id="freshman" width="1200" height="300"></canvas>
+                    <!-- </div> -->
+
+                    <div class="row">
+                        <div> <h2>Sophomore Year</h2> </div>
                         <div class="col-md-6">
                             <h4> Fall</h4>
-                            <canvas id="ffall" width="500" height="300">
+                            <canvas id="sfall" width="500" height="300">
                             </canvas>
                         </div>
 
                         <div class="col-md-6">
                             <h4> Spring</h4>
-                            <canvas id="fspring" width="500" height="300">
+                            <canvas id="sspring" width="500" height="300">
+                            </canvas>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div> <h2>Junior Year</h2> </div>
+                        <div class="col-md-6">
+                            <h4> Fall</h4>
+                            <canvas id="jfall" width="500" height="300">
+                            </canvas>
+                        </div>
+
+                        <div class="col-md-6">
+                            <h4> Spring</h4>
+                            <canvas id="jspring" width="500" height="300">
+                            </canvas>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div> <h2>Senior Year</h2> </div>
+                        <div class="col-md-6">
+                            <h4> Fall</h4>
+                            <canvas id="srfall" width="500" height="300">
+                            </canvas>
+                        </div>
+
+                        <div class="col-md-6">
+                            <h4> Spring</h4>
+                            <canvas id="srspring" width="500" height="300">
                             </canvas>
                         </div>
                     </div>
@@ -189,30 +271,115 @@ CloseCon($con);
 </script>
 
 <script>
-    // query for each class
-    //
-    // query what that class is a prereq of
-    // start building chart
-
-    // var e = [
-    //     [{id: "CS 121", next: ["CS 210", "CS 240", "CS 270"]}], //{id: "z1", empty: true, next: undefined}, {id: "z1", empty: true, next: undefined}],
-    //     [{id: "CS 210", next: ["CS 383"]}, {id: "CS 240", next: ["CS 383"]},  {id: "CS 270", next: ["CS 383"]}],
-    //     [{id: "CS 383", next: undefined}]//, {id: "Software Engineering", next: undefined}, {{id: "z3", empty: true, next: undefined}],
-    // ];
-
-    // new flowjs("demo", d).draw();
-    // new flowjs("demo", e).draw();
-
-    var passedArray = <?php echo json_encode($graph); ?>;
+    // $courses $prereqs
+    var courseArray = <?php echo json_encode($freshman_courses); ?>;
+    var prereqArray = <?php echo json_encode($freshman_prereqs); ?>;
 
     var g = new flowjs.DiGraph();
-    for(i=0; i<passedArray.length; i++)
+    
+    i=0;
+    for(i=0; i<courseArray.length; i++)
     {
-        g.addPaths([
-            [passedArray[i]['pnum'], passedArray[i]['Course_Num']]
+        g.addPaths([ [courseArray[i]['Department'] + courseArray[i]['Course_Num']] ]);
+    }
+    
+    if(prereqArray != undefined)
+    {
+        for(i=0; i<prereqArray.length; i++)
+        {
+            g.addPaths([
+                [prereqArray[i]['pDept'] + prereqArray[i]['pNum'], prereqArray[i]['dcDept'] + prereqArray[i]['dcNum'], "Sophomore"]
+            ]);
+        }
+    }
+
+    var courseArray = <?php echo json_encode($sophomore_courses); ?>;
+    var prereqArray = <?php echo json_encode($sophomore_prereqs); ?>;
+    
+    if(prereqArray.length > 0)
+    {
+        g.addPaths([ [ "testing2"] ]);
+        for(i=0; i<prereqArray.length; i++)
+        {
+            g.addPaths([
+                [ "Sophomore", prereqArray[i]['pDept'] + prereqArray[i]['pNum'], prereqArray[i]['dcDept'] + prereqArray[i]['dcNum'], "Junior"]
+            ]);
+        }
+    }
+    else
+    {
+        for(i=0; i<courseArray.length; i++)
+        {
+            g.addPaths([ [ "Sophomore", courseArray[i]['Department'] + courseArray[i]['Course_Num'], "Junior"] ]);
+        }
+    }
+
+    var courseArray = <?php echo json_encode($junior_courses); ?>;
+    var prereqArray = <?php echo json_encode($junior_prereqs); ?>;
+    
+    if(prereqArray.length > 0)
+    {
+        for(i=0; i<prereqArray.length; i++)
+        {
+            g.addPaths([
+                [ "Junior", prereqArray[i]['pDept'] + prereqArray[i]['pNum'], prereqArray[i]['dcDept'] + prereqArray[i]['dcNum'], "Senior"]
+            ]);
+        }
+        for(i=0; i<courseArray.length; i++)
+        {
+            if(g.getNode(courseArray[i]['Department'] + courseArray[i]['Course_Num']) == null)
+            {
+                g.addPaths([ [ "Junior", courseArray[i]['Department'] + courseArray[i]['Course_Num'], "Senior"] ]);
+            }
+        }
+    }
+    else
+    {
+        for(i=0; i<courseArray.length; i++)
+        {
+            g.addPaths([ [ "Junior", courseArray[i]['Department'] + courseArray[i]['Course_Num'], "Senior"] ]);
+        }
+    }
+
+    var courseArray = <?php echo json_encode($senior_courses); ?>;
+    var prereqArray = <?php echo json_encode($senior_prereqs); ?>;
+    
+    if(prereqArray.length > 0)
+    {
+        g.addPaths([ [ "testing2"] ]);
+        for(i=0; i<prereqArray.length; i++)
+        {
+            g.addPaths([
+                [ "Senior", prereqArray[i]['pDept'] + prereqArray[i]['pNum'], prereqArray[i]['dcDept'] + prereqArray[i]['dcNum']]
+            ]);
+        }
+    }
+    else
+    {
+        for(i=0; i<courseArray.length; i++)
+        {
+            g.addPaths([ [ "Senior", courseArray[i]['Department'] + courseArray[i]['Course_Num']] ]);
+        }
+    }
+    
+
+    new flowjs.DiFlowChart("freshman", g).draw();
+
+    // all courses with no breakup
+    var courseArray = <?php echo json_encode($rCourses); ?>;
+    var prereqArray = <?php echo json_encode($rPrereqs); ?>;
+    var a = new flowjs.DiGraph();
+    for(i=0; i<courseArray.length; i++)
+    {
+        a.addPaths([ [courseArray[i]['Department'] + courseArray[i]['Course_Num']] ]);
+    }
+    for(i=0; i<prereqArray.length; i++)
+    {
+        a.addPaths([
+            [prereqArray[i]['pDept'] + prereqArray[i]['pNum'], prereqArray[i]['dcDept'] + prereqArray[i]['dcNum']]
         ]);
     }
-    new flowjs.DiFlowChart("ffall", g).draw();
-
+    
+    new flowjs.DiFlowChart("allyears", a).draw();
 
 </script>

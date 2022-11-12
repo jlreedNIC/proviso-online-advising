@@ -88,8 +88,8 @@ CloseCon($con);
         <script src="https://www.cssscript.com/demo/dynamic-flow-chart-library-with-createjs-flowjs/src/flowconnector.js"></script> -->
 
         <!-- the following script will make graph work on Riley's comp -->
-        <!--<script type="text/javascript" src="flowjs-master/lib/createjs-2015.05.21.min.js"></script>
-        <script type="text/javascript" src="flowjs-master/flow.min.js"></script> -->
+        <script type="text/javascript" src="flowjs-master/lib/createjs-2015.05.21.min.js"></script>
+        <script type="text/javascript" src="flowjs-master/flow.min.js"></script>
 
         <!-- the following script will make graph work on Jordan's comp -->
         <script type="text/javascript" src="flowjs/lib/createjs-2015.05.21.min.js"></script>
@@ -241,7 +241,7 @@ CloseCon($con);
                     <h2> Full Degree</h2>
                     <canvas id="demo" width="100" height="50"></canvas>
         
-                    <iframe src="gojs/release/DM.html" height="800" width="1000" title="Iframe Example"></iframe>
+                    <iframe src="gojs/release/DM.html"  height="800" style="width:100%" title="Iframe Example"></iframe>
                 </div>
             </div>
         </div>

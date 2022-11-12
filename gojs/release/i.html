@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>University Departments and Colleges Chart | MindFusion JavaScript Diagram</title>
+
+<script src="go-debug.js"></script>
+<script src="https://unpkg.com/gojs/release/go-debug.js"></script>
+<script>
+
+function init(){
+const myDiagram =
+  new go.Diagram("myDiagramDiv",
+    { // enable Ctrl-Z to undo and Ctrl-Y to redo
+      "undoManager.isEnabled": true
+    });
+
+// define a simple Node template
+myDiagram.nodeTemplate =
+  new go.Node("Horizontal",
+    // the entire node will have a light-blue background
+    { background: "#44CCFF" })
+    .add(new go.Picture(
+        // Pictures should normally have an explicit width and height.
+        // This picture has a red background, only visible when there is no source set
+        // or when the image is partially transparent.
+        { margin: 10, width: 50, height: 50, background: "red" })
+        // Picture.source is data bound to the "source" attribute of the model data
+        .bind("source"))
+    .add(new go.TextBlock(
+        "Default Text",  // the initial value for TextBlock.text
+        // some room around the text, a larger font, and a white stroke:
+        { margin: 12, stroke: "white", font: "bold 16px sans-serif" })
+        // TextBlock.text is data bound to the "name" property of the model data
+        .bind("text", "name"));
+
+myDiagram.model = new go.Model(
+  [ // note that each node data object holds whatever properties it needs;
+    // for this app we add the "name" and "source" properties
+    // because in our template above, we have defined bindings to expect them
+    { name: "Don Meow", source: "cat1.png" },
+    { name: "Copricat", source: "cat2.png" },
+    { name: "Demeter",  source: "cat3.png" },
+    { /* Empty node data, to show a node with no values from bindings */ }
+  ]);
+  
+  }
+</script> 
+
+</head>
+
+<body onload = "init()">
+
+
+<div id="myDiagramDiv"
+     style="width:600px; height:600px; background-color: #DAE4E4;"></div>
+</body>
+</html>

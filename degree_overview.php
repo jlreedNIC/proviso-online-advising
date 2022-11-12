@@ -88,7 +88,7 @@ CloseCon($con);
         <script src="https://www.cssscript.com/demo/dynamic-flow-chart-library-with-createjs-flowjs/src/flowconnector.js"></script> -->
 
         <!-- the following script will make graph work on Riley's comp -->
-        <!-- <script type="text/javascript" src="flowjs-master/lib/createjs-2015.05.21.min.js"></script>
+        <!--<script type="text/javascript" src="flowjs-master/lib/createjs-2015.05.21.min.js"></script>
         <script type="text/javascript" src="flowjs-master/flow.min.js"></script> -->
 
         <!-- the following script will make graph work on Jordan's comp -->
@@ -239,9 +239,9 @@ CloseCon($con);
             <div class="card my-card shadow p-3 mb-5 bg-white rounded">
                 <div class="card-body">
                     <h2> Full Degree</h2>
-                    <canvas id="demo" width="500" height="100"></canvas>
+                    <canvas id="demo" width="100" height="50"></canvas>
         
-                    <iframe src="jquery/dog.html" height="400" width="1000" title="Iframe Example"></iframe>
+                    <iframe src="gojs/release/DM.html" height="800" width="1000" title="Iframe Example"></iframe>
                 </div>
             </div>
         </div>

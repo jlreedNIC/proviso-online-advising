@@ -176,12 +176,12 @@ CloseCon($con);
                     <div class="row">
                         <div class="col-md-6">
                             Legend:
-                            <i class="fa fa-square-o" aria-hidden="true"></i> Not Completed
+                            <!--<i class="fa fa-square-o" aria-hidden="true"></i> Not Completed -->
                             <i class="fa fa-check-square-o" aria-hidden="true"></i> Completed
-                            <i class="fa fa-plus-square-o" aria-hidden="true"></i> Added by Career Goal
+                            <!--<i class="fa fa-plus-square-o" aria-hidden="true"></i> Added by Career Goal -->
                         </div>
                         <div class="col-md-6" style="text-align: right">
-                            <a href="suggested_course_plan.php">Suggested Course Plan</a>
+                          <h3>  <a href="suggested_course_plan.php">Suggested Course Plan</a></h3>
                         </div>
                     </div>
 						
@@ -208,7 +208,7 @@ CloseCon($con);
                                 <td><?php echo $data[$i]['Course_Name']." (".$data[$i]['Credits'].")";?></td>
                                 <td>
                                     <span class="badge badge-info" style="background-color:black">
-                                        <?php echo 'skills';?>
+                                    <?php echo $data[$i]['Skill']?>
                                     </span>
                                 </td>
 

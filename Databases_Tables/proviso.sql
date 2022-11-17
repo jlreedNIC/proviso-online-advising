@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 12, 2022 at 09:23 AM
+-- Generation Time: Nov 18, 2022 at 12:32 AM
 -- Server version: 10.4.24-MariaDB
--- PHP Version: 8.0.19
+-- PHP Version: 8.1.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -53,31 +53,32 @@ CREATE TABLE `courses` (
   `Course_Name` text NOT NULL,
   `Course_Num` int(11) NOT NULL,
   `Department` text NOT NULL,
-  `Credits` int(11) NOT NULL
+  `Credits` int(11) NOT NULL,
+  `Skill` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `courses`
 --
 
-INSERT INTO `courses` (`Course_ID`, `Course_Name`, `Course_Num`, `Department`, `Credits`) VALUES
-(1, 'Software Engineering', 383, 'CS', 4),
-(2, 'Computer Science I', 120, 'CS', 4),
-(3, 'Computer Science II', 121, 'CS', 3),
-(4, 'Computer Organization and Architecture', 150, 'CS', 3),
-(5, 'Programming Languages', 210, 'CS', 3),
-(6, 'Computer Operating Systems', 240, 'CS', 3),
-(7, 'System Software', 270, 'CS', 3),
-(8, 'Database Systems', 360, 'CS', 4),
-(9, 'Theory of Computation', 385, 'CS', 3),
-(10, 'Compiler Design', 445, 'CS', 4),
-(11, 'Calculus I', 170, 'MATH', 4),
-(12, 'Calculus II', 175, 'MATH', 4),
-(13, 'Discrete Mathematics', 176, 'MATH', 3),
-(14, 'Linear Algebra', 330, 'MATH', 3),
-(15, 'Probability and Statistics', 301, 'STAT', 3),
-(16, 'Organisms and Environments', 114, 'BIOL', 4),
-(17, 'General Chemistry I', 111, 'CHEM', 4);
+INSERT INTO `courses` (`Course_ID`, `Course_Name`, `Course_Num`, `Department`, `Credits`, `Skill`) VALUES
+(1, 'Software Engineering', 383, 'CS', 4, 'C'),
+(2, 'Computer Science I', 120, 'CS', 4, 'C++'),
+(3, 'Computer Science II', 121, 'CS', 3, 'C++'),
+(4, 'Computer Organization and Architecture', 150, 'CS', 3, 'C++'),
+(5, 'Programming Languages', 210, 'CS', 3, 'C'),
+(6, 'Computer Operating Systems', 240, 'CS', 3, 'C'),
+(7, 'System Software', 270, 'CS', 3, 'C'),
+(8, 'Database Systems', 360, 'CS', 4, 'MYSQL/HTML'),
+(9, 'Theory of Computation', 385, 'CS', 3, ''),
+(10, 'Compiler Design', 445, 'CS', 4, 'C'),
+(11, 'Calculus I', 170, 'MATH', 4, ''),
+(12, 'Calculus II', 175, 'MATH', 4, ''),
+(13, 'Discrete Mathematics', 176, 'MATH', 3, ''),
+(14, 'Linear Algebra', 330, 'MATH', 3, ''),
+(15, 'Probability and Statistics', 301, 'STAT', 3, ''),
+(16, 'Organisms and Environments', 114, 'BIOL', 4, ''),
+(17, 'General Chemistry I', 111, 'CHEM', 4, '');
 
 -- --------------------------------------------------------
 
@@ -96,7 +97,6 @@ CREATE TABLE `degree` (
 --
 
 INSERT INTO `degree` (`Degree_ID`, `Name`, `Description`) VALUES
-(1, 'Bachelors of Computer Science', 'This program prepares you to design, develop and test computing systems for a variety of purposes. Become proficient in various operating systems, programming languages and techniques and computer architecture with many opportunities to practice your skills on real-world projects. Students may specialize in the area that best supports their interests and goals.'),
 (1, 'Bachelors of Computer Science', 'This program prepares you to design, develop and test computing systems for a variety of purposes. Become proficient in various operating systems, programming languages and techniques and computer architecture with many opportunities to practice your skills on real-world projects. Students may specialize in the area that best supports their interests and goals.');
 
 -- --------------------------------------------------------
@@ -551,30 +551,30 @@ ALTER TABLE `students`
 -- Constraints for table `degree_category_accepted_courses`
 --
 ALTER TABLE `degree_category_accepted_courses`
-  ADD CONSTRAINT `degree_category_accepted_courses_ibfk_1` FOREIGN KEY (`DegreeID`) REFERENCES `degrees` (`degreeID`),
-  ADD CONSTRAINT `degree_category_accepted_courses_ibfk_2` FOREIGN KEY (`CategoryID`) REFERENCES `degree_categories` (`categoryID`),
+  ADD CONSTRAINT `degree_category_accepted_courses_ibfk_1` FOREIGN KEY (`DegreeID`) REFERENCES `degrees` (`DegreeID`),
+  ADD CONSTRAINT `degree_category_accepted_courses_ibfk_2` FOREIGN KEY (`CategoryID`) REFERENCES `degree_categories` (`CategoryID`),
   ADD CONSTRAINT `degree_category_accepted_courses_ibfk_3` FOREIGN KEY (`Accepted_Courses`) REFERENCES `courses` (`Course_ID`);
 
 --
 -- Constraints for table `degree_category_req`
 --
 ALTER TABLE `degree_category_req`
-  ADD CONSTRAINT `degree_category_req_ibfk_1` FOREIGN KEY (`CategoryID`) REFERENCES `degree_categories` (`categoryID`),
-  ADD CONSTRAINT `degree_category_req_ibfk_2` FOREIGN KEY (`DegreeID`) REFERENCES `degrees` (`degreeID`);
+  ADD CONSTRAINT `degree_category_req_ibfk_1` FOREIGN KEY (`CategoryID`) REFERENCES `degree_categories` (`CategoryID`),
+  ADD CONSTRAINT `degree_category_req_ibfk_2` FOREIGN KEY (`DegreeID`) REFERENCES `degrees` (`DegreeID`);
 
 --
 -- Constraints for table `degree_classes_req`
 --
 ALTER TABLE `degree_classes_req`
   ADD CONSTRAINT `course foreign key` FOREIGN KEY (`Course_ID`) REFERENCES `courses` (`Course_ID`),
-  ADD CONSTRAINT `degree foreign key` FOREIGN KEY (`DegreeID`) REFERENCES `degrees` (`degreeID`);
+  ADD CONSTRAINT `degree foreign key` FOREIGN KEY (`DegreeID`) REFERENCES `degrees` (`DegreeID`);
 
 --
 -- Constraints for table `degree_min_grade_req`
 --
 ALTER TABLE `degree_min_grade_req`
   ADD CONSTRAINT `degree_min_grade_req_ibfk_1` FOREIGN KEY (`Course_ID`) REFERENCES `courses` (`Course_ID`),
-  ADD CONSTRAINT `degree_min_grade_req_ibfk_2` FOREIGN KEY (`DegreeID`) REFERENCES `degrees` (`degreeID`);
+  ADD CONSTRAINT `degree_min_grade_req_ibfk_2` FOREIGN KEY (`DegreeID`) REFERENCES `degrees` (`DegreeID`);
 
 --
 -- Constraints for table `prereq`

@@ -56,7 +56,7 @@ $mysqli->close();
   background-color: #ffd700;
   color: black;
   padding: 14px 20px;
-  margin: 8px 300px;
+  margin: 8px 400px;
   border-radius: 25px;
   border: 4px round black;
   cursor: pointer;
@@ -154,7 +154,7 @@ button:hover {
 	
         <header style="padding:80px; text-align: center;">
             <h1>
-            Bachelors of Computer Science
+            Job Descriptions in BSCS
             </h1>
             <hr style="border: 1px solid black;">
         </header>

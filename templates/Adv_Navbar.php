@@ -20,7 +20,7 @@ function Navbar($location)
             <a href="Adv_suggested.php" class=" <?php if($location == "Suggested") echo "active" ?> nav-item nav-link my-nav-item" >Student Degree</a>
             <a href="Adv_JobD.php" class=" <?php if($location == "Job_Descriptions") echo "active" ?> nav-item nav-link my-nav-item ">Job Description</a>
             <a href="#" class="nav-item nav-link my-nav-item disabled">Course outcomes</a>
-            <a href="sign_up.html" class="nav-item nav-link my-nav-item">Register</a>
+            <a href="Adv_sign_up.php" class="nav-item nav-link my-nav-item">Register</a>
 			<a href="#" class=" <?php if($location == "sign_up") echo "active" ?> nav-item nav-link my-nav-item">Logout</a>
         </div>
     </div>

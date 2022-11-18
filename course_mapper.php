@@ -3,7 +3,9 @@
 require("php_scripts/db_connection.php");
 // query for course table
 $con = OpenCon();
-$qry = "select Position_Name, Company, Pay, Des, firstName, lastName
+
+// get current career choice of student
+$qry = "SELECT Position_Name, Company, Pay, Des, firstName, lastName
         from user_career 
         join careers on user_career.Career_ID=careers.CareerID
         join students on students.userID=user_career.User_ID
@@ -18,6 +20,7 @@ while($row = mysqli_fetch_array($rs, MYSQLI_ASSOC))
     $size++;
 }
 
+// select skills required by career
 $qry = "select Skill_Name
         from user_career
         join careers_req_skills on user_career.Career_ID=careers_req_skills.Career_ID
@@ -31,6 +34,52 @@ while($row = mysqli_fetch_array($rs, MYSQLI_ASSOC))
 {
     $skills[$size] = $row;
     $size++;
+}
+
+// select courses and relevant skills to map skills to career
+$qry = "SELECT courses.Course_Name, courses.Course_Num, courses.Department, courses.Credits, skills.Skill_Name
+        from user_career
+        join careers_req_skills on careers_req_skills.Career_ID=user_career.Career_ID
+        join course_skills on careers_req_skills.Skill_ID=course_skills.Skill_ID
+        join courses on courses.Course_ID=course_skills.Course_ID
+        join skills on course_skills.Skill_ID=skills.Skill_ID
+        where user_career.User_Career_ID=1";
+
+$rs = mysqli_query($con, $qry);
+
+$size = 0;
+while($row = mysqli_fetch_array($rs, MYSQLI_ASSOC))
+{
+    $courses[$size] = $row;
+    $size++;
+}
+
+// put courses into array with associated skills in list in array
+// push first course and skill
+$temp[0]['Course_Name'] = $courses[0]['Course_Name'];
+$temp[0]['Course_Num'] = $courses[0]['Course_Num'];
+$temp[0]['Department'] = $courses[0]['Department'];
+$temp[0]['Credits'] = $courses[0]['Credits'];
+$temp[0]['Skills'] = [$courses[0]['Skill_Name']];
+
+$j = 0;
+for($i=1; $i<$size; $i++)
+{
+    if($courses[$i]['Course_Name'] != $courses[$i-1]['Course_Name'])
+    {
+        $j++;
+        $temp[$j]['Course_Name'] = $courses[$i]['Course_Name'];
+        $temp[$j]['Course_Num'] = $courses[$i]['Course_Num'];
+        $temp[$j]['Department'] = $courses[$i]['Department'];
+        $temp[$j]['Credits'] = $courses[$i]['Credits'];
+        $temp[$j]['Skills'] = array();
+        array_push($temp[$j]['Skills'], $courses[$i]['Skill_Name']);
+        
+    }
+    else
+    {
+        array_push($temp[$j]['Skills'], $courses[$i]['Skill_Name']);
+    }
 }
 
 CloseCon($con);
@@ -105,23 +154,23 @@ CloseCon($con);
             <hr style="border: 1px solid black;">
         </header>
         
-        
+        <!-- job info  -->
         <div class="container-fluid" style="width:80%">
             <a href="#"> Change Career Goal</a>
             <div class="card my-card shadow p-3 mb-5 bg-white rounded">
                 <div class="card-body">
-                    <h2><?php echo $data[0]['Position_Name'];?></h2>
+                    <h2><?php echo $data[0]['Position_Name']." - ".$data[0]['Company'];?></h2>
                 </div>
 
                 <div class="card-body">
                     <p>
-                        Company: <?php echo $data[0]['Company'];?><br>
-                        Pay: <?php echo $data[0]['Pay'];?>
+                        Estimated Annual Salary: <?php echo $data[0]['Pay'];?>
                     </p>
                 </div>
             </div>
         </div>
 
+        <!-- job requirements and skills  -->
         <div class="container-fluid" style="width:80%">
             <div class="card my-card shadow p-3 mb-5 bg-white rounded">
                 <div class="card-body">
@@ -149,7 +198,7 @@ CloseCon($con);
 
                                 <div class="card-body">
                                     <?php 
-                                    for($i=0; $i<$size; $i++)
+                                    for($i=0; $i<count($skills); $i++)
                                     {
                                         ?>
 
@@ -168,18 +217,14 @@ CloseCon($con);
             </div>
         </div>
 
+        <!-- recommended courses  -->
         <div class="container-fluid" style="width: 80%">
             <div class="card my-card shadow p-3 mb-5 bg-white rounded">
                 <div class="card-body">
-                    <h2>Job Requirements</h2>
+                    <h2>Recommended Courses from Skills</h2>
                     <div class="row">
-                        <div class="col-md-6">
-                            Legend:
-                            <i class="fa fa-square-o" aria-hidden="true"></i> Not Completed
-                            <i class="fa fa-check-square-o" aria-hidden="true"></i> Completed
-                            <i class="fa fa-plus-square-o" aria-hidden="true"></i> Added by Career Goal
-                        </div>
-                        <div class="col-md-6" style="text-align: right">
+                        
+                        <div  style="text-align: right">
                             <a href="suggested_course_plan.php">Suggested Course Plan</a>
                         </div>
                     </div>
@@ -198,17 +243,27 @@ CloseCon($con);
                             <?php
                                 // LOOP TILL END OF DATA
                                 // while($rows=$result->fetch_assoc())
-                                for($i=0; $i<$size; $i++)
+                                for($i=0; $i<count($temp); $i++)
                                 {
 			                ?>
                             <tr>
                                 <td><i class="fa fa-check-square-o" aria-hidden="true"></i></td>
-                                <td><?php echo $data[$i]['Department']." ".$data[$i]['Course_Num'];?></td>
-                                <td><?php echo $data[$i]['Course_Name']." (".$data[$i]['Credits'].")";?></td>
+                                <td><?php echo $temp[$i]['Department']." ".$temp[$i]['Course_Num'];?></td>
+                                <td><?php echo $temp[$i]['Course_Name']." (".$temp[$i]['Credits'].")";?></td>
                                 <td>
-                                    <span class="badge badge-info" style="background-color:black">
-                                        <?php echo 'skills';?>
-                                    </span>
+                                    <?php
+                                    for($j=0; $j<count($temp[$i]['Skills']); $j++)
+                                    {
+                                        ?>
+
+                                        <span class="badge badge-info" style="background-color:black">
+                                        <?php echo $temp[$i]['Skills'][$j]; ?>
+                                        </span>
+
+                                        <?php
+                                    }
+                                    ?>
+
                                 </td>
 
                             </tr>

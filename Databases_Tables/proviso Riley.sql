@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 19, 2022 at 01:17 AM
+-- Generation Time: Nov 19, 2022 at 07:08 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -76,31 +76,32 @@ CREATE TABLE `courses` (
   `Course_Name` text NOT NULL,
   `Course_Num` int(11) NOT NULL,
   `Department` text NOT NULL,
-  `Credits` int(11) NOT NULL
+  `Credits` int(11) NOT NULL,
+  `Skill` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `courses`
 --
 
-INSERT INTO `courses` (`Course_ID`, `Course_Name`, `Course_Num`, `Department`, `Credits`) VALUES
-(1, 'Software Engineering', 383, 'CS', 4),
-(2, 'Computer Science I', 120, 'CS', 4),
-(3, 'Computer Science II', 121, 'CS', 3),
-(4, 'Computer Organization and Architecture', 150, 'CS', 3),
-(5, 'Programming Languages', 210, 'CS', 3),
-(6, 'Computer Operating Systems', 240, 'CS', 3),
-(7, 'System Software', 270, 'CS', 3),
-(8, 'Database Systems', 360, 'CS', 4),
-(9, 'Theory of Computation', 385, 'CS', 3),
-(10, 'Compiler Design', 445, 'CS', 4),
-(11, 'Calculus I', 170, 'MATH', 4),
-(12, 'Calculus II', 175, 'MATH', 4),
-(13, 'Discrete Mathematics', 176, 'MATH', 3),
-(14, 'Linear Algebra', 330, 'MATH', 3),
-(15, 'Probability and Statistics', 301, 'STAT', 3),
-(16, 'Organisms and Environments', 114, 'BIOL', 4),
-(17, 'General Chemistry I', 111, 'CHEM', 4);
+INSERT INTO `courses` (`Course_ID`, `Course_Name`, `Course_Num`, `Department`, `Credits`, `Skill`) VALUES
+(1, 'Software Engineering', 383, 'CS', 4, 'C#'),
+(2, 'Computer Science I', 120, 'CS', 4, 'C++'),
+(3, 'Computer Science II', 121, 'CS', 3, 'C++'),
+(4, 'Computer Organization and Architecture', 150, 'CS', 3, 'C++'),
+(5, 'Programming Languages', 210, 'CS', 3, 'C'),
+(6, 'Computer Operating Systems', 240, 'CS', 3, 'C'),
+(7, 'System Software', 270, 'CS', 3, 'C'),
+(8, 'Database Systems', 360, 'CS', 4, 'MYSQL'),
+(9, 'Theory of Computation', 385, 'CS', 3, ''),
+(10, 'Compiler Design', 445, 'CS', 4, 'C'),
+(11, 'Calculus I', 170, 'MATH', 4, ''),
+(12, 'Calculus II', 175, 'MATH', 4, ''),
+(13, 'Discrete Mathematics', 176, 'MATH', 3, ''),
+(14, 'Linear Algebra', 330, 'MATH', 3, ''),
+(15, 'Probability and Statistics', 301, 'STAT', 3, ''),
+(16, 'Organisms and Environments', 114, 'BIOL', 4, ''),
+(17, 'General Chemistry I', 111, 'CHEM', 4, '');
 
 -- --------------------------------------------------------
 
@@ -132,18 +133,19 @@ INSERT INTO `course_skills` (`Course_Skill_ID`, `Course_ID`, `Skill_ID`) VALUES
 --
 
 CREATE TABLE `degree` (
-  `Degree_ID` int(11) NOT NULL,
-  `Name` text NOT NULL,
-  `Description` text NOT NULL
+  `DegreeID` int(11) NOT NULL,
+  `Name` varchar(100) NOT NULL,
+  `Degree_Level` varchar(100) NOT NULL,
+  `Degree_Type` varchar(100) NOT NULL,
+  `Description` varchar(383) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `degree`
 --
 
-INSERT INTO `degree` (`Degree_ID`, `Name`, `Description`) VALUES
-(1, 'Bachelors of Computer Science', 'This program prepares you to design, develop and test computing systems for a variety of purposes. Become proficient in various operating systems, programming languages and techniques and computer architecture with many opportunities to practice your skills on real-world projects. Students may specialize in the area that best supports their interests and goals.'),
-(1, 'Bachelors of Computer Science', 'This program prepares you to design, develop and test computing systems for a variety of purposes. Become proficient in various operating systems, programming languages and techniques and computer architecture with many opportunities to practice your skills on real-world projects. Students may specialize in the area that best supports their interests and goals.');
+INSERT INTO `degree` (`DegreeID`, `Name`, `Degree_Level`, `Degree_Type`, `Description`) VALUES
+(1, 'Computer Science', 'bachelor', 'B.S.', 'This program prepares you to design, develop and test computing systems for a variety of purposes. Become proficient in various operating systems, programming languages and techniques and computer architecture with many opportunities to practice your skills on real-world projects. Students may specialize in the area that best supports their interests and goals.');
 
 -- --------------------------------------------------------
 
@@ -515,6 +517,13 @@ ALTER TABLE `course_skills`
   ADD KEY `Skill_ID` (`Skill_ID`);
 
 --
+-- Indexes for table `degree`
+--
+ALTER TABLE `degree`
+  ADD PRIMARY KEY (`DegreeID`),
+  ADD UNIQUE KEY `degree_name` (`Name`);
+
+--
 -- Indexes for table `degrees`
 --
 ALTER TABLE `degrees`
@@ -623,6 +632,12 @@ ALTER TABLE `courses`
 --
 ALTER TABLE `course_skills`
   MODIFY `Course_Skill_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `degree`
+--
+ALTER TABLE `degree`
+  MODIFY `DegreeID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `degrees`

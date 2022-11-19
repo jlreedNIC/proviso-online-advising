@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 19, 2022 at 07:08 PM
+-- Generation Time: Nov 19, 2022 at 07:24 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -370,6 +370,29 @@ INSERT INTO `job1` (`CareerID`, `Company`, `Pay`, `Pos2`, `Pos3`, `Des2`, `Des3`
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `job1_skills`
+--
+
+CREATE TABLE `job1_skills` (
+  `Skill_ID` int(11) NOT NULL,
+  `Skill_Name` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `job1_skills`
+--
+
+INSERT INTO `job1_skills` (`Skill_ID`, `Skill_Name`) VALUES
+(1, 'C'),
+(2, 'C++'),
+(3, 'C#'),
+(4, 'Python'),
+(5, 'Java'),
+(6, 'Bachelors in computer science');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `prereq`
 --
 
@@ -577,6 +600,12 @@ ALTER TABLE `job1`
   ADD PRIMARY KEY (`CareerID`);
 
 --
+-- Indexes for table `job1_skills`
+--
+ALTER TABLE `job1_skills`
+  ADD PRIMARY KEY (`Skill_ID`);
+
+--
 -- Indexes for table `prereq`
 --
 ALTER TABLE `prereq`
@@ -680,6 +709,12 @@ ALTER TABLE `degree_min_grade_req`
 --
 ALTER TABLE `job1`
   MODIFY `CareerID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `job1_skills`
+--
+ALTER TABLE `job1_skills`
+  MODIFY `Skill_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `prereq`

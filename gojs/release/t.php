@@ -41,7 +41,7 @@ array_push($data, $row);
 
 
 //-----query 2----- skills table
-$my = $mysqli->query("SELECT * FROM skills");
+$my = $mysqli->query("SELECT * FROM job1_skills");
 $dataa = array();
 
 while ($resultt = $my->fetch_assoc())
@@ -92,7 +92,7 @@ array_push($data3, $row6);
 
 
 //----query 4---- all tables for linking to array. 
-$my = $mysqli->query("SELECT * FROM careers,skills,job1");
+$my = $mysqli->query("SELECT * FROM careers,job1_skills,job1");
 $dat = array();
 
 while ($res = $my->fetch_assoc())
@@ -176,7 +176,7 @@ function goIntro(){
 	 new go.Binding("fill", "color")),
 	 
 	 $(go.TextBlock,
-	 { margin: 15 },
+	 { margin: 10 },
 	 
 	 new go.Binding("text", "key"))
 	 ); 

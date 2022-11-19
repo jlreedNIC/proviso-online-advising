@@ -79,7 +79,7 @@ $mysqli->close();
 
 
 			?>
-                    <h2>Career Goal</h2> <span style="font-size: x-large"><?php echo $rows['Position_Name'];?> </span><br>
+                    <h2>Career Goal:</h2> <span style="font-size: x-large"><?php echo $rows['Position_Name'];?> </span><br>
               <?php
 				}
 			?>
@@ -127,14 +127,27 @@ $mysqli->close();
                 </div>
             </div>
         </div>
+        <div class="container-fluid" style="width:80%">
+            <div class="card my-card shadow p-3 mb-5 bg-white rounded">
+                <div class="card-body">
+                    <h2> Career Graph</h2>
+                    <canvas id="demo" width="100" height="50"></canvas>
+        
+                    <iframe src="gojs/release/t.php"  height="800" style="width:100%" title="Iframe Example"></iframe>
+                </div>
+            </div>
+        </div>
+    
 
+
+        <!--
         <div class="container-fluid" style="width: 80%">
             Skills needed: $skills
         </div>
 
         <div class="container-fluid" style="width: 80%">
             Courses Recommended based on skills needed: $recommendations
-        </div>
+        </div> -->
 		
 		<?php
         include('templates/footer.php');

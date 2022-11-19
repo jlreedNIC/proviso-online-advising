@@ -159,7 +159,7 @@ CloseCon($con);
 
 			?>
 			<h2><?php echo $rows['Name'];?></h2>
-			 Career Goal: <span style="font-size: x-large"><?php echo $rows['Position_Name'];?></span><a href="#"> Change Career Goal</a><br>
+			 Career Goal: <span style="font-size: x-large"><?php echo $rows['Position_Name'];?></a><br>
 			  Credits: 128/132
 			<?php
 				}

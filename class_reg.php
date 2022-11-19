@@ -308,7 +308,7 @@ Current Address :
     </div>
 
 </div>
-<button type="submit"  class="registerbtn" onclick="window.location.href='sign_up_success.html';">Continue</button>
+<button type="submit"  class="registerbtn" onclick="window.location.href='sign_up_success.php';">Continue</button>
 
 <?php
         include('templates/footer.php');

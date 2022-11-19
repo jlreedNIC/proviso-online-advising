@@ -1,27 +1,7 @@
 <?php
 
-$user = 'root';
-$password = '';
 
-// Database name is UserDatabase
-$database = 'proviso';
-
-// Server is localhost with
-// port number 3306
-$servername='localhost:3306';
-$mysqli = new mysqli($servername, $user,
-				$password, $database);
-
-// Checking for connections
-if ($mysqli->connect_error) {
-	die('Connect Error (' .
-	$mysqli->connect_errno . ') '.
-	$mysqli->connect_error);
-}
-
-
-// SQL query to select data from database $sql = " SELECT * FROM degree, careers,student_take ";
-
+require("php_scripts/db_connection.php");
 $sql = " SELECT * FROM student_take";
 $sqll= " SELECT * FROM degree,careers";
 
@@ -31,7 +11,7 @@ $answer = $mysqli->query($sqll);
 
 $mysqli->close();
 
-require("php_scripts/db_connection.php");
+//require("php_scripts/db_connection.php");
 // query for course table
 $con = OpenCon();
 $qry = "select * from courses

@@ -159,14 +159,14 @@ button:hover {
             <hr style="border: 1px solid black;">
         </header>
 
-        <button onclick="document.getElementById('id01').style.display='block'" style="padding:10px;">Software Engineer</button>
+        <button onclick="document.getElementById('id01').style.display='block'" style="padding:10px;">Software Developer</button>
 
 <div id="id01" class="modal">
   <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal"  >&times;</span>
   <form class="modal-content" action="/action_page.php">
     <div class="container">
-      <h1>Software Engineer:</h1></br>
-      <p>Software Engineers are tasked with creating and developing websites, programs, 
+      <h1>Software Developer:</h1></br>
+      <p>Software Developers are tasked with creating and developing websites, programs, 
         and other applications that run on computers or other devices.</p>
       <p>Skills: A strong background in computer programming is highly recommended for these positions.
         Interpersonal skills to collaborate with others on projects 
@@ -216,28 +216,19 @@ button:hover {
   </form>
 </div>
 
-<!--
-        <div class="container-fluid" style="width:80%">
+<div class="container-fluid" style="width:100%">
             <div class="card my-card shadow p-3 mb-5 bg-white rounded">
                 <div class="card-body">
-                 
-                    <h3><a href="http://uidaho.smartcatalogiq.com/2017-2018/University-of-Idaho-General-Catalog/Departments-of-Instruction/Department-of-Computer-Science/Computer-Science-B-S-C-S">View Full Course Catalog Page</a></h3></br>
-                    <h3><a href="https://www.uidaho.edu/registrar/transcripts">View Transcript Policy</a></h3></br>
-                    <h2 style="padding:10px; text-align: center;"> Course Catalog </h2>
-
-                    <canvas  width="20" height="10"></canvas>
-                    <center>
-                    <iframe src="http://uidaho.smartcatalogiq.com/2017-2018/University-of-Idaho-General-Catalog/Departments-of-Instruction/Department-of-Computer-Science/Computer-Science-B-S-C-S" 
-                        height="950" style=" width:70%;"  title="Iframe Example"></iframe>
-                    </center>
-                    </div>
+                    <h2> Most commonly chosen: </h2></br>
+                    <h3> Software Developer Career Graph </h3></br>
+                    <canvas  width="10" height="20"></canvas>
+                    <iframe src="gojs/release/t.php" height="950" style="width:100%"  title="Iframe Example"></iframe>
+                </div>
             </div>
         </div>
-                    -->
+
         
       
-        
-
 		<?php
         include('templates/footer.php');
         Footer();

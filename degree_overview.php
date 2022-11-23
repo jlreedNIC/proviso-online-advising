@@ -13,10 +13,11 @@ $mysqli->close();
 
 //require("php_scripts/db_connection.php");
 // query for course table
+
 $con = OpenCon();
 $qry = "select * from courses
+        join skills  on Skill_ID=Skills_ID
         order by Course_Num";
-
 $rs = mysqli_query($con, $qry);
 
 $size = 0;
@@ -188,7 +189,7 @@ CloseCon($con);
                                 <td><?php echo $data[$i]['Course_Name']." (".$data[$i]['Credits'].")";?></td>
                                 <td>
                                     <span class="badge badge-info" style="background-color:black">
-                                    <?php echo $data[$i]['Skill']?>
+                                    <?php echo $data[$i]['Skill_Name']?>
                                     </span>
                                 </td>
 

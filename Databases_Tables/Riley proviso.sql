@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 19, 2022 at 07:24 PM
+-- Generation Time: Nov 24, 2022 at 12:25 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -77,31 +77,31 @@ CREATE TABLE `courses` (
   `Course_Num` int(11) NOT NULL,
   `Department` text NOT NULL,
   `Credits` int(11) NOT NULL,
-  `Skill` text NOT NULL
+  `Skills_ID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `courses`
 --
 
-INSERT INTO `courses` (`Course_ID`, `Course_Name`, `Course_Num`, `Department`, `Credits`, `Skill`) VALUES
-(1, 'Software Engineering', 383, 'CS', 4, 'C#'),
-(2, 'Computer Science I', 120, 'CS', 4, 'C++'),
-(3, 'Computer Science II', 121, 'CS', 3, 'C++'),
-(4, 'Computer Organization and Architecture', 150, 'CS', 3, 'C++'),
-(5, 'Programming Languages', 210, 'CS', 3, 'C'),
-(6, 'Computer Operating Systems', 240, 'CS', 3, 'C'),
-(7, 'System Software', 270, 'CS', 3, 'C'),
-(8, 'Database Systems', 360, 'CS', 4, 'MYSQL'),
-(9, 'Theory of Computation', 385, 'CS', 3, ''),
-(10, 'Compiler Design', 445, 'CS', 4, 'C'),
-(11, 'Calculus I', 170, 'MATH', 4, ''),
-(12, 'Calculus II', 175, 'MATH', 4, ''),
-(13, 'Discrete Mathematics', 176, 'MATH', 3, ''),
-(14, 'Linear Algebra', 330, 'MATH', 3, ''),
-(15, 'Probability and Statistics', 301, 'STAT', 3, ''),
-(16, 'Organisms and Environments', 114, 'BIOL', 4, ''),
-(17, 'General Chemistry I', 111, 'CHEM', 4, '');
+INSERT INTO `courses` (`Course_ID`, `Course_Name`, `Course_Num`, `Department`, `Credits`, `Skills_ID`) VALUES
+(1, 'Software Engineering', 383, 'CS', 4, 1),
+(2, 'Computer Science I', 120, 'CS', 4, 2),
+(3, 'Computer Science II', 121, 'CS', 3, 2),
+(4, 'Computer Organization and Architecture', 150, 'CS', 3, 2),
+(5, 'Programming Languages', 210, 'CS', 3, 1),
+(6, 'Computer Operating Systems', 240, 'CS', 3, 1),
+(7, 'System Software', 270, 'CS', 3, 1),
+(8, 'Database Systems', 360, 'CS', 4, 9),
+(9, 'Theory of Computation', 385, 'CS', 3, 1),
+(10, 'Compiler Design', 445, 'CS', 4, 2),
+(11, 'Calculus I', 170, 'MATH', 4, 0),
+(12, 'Calculus II', 175, 'MATH', 4, 0),
+(13, 'Discrete Mathematics', 176, 'MATH', 3, 0),
+(14, 'Linear Algebra', 330, 'MATH', 3, 0),
+(15, 'Probability and Statistics', 301, 'STAT', 3, 0),
+(16, 'Organisms and Environments', 114, 'BIOL', 4, 0),
+(17, 'General Chemistry I', 111, 'CHEM', 4, 0);
 
 -- --------------------------------------------------------
 
@@ -440,6 +440,7 @@ CREATE TABLE `skills` (
 --
 
 INSERT INTO `skills` (`Skill_ID`, `Skill_Name`) VALUES
+(0, 'N/A'),
 (1, 'C'),
 (2, 'C++'),
 (3, 'C#'),
@@ -474,7 +475,9 @@ CREATE TABLE `students` (
 --
 
 INSERT INTO `students` (`userID`, `userName`, `password`, `email`, `firstName`, `lastName`, `gender`, `role`) VALUES
-(1, 'reed5204', 'hellothere', 'reed5204@vandals.uidaho.edu', 'Jordan', 'Reed', 'Female', 'student');
+(1, 'reed5204', 'hellothere', 'reed5204@vandals.uidaho.edu', 'Jordan', 'Reed', 'Female', 'student'),
+(2, 'a', 'a', 'a@gmail.com', 'a', 'a', 'Male', 'student'),
+(3, 'a', 'a', 'a@gmail.com', 'a', 'a', 'Male', 'student');
 
 -- --------------------------------------------------------
 
@@ -726,13 +729,13 @@ ALTER TABLE `prereq`
 -- AUTO_INCREMENT for table `skills`
 --
 ALTER TABLE `skills`
-  MODIFY `Skill_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `Skill_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `students`
 --
 ALTER TABLE `students`
-  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `user_career`

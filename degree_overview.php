@@ -2,22 +2,23 @@
 
 
 require("php_scripts/db_connection.php");
+$con = OpenCon(); // open connection to database
+
 $sql = " SELECT * FROM student_take";
 $sqll= " SELECT * FROM degree,careers";
 
-$result = $mysqli->query($sql);
-$answer = $mysqli->query($sqll);
+$result = mysqli_query($con, $sql);
+$answer = mysqli_query($con, $sqll);
 
-
-$mysqli->close();
 
 //require("php_scripts/db_connection.php");
 // query for course table
 
-$con = OpenCon();
+// $con = OpenCon();
 $qry = "select * from courses
-        join skills  on Skill_ID=Skills_ID
+        
         order by Course_Num";
+        // join skills  on Skill_ID=Skills_ID
 $rs = mysqli_query($con, $qry);
 
 $size = 0;
@@ -135,7 +136,7 @@ CloseCon($con);
                   
 					<?php
 				// LOOP TILL END OF DAT
-				while ($rows=$answer->fetch_assoc())
+				while ($rows = mysqli_fetch_array($answer, MYSQLI_ASSOC))
 				{
 
 			?>

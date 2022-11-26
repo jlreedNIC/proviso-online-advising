@@ -12,8 +12,14 @@
 
 // selects the relevant information for just the current student
 $sql = "SELECT Degree_Type, Degree_Name, Description, grade, firstName, lastName, role, Company, Position_Name, Pay, Des
-        from careers, degrees, students
-        where students.userID = 1";
+        from students
+        join user_career on user_career.User_ID=students.userID
+        join user_degree on user_degree.userID=students.userID
+        
+        join careers on user_career.Career_ID=careers.CareerID
+        join degrees on user_degree.DegreeID=degrees.DegreeID
+        
+        where user_career.User_ID = 1";
 
 $result = $mysqli->query($sql);
 

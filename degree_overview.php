@@ -10,6 +10,25 @@ $sqll= " SELECT * FROM degree,careers";
 $result = mysqli_query($con, $sql);
 $answer = mysqli_query($con, $sqll);
 
+// for getting the user info like degree and career goal
+$qry = "SELECT Degree_Type, Degree_Name, firstName, lastName, Company, Position_Name
+        from students
+        join user_career on user_career.User_ID=students.userID
+        join user_degree on user_degree.userID=students.userID
+
+        join careers on user_career.Career_ID=careers.CareerID
+        join degrees on user_degree.DegreeID=degrees.DegreeID
+
+        where user_career.User_ID = 1";
+
+$rs = mysqli_query($con, $qry);
+$size = 0;
+while($row = mysqli_fetch_array($rs, MYSQLI_ASSOC))
+{
+    $userInfo[$size] = $row;
+    $size++;
+}
+
 
 //require("php_scripts/db_connection.php");
 // query for course table
@@ -117,9 +136,8 @@ CloseCon($con);
             include("templates/navbar.php");
             include("templates/header.php");
             Navbar("degree");
-            NameHeader("Jane Doe");
+            NameHeader($userInfo[0]['firstName']." ".$userInfo[0]['lastName']);
         ?>
-
 
         <header style="padding:80px; text-align: center;">
             <h1>
@@ -132,21 +150,9 @@ CloseCon($con);
        <div class="container-fluid" style="width:80%">
             <div class="card my-card shadow p-3 mb-5 bg-white rounded">
                 <div class="card-body">
-				
-                  
-					<?php
-				// LOOP TILL END OF DAT
-				while ($rows = mysqli_fetch_array($answer, MYSQLI_ASSOC))
-				{
-
-			?>
-			<h2><?php echo $rows['Name'];?></h2>
-			 Career Goal: <span style="font-size: x-large"><?php echo $rows['Position_Name'];?></a><br>
-			  Credits: 128/132
-			<?php
-				}
-		
-			?>	
+                    <h2> <?php echo $userInfo[0]['Degree_Type']." ".$userInfo[0]['Degree_Name']; ?> </h2>
+                    Career Goal: <span style="font-size: x-large"> <?php echo $userInfo[0]['Position_Name'];?> </span><br>
+                    Credits: 128/132
                 </div>
             </div>
         </div>

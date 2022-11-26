@@ -8,9 +8,21 @@
 
 
 // SQL query to select data from database
-$sql = " SELECT * FROM degree, careers";
+// $sql = " SELECT * FROM degree, careers";
+
+// selects the relevant information for just the current student
+$sql = "SELECT Degree_Type, Degree_Name, Description, grade, firstName, lastName, role, Company, Position_Name, Pay, Des
+        from careers, degrees, students
+        where students.userID = 1";
 
 $result = $mysqli->query($sql);
+
+$size = 0;
+while($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+{
+    $userInfo[$size] = $row;
+    $size++;
+}
 
 $mysqli->close();
 
@@ -62,63 +74,52 @@ $mysqli->close();
     include('templates/navbar.php');
     Navbar("home");
 
-    include('templates/header.php');
-    NameHeader("Jane Doe");
+    // do we need this or keep the name below on the dashboard page
+    // include('templates/header.php');
+    // NameHeader($userInfo[0]['firstName']." ".$userInfo[0]['lastName']);
 ?>
 
 <!-- Header <img class="center-fit" src="img/notebook.jpg" >-->
 <header class="w3-container w3-cyan w3-center " style="padding:128px 16px; background-image: url('img/ccc.jpg')  !important">
 
     <h1 class="w3-margin w3-jumbo" style="color:white">Dashboard</h1>
-    <p style="color:white" class="w3-xlarge">Student</p>
+    <p style="color:white" class="w3-xlarge"> <?php echo $userInfo[0]['role']; ?> </p>
     <p style="color:white" class="w3-large">
-        John Doe <br>
-        Sophomore
+      <?php echo $userInfo[0]['firstName']." ".$userInfo[0]['lastName']; ?> <br>
+      <?php echo $userInfo[0]['grade']; ?>
     </p>
 </header>
 
 <!-- First Grid -->
 <div class="w3-row-padding w3-padding-64 w3-container">
   <div class="w3-content">
+
     <div class="w3-twothird">
-		<?php
-				// LOOP TILL END OF DATA
-				while($rows=$result->fetch_assoc())
-				{
-
-
-			?>
-      <h1><?php echo $rows['Name'];?>  </h1>
-	  	
-
-      <p class="w3-text-grey w3-padding-32"><?php echo $rows['Description'];?></p>
+      <!-- degree info  -->
+      <h1><?php echo $userInfo[0]['Degree_Type']." ".$userInfo[0]['Degree_Name']; ?>  </h1>
+      <p class="w3-text-grey w3-padding-32"><?php echo $userInfo[0]['Description']; ?></p>
     </div>
 
     <div class="w3-third w3-center">
       <i class="fa fa-book w3-padding-64 w3-text-black"></i>
     </div>
+
   </div>
 </div>
 
 <!-- Second Grid -->
 <div class="w3-row-padding w3-light-grey w3-padding-64 w3-container">
   <div class="w3-content">
+
     <div class="w3-third w3-center">
       <i class="fa fa-desktop w3-padding-64 w3-text-black w3-margin-right"></i>
     </div>
 
     <div class="w3-twothird">
-	
-		
-      <h1><?php echo $rows['Position_Name'];?> </h1>
-	  
-      
-
-      <p class="w3-text-grey w3-padding-32"><?php echo $rows['Des'];?></p>
-		<?php
-				}
-			?>
+      <h1><?php echo $userInfo[0]['Position_Name']; ?> </h1>
+      <p class="w3-text-grey w3-padding-32"><?php echo $userInfo[0]['Des']; ?></p>
     </div>
+
   </div>
 </div>
 

@@ -11,10 +11,11 @@ $username = $_POST['username'];
 $password = $_POST['password'];
 $email = $_POST['email'];
 $gender = $_POST['gender'];
+$role = $_POST['role'];
 
 $sql = "INSERT INTO students
-        (firstName, lastName, userName, password, email, gender)
-        VALUES ('$firstname', '$lastname', '$username', '$password', '$email', '$gender')";
+        (firstName, lastName, userName, password, email, gender, role)
+        VALUES ('$firstname', '$lastname', '$username', '$password', '$email', '$gender', '$role')";
 
 $rs = mysqli_query($con, $sql);
 
@@ -36,12 +37,14 @@ if($rs)
 
           <p class='w3-large'>
               Click 
-              <a href='../index.html' class='link'>here</a>
+              <a href='../index.php' class='link'>here</a>
               to go to the dashboard.
           </p>
           </header>
     </body>
         ";
+
+        // look into just doing 'include('sign_up_success.html');
 }
 else
 {

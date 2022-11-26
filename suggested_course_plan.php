@@ -201,6 +201,15 @@ CloseCon($con);
         <div class="container-fluid" style="width:80%">
             <div class="card my-card shadow p-3 mb-5 bg-white rounded">
                 <div class="card-body">
+                    <div> <h2>Four Year Plan - Iframe testing</h2> </div>
+                        <iframe src="gojs/release/sample_course_plan.php"  height="800" style="width:100%" title="Iframe Example"></iframe>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid" style="width:80%">
+            <div class="card my-card shadow p-3 mb-5 bg-white rounded">
+                <div class="card-body">
                     <!-- <div class="row"> -->
                         <div> <h2>Freshman Year</h2> </div>
                             <canvas id="freshman" width="1200" height="300"></canvas>

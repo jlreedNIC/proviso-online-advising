@@ -1,29 +1,29 @@
 <?php
-
-$user = 'root';
-$password = '';
-
-// Database name is UserDatabase
-$database = 'proviso';
-
-// Server is localhost with
-// port number 3306
-$servername='localhost:3306';
-$mysqli = new mysqli($servername, $user,
-				$password, $database);
-
-// Checking for connections
-if ($mysqli->connect_error) {
-	die('Connect Error (' .
-	$mysqli->connect_errno . ') '.
-	$mysqli->connect_error);
+session_start();
+if(!isset($_SESSION['userName']))
+{
+    header("Location: login.php");
+    exit();
 }
 
+require('php_scripts/db_connection.php');
 
-// SQL query to select data from database
-$sql = " SELECT * FROM  careers,degree";
+$sql = "SELECT Company, Position_Name, Pay, Des
+        from students
+        join user_career on user_career.User_ID=students.userID
+        
+        join careers on user_career.Career_ID=careers.CareerID
+        
+        where user_career.User_ID = ".$_SESSION['userID']."";
 
 $result = $mysqli->query($sql);
+
+$size = 0;
+while($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+{
+    $careerInfo[$size] = $row;
+    $size++;
+}
 
 $mysqli->close();
 
@@ -33,19 +33,21 @@ $mysqli->close();
 <html>
     <head>
         <title>Career Goal</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">  
+        <!-- <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"> -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
         <link href="mycss.css" rel="stylesheet">
+        
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+        <!-- Fonts -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
         <style>
             body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
             .w3-bar,h1,button {font-family: "Montserrat", sans-serif}
-            .fa-anchor,.fa-coffee {font-size:200px}
 
             body {
                 background-color: white;
@@ -58,7 +60,7 @@ $mysqli->close();
         include('templates/header.php');
         include('templates/navbar.php');
         Navbar("career");
-        NameHeader("Jane Doe");
+        NameHeader($_SESSION['firstName']." ".$_SESSION['lastName']);
         ?>
       
 	
@@ -72,17 +74,7 @@ $mysqli->close();
         <div class="container-fluid" style="width:80%">
             <div class="card my-card shadow p-3 mb-5 bg-white rounded">
                 <div class="card-body">
-                 <?php
-				// LOOP TILL END OF DATA
-				while($rows=$result->fetch_assoc())
-				{
-
-
-			?>
-                    <h2>Career Goal:</h2> <span style="font-size: x-large"><?php echo $rows['Position_Name'];?> </span><br>
-              <?php
-				}
-			?>
+                    <h2>Career Goal:</h2> <span style="font-size: x-large"><?php echo $careerInfo[0]['Position_Name'];?> </span><br>
                 </div>
             </div>
         </div>

@@ -1,113 +1,6 @@
 <?php 
 
-require("../../php_scripts/db_connection.php");
-$con = OpenCon();
-
-$qry = "SELECT courses.Course_ID, Course_Name, Department, Course_Num
-        from degree_classes_req
-        join user_degree on user_degree.DegreeID=degree_classes_req.DegreeID
-        join courses on degree_classes_req.Course_ID=courses.Course_ID
-        where user_degree.userID = 1";
-
-$rs = mysqli_query($con, $qry);
-
-$size = 0;
-while($row = mysqli_fetch_array($rs, MYSQLI_ASSOC))
-{
-    $courses_req[$size] = $row;
-    $size++;
-}
-
-for($i=0; $i<$size; $i++)
-{
-    $qry = "SELECT courses.Course_ID, Course_Name, Department, Course_Num
-            FROM prereq
-            JOIN courses on prereq.Prereq_ID=courses.Course_ID
-            where prereq.Course_ID = ".$courses_req[$i]['Course_ID']."";
-    
-    $rs = mysqli_query($con, $qry);
-
-    $prereqSize = 0;
-    while($row = mysqli_fetch_array($rs, MYSQLI_ASSOC))
-    {
-        $prereqs_req[$i][$prereqSize] = $row;
-        $prereqSize++;
-    }
-}
-
-// find categories required for degree
-$category_queries = "SELECT degree_categories.CategoryID, degree_categories.Category, degree_category_req.CreditsReq
-                    from user_degree 
-                    join degree_category_req on user_degree.DegreeID=degree_category_req.DegreeID
-                    join degree_categories on degree_categories.CategoryID=degree_category_req.CategoryID
-                    where user_degree.userID=1";
-
-$rs1 = mysqli_query($con, $category_queries);
-
-$size = 0;
-while($row = mysqli_fetch_array($rs1, MYSQLI_ASSOC))
-{
-    $categories[$size] = $row;
-    $size++;
-}
-
-// find courses accepted in each category
-for($i=0; $i<$size; $i++)
-{
-    $courses_in_categories = "SELECT courses.Course_ID, courses.Course_Name, courses.Department, courses.Course_Num, courses.Credits
-                        from degree_category_accepted_courses
-                        join courses on courses.Course_ID=degree_category_accepted_courses.Accepted_Courses
-                        where CategoryID = ".$categories[$i]['CategoryID']."";
-    
-    $rs1 = mysqli_query($con, $courses_in_categories);
-    $courseSize = 0;
-    while($row = mysqli_fetch_array($rs1, MYSQLI_ASSOC))
-    {
-        $courses[$i][$courseSize] = $row;
-        $courseSize++;
-    }
-}
-
-
-// print_r($courses_req);
-// echo "<br><br>";
-// print_r($prereqs_req);
-// echo "<br><br>";
-
-// query to grab all specified course requirements
-$req_courses_qry = "select DegreeID, courses.Course_ID, Course_Name, Department, Course_Num
-                    from degree_classes_req
-                    join courses on degree_classes_req.Course_ID=courses.Course_ID
-                    where DegreeID=1
-                    order by Course_Num";
-
-$req_prereqs_qry = "select dc.Course_Name as dcName, dc.Department as dcDept, dc.Course_Num as dcNum, c.Course_Name as pName, c.Course_Num as pNum, c.Department as pDept
-                    from
-                    (select DegreeID, courses.Course_ID, Course_Name, Department, Course_Num
-                    from degree_classes_req
-                    join courses on degree_classes_req.Course_ID=courses.Course_ID
-                    where DegreeID=1) as dc
-                    join prereq as p on dc.Course_ID=p.Course_ID
-                    join courses as c on p.Prereq_ID=c.Course_ID";
-
-$rs1 = mysqli_query($con, $req_courses_qry);
-$rs2 = mysqli_query($con, $req_prereqs_qry);
-
-$size = 0;
-while($row = mysqli_fetch_array($rs1, MYSQLI_ASSOC))
-{
-    $rCourses[$size] = $row;
-    $size++;
-}
-
-$size = 0;
-while($row = mysqli_fetch_array($rs2, MYSQLI_ASSOC))
-{
-    $rPrereqs[$size] = $row;
-    $size++;
-}
-
-CloseCon($con);
+require("../../php_scripts/course_mapper_queries.php");
 
 ?>
 
@@ -161,6 +54,10 @@ CloseCon($con);
 
         var courses_req = <?php echo json_encode($courses_req); ?>;
         var prereqs_req = <?php echo json_encode($prereqs_req); ?>;
+        var career_rec_courses = <?php echo json_encode($career_rec_courses); ?>;
+        var career_prereqs = <?php echo json_encode($career_prereqs); ?>;
+        var have_taken = <?php echo json_encode($have_taken); ?>;
+        var will_take = <?php echo json_encode($will_take); ?>;
 
         // load required courses
         // load prereqs if not in list
@@ -183,6 +80,10 @@ CloseCon($con);
         {
             return arrayVal['to'] == this;
         }
+        function checkForFromClass(arrayVal) // linkDataArray
+        {
+            return arrayVal['from'] == this;
+        }
         function checkForToFromPath(arrayVal) // linkDataArray
         {
             return (arrayVal['from'] == this['from']) && (arrayVal['to'] == this['to']);
@@ -199,7 +100,6 @@ CloseCon($con);
             nodeDataArray.push({key: courses_req[i]['Department'] + " " + courses_req[i]['Course_Num'], color: "gray"});
         }
 
-        console.log("finished courses, starting prereqs");
 
         // -------------------------------------------------------------
 
@@ -234,17 +134,62 @@ CloseCon($con);
 
         // load career suggested courses
 
+        // if course not in list, add it
+        for(i=0; i<career_rec_courses.length; i++)
+        {
+            index = nodeDataArray.findIndex(checkForKey, career_rec_courses[i]['Department'] + " " + career_rec_courses[i]['Course_Num']);
+            if(index == -1) // not found in list
+            {
+                nodeDataArray.push({key: career_rec_courses[i]['Department'] + " " + career_rec_courses[i]['Course_Num'], color: "lightblue"});
+            }
+            else
+            {
+                nodeDataArray[index]['color'] = "lightblue";
+            }
+        }
+
         // ---------------------------------------------------------------
 
         // load career suggested course prereqs
+        for(i=0; i<career_prereqs.length; i++)
+        {
+            prereq = career_prereqs[i]['preDept'] + " " + career_prereqs[i]['preNum'];
+            course = career_prereqs[i]['dept'] + " " + career_prereqs[i]['num'];
+
+            // check if prereq in data array
+            
+            index = nodeDataArray.findIndex(checkForKey, prereq);
+            if(index == -1) // prereq not found
+            {
+                nodeDataArray.push({key: prereq, color: "lightblue"});
+            }
+
+            // check if prereq to course path is in link array
+            
+            index = nodeDataArray.findIndex(checkForToFromPath, {from: prereq, to: course});
+            if(index == -1) // path not found
+            {
+                linkDataArray.push({from: prereq, to: course});
+            }
+        }
 
         // ---------------------------------------------------------------
 
         // load will take classes
 
+        for(i=0; i<will_take.length; i++)
+        {
+            // check if in data array
+            index = nodeDataArray.findIndex(checkForKey, will_take[i]['Department'] + " " + will_take[i]['Course_Num']);
+            if(index == -1) // not in list
+            {
+                nodeDataArray.push({key: will_take[i]['Department'] + " " + will_take[i]['Course_Num'], color: "gray"});
+            }
+        }
+
         // ---------------------------------------------------------------
 
-        // turn all classes with no prereqs yellow, for able to take
+        // turn all classes with no prereqs pink, for able to take
         for(i=0; i<nodeDataArray.length; i++)
         {
             index = linkDataArray.findIndex(checkForToClass, nodeDataArray[i]['key']);
@@ -257,24 +202,25 @@ CloseCon($con);
         // --------------------------------------------------------
 
         // turn all taken classes green
-        index = nodeDataArray.findIndex(checkForKey, "CS 120");
-        // console.log("finding cs120: " + index);
-        nodeDataArray[index]['color'] = "lightgreen";
 
-        index = nodeDataArray.findIndex(checkForKey, "CS 121");
-        // console.log("finding cs121: " + index);
-        nodeDataArray[index]['color'] = "lightgreen";
+        for(i=0; i<have_taken.length; i++)
+        {
+            // find index of class
+            index = nodeDataArray.findIndex(checkForKey, have_taken[i]['Department'] + " " + have_taken[i]['Course_Num']);
+            if(index != -1) // course found
+            {
+                nodeDataArray[index]['color'] = "lightgreen";
+            }
+        }
 
         // -------------------------------------------------------
 
         // turn all 'next' classes yellow for able to take
+
         for(i=0; i<nodeDataArray.length; i++)
         {
-            // console.log("loop i: " + i);
-            // console.log("current course color: " + nodeDataArray[i]['color']);
             if(nodeDataArray[i]['color'] == "lightgreen") // course was completed
             {
-                // console.log("found completed class at i: " + i + " " + nodeDataArray[i]['key']);
                 // find index of all classes that the course is a prereq for
 
                 // for each value in path array, if from == course, find index of to class in data array
@@ -284,7 +230,6 @@ CloseCon($con);
                     {
                         // find index of 'to' class and change color
                         index = nodeDataArray.find(checkForKey, linkDataArray[j]['to']);
-                        // console.log("next class color: " + index['color']);
                         if(index['color'] != "lightgreen")
                         {
                             index['color'] = "pink";
@@ -293,6 +238,8 @@ CloseCon($con);
                 }
             }
         }
+
+        
         
 
         

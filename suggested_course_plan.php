@@ -15,6 +15,7 @@ $req_courses_qry = "select DegreeID, courses.Course_ID, Course_Name, Department,
                     join courses on degree_classes_req.Course_ID=courses.Course_ID
                     where DegreeID=1
                     order by Course_Num";
+                    // replace!
 
 $req_prereqs_qry = "select dc.Course_Name as dcName, dc.Department as dcDept, dc.Course_Num as dcNum, c.Course_Name as pName, c.Course_Num as pNum, c.Department as pDept
                     from
@@ -24,6 +25,7 @@ $req_prereqs_qry = "select dc.Course_Name as dcName, dc.Department as dcDept, dc
                     where DegreeID=1) as dc
                     join prereq as p on dc.Course_ID=p.Course_ID
                     join courses as c on p.Prereq_ID=c.Course_ID";
+                    // replace!
 
 $rs1 = mysqli_query($con, $req_courses_qry);
 $rs2 = mysqli_query($con, $req_prereqs_qry);

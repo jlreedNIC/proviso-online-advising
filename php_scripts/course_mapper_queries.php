@@ -265,6 +265,9 @@ for($i=0; $i<$size; $i++)
     
     while($row = mysqli_fetch_array($rs, MYSQLI_ASSOC))
     {
+        // echo "checking prereq: ";
+        // print_r($row);
+        // echo "<br>";
         if(in_array($row, $prereqs_req) == false)
         {
             $prereqs_req[$prereqSize] = $row;
@@ -275,6 +278,10 @@ for($i=0; $i<$size; $i++)
             $newClass['Department'] = $prereqs_req[$prereqSize]['preDept'];
             $newClass['Course_Num'] = $prereqs_req[$prereqSize]['preNum'];
             $newClass['color'] = "gray";
+
+            // echo "----------now checking color variations in master list of: ";
+            // print_r($newClass);
+            // echo "<br>";
 
             $color1 = $newClass;
             $color2 = $newClass;
@@ -288,6 +295,7 @@ for($i=0; $i<$size; $i++)
             if(!$i3 && !$i2 && !$i1) // check to see if the course is in the list at all
             {
                 array_push($courses_master_list, $newClass);
+                $size++;
             }
 
             $prereqSize++;
@@ -311,6 +319,10 @@ function search_master_for_course($course, $masterArr)
     if($index != false) return $index;
 
     $course['color'] = "lightblue";
+    $index = array_search($course, $masterArr);
+    if($index != false) return $index;
+
+    $course['color'] = "pink";
     $index = array_search($course, $masterArr);
     if($index != false) return $index;
 
@@ -377,18 +389,29 @@ for($i=0; $i<count($courses_master_list); $i++)
             $available = true;
             for($k=0; $k<count($parentI); $k++)
             {
+                // echo "-------------checking color of parent node: ";
+                // print_r($parentI[$k]);
+                // echo "<br>";
                 $index = search_master_for_course($parentI[$k], $courses_master_list);
-                if($courses_master_list[$index]['color'] != "green") $available = false;
+                // echo "-------------checking color of parent node: ";
+                // print_r($courses_master_list[$index]);
+                // echo "<br>";
+                if($courses_master_list[$index]['color'] != "green") 
+                {
+                    // echo "====condition failed. parent not completed<br>";
+                    $available = false;
+                }
             }
 
             if($available)
             {
+                // echo "======course available!<br>";
                 $c['Course_ID'] = $prereqs_req[$indexes[$j]]['cID'];
                 $c['Department'] = $dept;
                 $c['Course_Num'] = $courseNum;
 
                 $index = search_master_for_course($c, $courses_master_list);
-                $courses_master_list[$index]['color'] = "pink";
+                if($courses_master_list[$index]['color'] != "green") $courses_master_list[$index]['color'] = "pink";
             }
         }
     }

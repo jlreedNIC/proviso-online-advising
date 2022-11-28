@@ -1,6 +1,7 @@
 <?php
 
-require("php_scripts/db_connection.php");
+// require("php_scripts/db_connection.php");
+require("php_scripts/course_mapper_queries.php");
 // query for course table
 $con = OpenCon();
 
@@ -84,6 +85,8 @@ for($i=1; $i<$size; $i++)
 
 CloseCon($con);
 
+
+
 ?>
 
 <!DOCTYPE html>  
@@ -101,6 +104,8 @@ CloseCon($con);
         <!-- Fonts -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+
+        <script type = "text/javascript" src="gojs/release/go.js"></script>
 
         <style>
             body {
@@ -137,7 +142,7 @@ CloseCon($con);
         </style>
     </head>
 
-    <body>  
+    <body onload = "goIntro()">  
         <?php 
             include("templates/navbar.php");
             include("templates/header.php");
@@ -276,8 +281,18 @@ CloseCon($con);
             </div>
         </div>
 
-        
-    
+        <!-- course tree  -->
+        <div class="container-fluid" style="width:80%">
+            <div class="card my-card shadow p-3 mb-5 bg-white rounded">
+                <div class="card-body">
+                    <h2>Course Status Graph</h2>
+                </div>
+
+                <div class="card-body">
+                    <div id ="myDiagramDiv" style = "border: solid 1px black; width:1320px; height:900px"></div>
+                </div>
+            </div>
+        </div>
         
         <?php
             include('templates/footer.php');
@@ -293,3 +308,55 @@ CloseCon($con);
     var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {return new bootstrap.Tooltip(tooltipTriggerEl)})
 </script>
 
+<script type = "text/javascript">
+    function goIntro(){
+        var $ = go.GraphObject.make; 
+        
+        var diagram = new go.Diagram("myDiagramDiv");
+        diagram.initialContentAlignment = go.Spot.Center; 
+        
+        diagram.nodeTemplate =
+            $(go.Node, go.Panel.Auto,
+                $(go.Shape,
+                { figure: "RoundedRectangle"},
+                
+                new go.Binding("fill", "color")),
+                
+                $(go.TextBlock,
+                { margin: 5 },
+                
+                new go.Binding("text", "key"))
+            ); 
+        
+        
+        diagram.layout = $(go.LayeredDigraphLayout,
+            {
+                direction: 90,
+            }
+        );
+
+        var courses_master_list = <?php echo json_encode($courses_master_list); ?>;
+        var prereqs_req = <?php echo json_encode($prereqs_req); ?>;
+
+        var nodeDataArray = [];
+        var linkDataArray = [];
+
+        // load all courses
+
+        for(i=0; i<courses_master_list.length; i++)
+        {
+            nodeDataArray.push({key: courses_master_list[i]['Department'] + " " + courses_master_list[i]['Course_Num'], 
+                                color: courses_master_list[i]['color']});
+        }
+
+        // load all prereqs
+
+        for(i=0; i<prereqs_req.length; i++)
+        {
+            linkDataArray.push({from: prereqs_req[i]['preDept'] + " " + prereqs_req[i]['preNum'], 
+                                to: prereqs_req[i]['dept'] + " " + prereqs_req[i]['num']});
+        }
+        
+        diagram.model = new go.GraphLinksModel(nodeDataArray, linkDataArray); 
+    }
+</script>

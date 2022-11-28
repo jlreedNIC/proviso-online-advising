@@ -33,15 +33,73 @@
             <div class="card-body">
                 <header style="text-align: center">
                     <h1>ProViso Online Advising</h1>
-                    <p>
-                        Please login to use the online advising system.
-                    </p>
                 </header>
             </div>
 
             <div class="card-body">
+
+                <?php
+                require("php_scripts/db_connection.php");
+
+                $con = OpenCon();
+
+                // When form submitted, check and create user session.
+                if (isset($_POST['username'])) 
+                {
+                    $username = stripslashes($_REQUEST['username']);    // removes backslashes
+                    $username = mysqli_real_escape_string($con, $username);
+                    $password = stripslashes($_REQUEST['password']);
+                    $password = mysqli_real_escape_string($con, $password);
+                    
+                    // Check user is exist in the database
+                    $query = "SELECT userName, firstName, lastName, role, userID
+                            FROM students
+                            WHERE username='$username' AND password='$password'";
+
+                    $result = mysqli_query($con, $query) or die(mysql_error());
+
+                    $rows = mysqli_num_rows($result);
+
+                    if ($rows == 1) // valid user!
+                    {
+                        session_start();
+
+                        $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+
+                        $_SESSION['userName'] = $username;
+                        $_SESSION['firstName'] = $row['firstName'];
+                        $_SESSION['lastName'] = $row['lastName'];
+                        $_SESSION['role'] = $row['role'];
+                        $_SESSION['userID'] = $row['userID'];
+
+                        // Redirect to user dashboard page
+                        if($_SESSION['role'] == "Student")
+                        {
+                            header("Location: index.php");
+                        }
+                        else
+                        {
+                            header("Location: adv_index.php");
+                        }
+                        
+                    } 
+                    else 
+                    {
+                        ?>
+                        <p style="text-align:center">Incorrect Username/Password.</p>
+                        <p style="text-align:center">Click <a href='login.php'>here</a> to try logging in again.</p>
+                        <?php
+                    }
+                }
+                else
+                {
+                ?>
+
+                <p style="text-align: center">
+                    Please login to use the online advising system.
+                </p>
                 <!-- login form -->
-                <form class="form-inline" method="post" action="php_scripts/sign_up.php">  
+                <form class="form-inline" method="post" action="">  
                     <div class="container-fluid" style="width:80%">  
                             <div class="form-group">
                                 <label class="col-md-4"> User Name: </label> 
@@ -65,6 +123,7 @@
                 <?php
                 include('templates/footer.php');
                 Footer();
+                }
                 ?>
             </div>
 

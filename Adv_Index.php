@@ -1,39 +1,12 @@
 <?php
 
-// Username is root
-// Riley Walsh
-// lab_5
-// 10/07/2022
-$user = 'root';
-$password = '';
-
-// Database name is UserDatabase
-$database = 'proviso';
-
-// Server is localhost with
-// port number 3306
-$servername='localhost:3306';
-$mysqli = new mysqli($servername, $user,
-				$password, $database);
-
-// Checking for connections
-if ($mysqli->connect_error) {
-	die('Connect Error (' .
-	$mysqli->connect_errno . ') '.
-	$mysqli->connect_error);
+session_start();
+if(!isset($_SESSION['userName']))
+{
+    header("Location: login.php");
+    exit();
 }
 
-// we should keep database connection variables in a separate script
-// require('php_scripts/db_connection.php');
-// $mysqli = OpenCon();
-
-
-// SQL query to select data from database
-$sql = " SELECT * FROM degree, careers";
-
-$result = $mysqli->query($sql);
-
-$mysqli->close();
 
 ?>
 
@@ -83,19 +56,19 @@ $mysqli->close();
     include('templates/Adv_Navbar.php');
     Navbar("home");
 
-    include('templates/header.php');
-    NameHeader("Jane Doe");
+    // include('templates/header.php');
+    // NameHeader("Jane Doe");
 ?>
 
 <!-- Header <img class="center-fit" src="img/notebook.jpg" >-->
 <header class="w3-container w3-cyan w3-center " style="padding:128px 16px; background-image: url('img/c.jpg')  !important">
-
-    <h1 class="w3-margin w3-jumbo" style="color:gold">Welcome</h1>
-    <p style="color:gold" class="w3-xlarge">Advisor</p>
-    <p style="color:gold" class="w3-large">
-        Mrs.Jane Doe <br>
-        
-    </p>
+    <div style="background-color: black; width:50%; border: 2px solid gold" class="container-fluid">
+      <h1 class="w3-margin w3-jumbo" style="color:gold">Welcome</h1>
+      <p style="color:gold" class="w3-xlarge">Advisor</p>
+      <p style="color:gold" class="w3-large">
+          <?php echo $_SESSION['firstName']." ".$_SESSION['lastName']; ?> 
+      </p>
+    </div>
 </header>
 
 

@@ -1,9 +1,13 @@
 <?php
 
+session_start();
+if(!isset($_SESSION['userName']))
+{
+    header("Location: login.php");
+    exit();
+}
 
-
-
- require('php_scripts/db_connection.php');
+require('php_scripts/db_connection.php');
 // $mysqli = OpenCon();
 
 
@@ -19,9 +23,10 @@ $sql = "SELECT Degree_Type, Degree_Name, Description, grade, firstName, lastName
         join careers on user_career.Career_ID=careers.CareerID
         join degrees on user_degree.DegreeID=degrees.DegreeID
         
-        where user_career.User_ID = 1";
+        where user_career.User_ID = ".$_SESSION['userID']."";
 
 $result = $mysqli->query($sql);
+print_r($result);
 
 $size = 0;
 while($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
@@ -29,6 +34,7 @@ while($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
     $userInfo[$size] = $row;
     $size++;
 }
+print_r($userInfo);
 
 $mysqli->close();
 
@@ -87,13 +93,14 @@ $mysqli->close();
 
 <!-- Header <img class="center-fit" src="img/notebook.jpg" >-->
 <header class="w3-container w3-cyan w3-center " style="padding:128px 16px; background-image: url('img/ccc.jpg')  !important">
-
+  <div style="background-color: black; width:50%; border: 2px solid white" class="container-fluid">
     <h1 class="w3-margin w3-jumbo" style="color:white">Dashboard</h1>
-    <p style="color:white" class="w3-xlarge"> <?php echo $userInfo[0]['role']; ?> </p>
+    <p style="color:white" class="w3-xlarge"> <?php echo $_SESSION['role']; ?> </p>
     <p style="color:white" class="w3-large">
-      <?php echo $userInfo[0]['firstName']." ".$userInfo[0]['lastName']; ?> <br>
+      <?php echo $_SESSION['firstName']." ".$_SESSION['lastName']; ?> <br>
       <?php echo $userInfo[0]['grade']; ?>
     </p>
+  </div>
 </header>
 
 <!-- First Grid -->
@@ -130,7 +137,7 @@ $mysqli->close();
 </div>
 
 <!-- Third Grid -->
-<div class="w3-row-padding w3-light-grey w3-padding-64 w3-container">
+<div class="w3-row-padding w3-padding-64 w3-container">
   <div class="w3-content">
 
     <div class="w3-twothird">

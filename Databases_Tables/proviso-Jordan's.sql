@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 18, 2022 at 06:42 AM
+-- Generation Time: Nov 28, 2022 at 09:25 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.0.19
 
@@ -63,7 +63,8 @@ INSERT INTO `careers_req_skills` (`CRS_ID`, `Career_ID`, `Skill_ID`) VALUES
 (2, 1, 8),
 (3, 1, 9),
 (4, 1, 10),
-(5, 1, 11);
+(5, 1, 11),
+(6, 1, 4);
 
 -- --------------------------------------------------------
 
@@ -100,7 +101,9 @@ INSERT INTO `courses` (`Course_ID`, `Course_Name`, `Course_Num`, `Department`, `
 (14, 'Linear Algebra', 330, 'MATH', 3),
 (15, 'Probability and Statistics', 301, 'STAT', 3),
 (16, 'Organisms and Environments', 114, 'BIOL', 4),
-(17, 'General Chemistry I', 111, 'CHEM', 4);
+(17, 'General Chemistry I', 111, 'CHEM', 4),
+(18, 'Python for Machine Learning', 477, 'CS', 3),
+(19, 'Analysis of Algorithms', 395, 'CS', 3);
 
 -- --------------------------------------------------------
 
@@ -123,7 +126,11 @@ INSERT INTO `course_skills` (`Course_Skill_ID`, `Course_ID`, `Skill_ID`) VALUES
 (2, 1, 3),
 (3, 2, 2),
 (4, 3, 2),
-(5, 1, 10);
+(5, 1, 10),
+(6, 18, 4),
+(7, 7, 1),
+(8, 6, 1),
+(9, 8, 9);
 
 -- --------------------------------------------------------
 
@@ -182,7 +189,11 @@ CREATE TABLE `degree_categories` (
 --
 
 INSERT INTO `degree_categories` (`CategoryID`, `Category`) VALUES
-(1, 'Natural Science with Lab');
+(4, 'Humanities'),
+(1, 'Natural Science with Lab'),
+(3, 'Oral Communication'),
+(5, 'Social Sciences'),
+(2, 'Written Communication');
 
 -- --------------------------------------------------------
 
@@ -223,7 +234,11 @@ CREATE TABLE `degree_category_req` (
 --
 
 INSERT INTO `degree_category_req` (`Deg_Cat_ReqID`, `DegreeID`, `CategoryID`, `CreditsReq`) VALUES
-(1, 1, 1, 8);
+(1, 1, 1, 8),
+(2, 1, 2, 3),
+(3, 1, 3, 2),
+(4, 1, 4, 6),
+(5, 1, 5, 6);
 
 -- --------------------------------------------------------
 
@@ -256,7 +271,8 @@ INSERT INTO `degree_classes_req` (`Degree_CourseID`, `DegreeID`, `Course_ID`) VA
 (13, 1, 13),
 (14, 1, 15),
 (15, 1, 14),
-(16, 1, 10);
+(16, 1, 10),
+(17, 1, 19);
 
 -- --------------------------------------------------------
 
@@ -345,6 +361,54 @@ INSERT INTO `full_degree` (`Course_ID`, `Skill_ID`, `Career_ID`, `Course_Name`, 
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `job1`
+--
+
+CREATE TABLE `job1` (
+  `job1_ID` int(11) NOT NULL,
+  `CareerID` int(11) NOT NULL,
+  `Company` text NOT NULL,
+  `Pay` int(11) NOT NULL,
+  `Pos2` text NOT NULL,
+  `Pos3` text NOT NULL,
+  `Des2` text NOT NULL,
+  `Des3` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `job1`
+--
+
+INSERT INTO `job1` (`job1_ID`, `CareerID`, `Company`, `Pay`, `Pos2`, `Pos3`, `Des2`, `Des3`) VALUES
+(1, 1, 'Micron', 59000, 'SR. Software Developer\r\n', 'Lead Developer', 'Experience:5+ years as a Software Developer. ', 'Experience: 8+ Years hands on experience.');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `job1_skills`
+--
+
+CREATE TABLE `job1_skills` (
+  `job1_skill_ID` int(11) NOT NULL,
+  `Skill_ID` int(11) NOT NULL,
+  `Skill_Name` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `job1_skills`
+--
+
+INSERT INTO `job1_skills` (`job1_skill_ID`, `Skill_ID`, `Skill_Name`) VALUES
+(1, 1, 'C'),
+(2, 2, 'C++'),
+(3, 3, 'C#'),
+(4, 4, 'Python'),
+(5, 5, 'Java'),
+(6, 6, 'Bachelors in computer science');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `prereq`
 --
 
@@ -374,7 +438,11 @@ INSERT INTO `prereq` (`PreID`, `Prereq_ID`, `Course_ID`) VALUES
 (13, 9, 10),
 (14, 11, 12),
 (15, 11, 14),
-(16, 12, 15);
+(16, 12, 15),
+(18, 15, 18),
+(19, 3, 18),
+(20, 12, 19),
+(21, 3, 19);
 
 -- --------------------------------------------------------
 
@@ -418,15 +486,66 @@ CREATE TABLE `students` (
   `firstName` varchar(255) NOT NULL,
   `lastName` varchar(255) NOT NULL,
   `gender` varchar(255) NOT NULL,
-  `role` varchar(255) NOT NULL DEFAULT 'student'
+  `role` varchar(255) NOT NULL DEFAULT 'student',
+  `grade` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `students`
 --
 
-INSERT INTO `students` (`userID`, `userName`, `password`, `email`, `firstName`, `lastName`, `gender`, `role`) VALUES
-(1, 'reed5204', 'hellothere', 'reed5204@vandals.uidaho.edu', 'Jordan', 'Reed', 'Female', 'student');
+INSERT INTO `students` (`userID`, `userName`, `password`, `email`, `firstName`, `lastName`, `gender`, `role`, `grade`) VALUES
+(1, 'reed5204', 'hellothere', 'reed5204@vandals.uidaho.edu', 'Jordan', 'Reed', 'Female', 'Student', 'Junior'),
+(12, 'treed', 'hellothere', 'jfkdls@fjdksl', 'Travis', 'Reed', 'Male', 'Advisor', NULL),
+(13, 'kreed', 'hi', 'fjkdls@jfdkls', 'Katie', 'Reed', 'Female', 'Student', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `students_have_taken`
+--
+
+CREATE TABLE `students_have_taken` (
+  `Have_Taken_ID` int(11) NOT NULL,
+  `User_ID` int(11) NOT NULL,
+  `Course_ID` int(11) NOT NULL,
+  `Semester` varchar(100) NOT NULL,
+  `Year` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `students_have_taken`
+--
+
+INSERT INTO `students_have_taken` (`Have_Taken_ID`, `User_ID`, `Course_ID`, `Semester`, `Year`) VALUES
+(1, 1, 11, 'Spring', 2011),
+(2, 1, 12, 'Fall', 2011),
+(3, 1, 1, 'Fall', 2022),
+(4, 1, 15, 'Spring', 2015),
+(5, 1, 2, 'Fall', 2011),
+(6, 1, 6, 'Spring', 2022);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `students_will_take`
+--
+
+CREATE TABLE `students_will_take` (
+  `Will_Take_ID` int(11) NOT NULL,
+  `User_ID` int(11) NOT NULL,
+  `Course_ID` int(11) NOT NULL,
+  `Semester` varchar(100) NOT NULL,
+  `Year` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `students_will_take`
+--
+
+INSERT INTO `students_will_take` (`Will_Take_ID`, `User_ID`, `Course_ID`, `Semester`, `Year`) VALUES
+(1, 1, 10, 'Fall', 2023),
+(2, 1, 17, 'Fall', 2023);
 
 -- --------------------------------------------------------
 
@@ -457,6 +576,25 @@ CREATE TABLE `user_career` (
 --
 
 INSERT INTO `user_career` (`User_Career_ID`, `User_ID`, `Career_ID`) VALUES
+(1, 1, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user_degree`
+--
+
+CREATE TABLE `user_degree` (
+  `User_Degree_ID` int(11) NOT NULL,
+  `userID` int(11) NOT NULL,
+  `DegreeID` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `user_degree`
+--
+
+INSERT INTO `user_degree` (`User_Degree_ID`, `userID`, `DegreeID`) VALUES
 (1, 1, 1);
 
 --
@@ -539,6 +677,24 @@ ALTER TABLE `degree_min_grade_req`
   ADD KEY `DegreeID` (`DegreeID`);
 
 --
+-- Indexes for table `full_degree`
+--
+ALTER TABLE `full_degree`
+  ADD PRIMARY KEY (`Course_ID`);
+
+--
+-- Indexes for table `job1`
+--
+ALTER TABLE `job1`
+  ADD PRIMARY KEY (`job1_ID`);
+
+--
+-- Indexes for table `job1_skills`
+--
+ALTER TABLE `job1_skills`
+  ADD PRIMARY KEY (`job1_skill_ID`);
+
+--
 -- Indexes for table `prereq`
 --
 ALTER TABLE `prereq`
@@ -560,12 +716,36 @@ ALTER TABLE `students`
   ADD PRIMARY KEY (`userID`,`userName`,`email`);
 
 --
+-- Indexes for table `students_have_taken`
+--
+ALTER TABLE `students_have_taken`
+  ADD PRIMARY KEY (`Have_Taken_ID`),
+  ADD KEY `User_ID` (`User_ID`),
+  ADD KEY `Course_ID` (`Course_ID`);
+
+--
+-- Indexes for table `students_will_take`
+--
+ALTER TABLE `students_will_take`
+  ADD PRIMARY KEY (`Will_Take_ID`),
+  ADD KEY `User_ID` (`User_ID`),
+  ADD KEY `Course_ID` (`Course_ID`);
+
+--
 -- Indexes for table `user_career`
 --
 ALTER TABLE `user_career`
   ADD PRIMARY KEY (`User_Career_ID`),
   ADD KEY `Career_ID` (`Career_ID`),
   ADD KEY `User_ID` (`User_ID`);
+
+--
+-- Indexes for table `user_degree`
+--
+ALTER TABLE `user_degree`
+  ADD PRIMARY KEY (`User_Degree_ID`),
+  ADD KEY `userID` (`userID`),
+  ADD KEY `DegreeID` (`DegreeID`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -581,19 +761,19 @@ ALTER TABLE `careers`
 -- AUTO_INCREMENT for table `careers_req_skills`
 --
 ALTER TABLE `careers_req_skills`
-  MODIFY `CRS_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `CRS_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `courses`
 --
 ALTER TABLE `courses`
-  MODIFY `Course_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `Course_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `course_skills`
 --
 ALTER TABLE `course_skills`
-  MODIFY `Course_Skill_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `Course_Skill_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `degrees`
@@ -605,7 +785,7 @@ ALTER TABLE `degrees`
 -- AUTO_INCREMENT for table `degree_categories`
 --
 ALTER TABLE `degree_categories`
-  MODIFY `CategoryID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `CategoryID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `degree_category_accepted_courses`
@@ -617,13 +797,13 @@ ALTER TABLE `degree_category_accepted_courses`
 -- AUTO_INCREMENT for table `degree_category_req`
 --
 ALTER TABLE `degree_category_req`
-  MODIFY `Deg_Cat_ReqID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `Deg_Cat_ReqID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `degree_classes_req`
 --
 ALTER TABLE `degree_classes_req`
-  MODIFY `Degree_CourseID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `Degree_CourseID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `degree_min_grade_req`
@@ -632,10 +812,28 @@ ALTER TABLE `degree_min_grade_req`
   MODIFY `Min_GradeID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
+-- AUTO_INCREMENT for table `full_degree`
+--
+ALTER TABLE `full_degree`
+  MODIFY `Course_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+
+--
+-- AUTO_INCREMENT for table `job1`
+--
+ALTER TABLE `job1`
+  MODIFY `job1_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `job1_skills`
+--
+ALTER TABLE `job1_skills`
+  MODIFY `job1_skill_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
 -- AUTO_INCREMENT for table `prereq`
 --
 ALTER TABLE `prereq`
-  MODIFY `PreID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `PreID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `skills`
@@ -647,13 +845,31 @@ ALTER TABLE `skills`
 -- AUTO_INCREMENT for table `students`
 --
 ALTER TABLE `students`
-  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
+--
+-- AUTO_INCREMENT for table `students_have_taken`
+--
+ALTER TABLE `students_have_taken`
+  MODIFY `Have_Taken_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `students_will_take`
+--
+ALTER TABLE `students_will_take`
+  MODIFY `Will_Take_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `user_career`
 --
 ALTER TABLE `user_career`
   MODIFY `User_Career_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `user_degree`
+--
+ALTER TABLE `user_degree`
+  MODIFY `User_Degree_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Constraints for dumped tables
@@ -710,11 +926,32 @@ ALTER TABLE `prereq`
   ADD CONSTRAINT `foreign_key_prereq` FOREIGN KEY (`Prereq_ID`) REFERENCES `courses` (`Course_ID`);
 
 --
+-- Constraints for table `students_have_taken`
+--
+ALTER TABLE `students_have_taken`
+  ADD CONSTRAINT `students_have_taken_ibfk_1` FOREIGN KEY (`User_ID`) REFERENCES `students` (`userID`),
+  ADD CONSTRAINT `students_have_taken_ibfk_2` FOREIGN KEY (`Course_ID`) REFERENCES `courses` (`Course_ID`);
+
+--
+-- Constraints for table `students_will_take`
+--
+ALTER TABLE `students_will_take`
+  ADD CONSTRAINT `students_will_take_ibfk_1` FOREIGN KEY (`User_ID`) REFERENCES `students` (`userID`),
+  ADD CONSTRAINT `students_will_take_ibfk_2` FOREIGN KEY (`Course_ID`) REFERENCES `courses` (`Course_ID`);
+
+--
 -- Constraints for table `user_career`
 --
 ALTER TABLE `user_career`
   ADD CONSTRAINT `user_career_ibfk_1` FOREIGN KEY (`Career_ID`) REFERENCES `careers` (`CareerID`),
   ADD CONSTRAINT `user_career_ibfk_2` FOREIGN KEY (`User_ID`) REFERENCES `students` (`userID`);
+
+--
+-- Constraints for table `user_degree`
+--
+ALTER TABLE `user_degree`
+  ADD CONSTRAINT `user_degree_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `students` (`userID`),
+  ADD CONSTRAINT `user_degree_ibfk_2` FOREIGN KEY (`DegreeID`) REFERENCES `degrees` (`degreeID`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

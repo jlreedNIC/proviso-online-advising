@@ -1,5 +1,11 @@
 <?php
 
+session_start();
+if(!isset($_SESSION['userName']))
+{
+    header("Location: login.php");
+    exit();
+}
 
 require("php_scripts/db_connection.php");
 $con = OpenCon(); // open connection to database
@@ -19,7 +25,7 @@ $qry = "SELECT Degree_Type, Degree_Name, firstName, lastName, Company, Position_
         join careers on user_career.Career_ID=careers.CareerID
         join degrees on user_degree.DegreeID=degrees.DegreeID
 
-        where user_career.User_ID = 1";
+        where user_career.User_ID = ".$_SESSION['userID']."";
 
 $rs = mysqli_query($con, $qry);
 $size = 0;
@@ -136,7 +142,7 @@ CloseCon($con);
             include("templates/navbar.php");
             include("templates/header.php");
             Navbar("degree");
-            NameHeader($userInfo[0]['firstName']." ".$userInfo[0]['lastName']);
+            NameHeader($_SESSION['firstName']." ".$_SESSION['lastName']);
         ?>
 
         <header style="padding:80px; text-align: center;">

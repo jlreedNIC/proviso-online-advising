@@ -19,9 +19,8 @@ function Navbar($location)
 
             <a href="class_reg.php" class=" <?php if($location == "course_register") echo "active" ?> nav-item nav-link my-nav-item" >Course Register</a>
             <a href="course_mapper.php" class=" <?php if($location == "course_mapper") echo "active" ?> nav-item nav-link my-nav-item">Course Mapper</a>
-            <a href="#" class="nav-item nav-link my-nav-item disabled">Course outcomes</a>
-            <a href="sign_up.php" class="nav-item nav-link my-nav-item">Register</a>
-			<a href="#" class=" <?php if($location == "sign_up") echo "active" ?> nav-item nav-link my-nav-item">Logout</a>
+            <!-- <a href="sign_up.php" class="nav-item nav-link my-nav-item">Register</a> -->
+			<a href="logout.php" class=" <?php if($location == "sign_up") echo "active" ?> nav-item nav-link my-nav-item">Logout</a>
         </div>
     </div>
 </nav>

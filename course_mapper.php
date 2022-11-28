@@ -1,5 +1,12 @@
 <?php
 
+session_start();
+if(!isset($_SESSION['userName']))
+{
+    header("Location: login.php");
+    exit();
+}
+
 // require("php_scripts/db_connection.php");
 require("php_scripts/course_mapper_queries.php");
 // query for course table
@@ -10,7 +17,7 @@ $qry = "SELECT Position_Name, Company, Pay, Des, firstName, lastName
         from user_career 
         join careers on user_career.Career_ID=careers.CareerID
         join students on students.userID=user_career.User_ID
-        where User_Career_ID=1";
+        where User_Career_ID=".$_SESSION['userID']."";
 
 $rs = mysqli_query($con, $qry);
 
@@ -26,7 +33,7 @@ $qry = "select Skill_Name
         from user_career
         join careers_req_skills on user_career.Career_ID=careers_req_skills.Career_ID
         join skills on careers_req_skills.Skill_ID=skills.Skill_ID
-        where user_career.User_ID = 1";
+        where user_career.User_ID = ".$_SESSION['userID']."";
 
 $rs = mysqli_query($con, $qry);
 
@@ -44,7 +51,7 @@ $qry = "SELECT courses.Course_Name, courses.Course_Num, courses.Department, cour
         join course_skills on careers_req_skills.Skill_ID=course_skills.Skill_ID
         join courses on courses.Course_ID=course_skills.Course_ID
         join skills on course_skills.Skill_ID=skills.Skill_ID
-        where user_career.User_Career_ID=1";
+        where user_career.User_Career_ID=".$_SESSION['userID']."";
 
 $rs = mysqli_query($con, $qry);
 
@@ -147,8 +154,7 @@ CloseCon($con);
             include("templates/navbar.php");
             include("templates/header.php");
             Navbar("course_mapper");
-            $fullName = $data[0]['firstName']." ".$data[0]['lastName'];
-            NameHeader($fullName);
+            NameHeader($_SESSION['firstName']." ".$_SESSION['lastName']);
         ?>
 
 

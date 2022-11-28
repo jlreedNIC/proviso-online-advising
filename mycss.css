@@ -8,6 +8,12 @@ body{
     
 }
 
+.login-div{
+    background-color: white;
+    border: 5px solid rgb(231, 200, 25);
+    padding: 20px;
+}
+
 .my-nav-item {
     /* padding: 15px; */
     /* padding-left: 20px;

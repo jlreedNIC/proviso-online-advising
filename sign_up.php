@@ -33,15 +33,73 @@
             <div class="card-body">
                 <header style="text-align: center">
                     <h1>ProViso Online Advising</h1>
-                    <p>
-                        Please register to use the online advising system.
-                    </p>
+                    
                 </header>
             </div>
 
             <div class="card-body">
+
+                <?php 
+                require('php_scripts/db_connection.php');
+
+                $con = OpenCon();
+
+                // When form submitted, insert values into the database.
+                if (isset($_REQUEST['username'])) 
+                {
+                    // removes backslashes
+                    $username = stripslashes($_REQUEST['username']);
+                    //escapes special characters in a string
+                    $username = mysqli_real_escape_string($con, $username);
+
+                    $email    = stripslashes($_REQUEST['email']);
+                    $email    = mysqli_real_escape_string($con, $email);
+
+                    $password = stripslashes($_REQUEST['password']);
+                    $password = mysqli_real_escape_string($con, $password);
+
+                    $firstname = stripslashes($_REQUEST['firstname']);
+                    $firstname = mysqli_real_escape_string($con, $firstname);
+
+                    $lastname = stripslashes($_REQUEST['lastname']);
+                    $lastname = mysqli_real_escape_string($con, $lastname);
+
+                    $gender = stripslashes($_REQUEST['gender']);
+
+                    $role = stripslashes($_REQUEST['role']);
+
+                    $query    = "INSERT into `students` (userName, password, email, firstName, lastName, gender, role)
+                                VALUES ('$username', '$password', '$email', '$firstname', '$lastname', '$gender', '$role')";
+                    $result   = mysqli_query($con, $query);
+
+                    if($result) // able to insert
+                    {
+                        ?>
+
+                        <p style="text-align: center">You have successfully registered!</p>
+                        <p style="text-align: center">Proceed to <a href="login.php">login</a> page.</p>
+
+                        <?php 
+                    }
+                    else // missing fields
+                    {
+                        ?>
+                        <p style="text-align: center">Required fields are missing. <a href="sign_up.php">Try again.</a> </p>
+                        <?php
+                    }
+
+                    CloseCon($con);
+                }
+                else
+                {
+                ?>
+
+                <p style="text-align: center">
+                    Please register to use the online advising system.
+                </p>
+
                 <!-- login form -->
-                <form class="form-inline" method="post" action="php_scripts/sign_up.php">  
+                <form class="form-inline" method="post" action="">  
                     <div class="container-fluid"> 
 
                         <div class="row">
@@ -101,6 +159,8 @@
                 <?php
                 include('templates/footer.php');
                 Footer();
+
+                }
                 ?>
             </div>
         </div>

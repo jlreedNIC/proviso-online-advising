@@ -32,7 +32,7 @@ $qry = "SELECT courses.Course_ID, Department, Course_Num
         from degree_classes_req
         join user_degree on user_degree.DegreeID=degree_classes_req.DegreeID
         join courses on degree_classes_req.Course_ID=courses.Course_ID
-        where user_degree.userID = 1
+        where user_degree.userID = ".$_SESSION['userID']."
         order by Department, Course_Num";
 
 $rs = mysqli_query($con, $qry);
@@ -62,7 +62,7 @@ $qry = "SELECT distinct courses.Course_ID, Department, Course_Num
         join careers_req_skills on user_career.Career_ID=careers_req_skills.Career_ID
         join course_skills on course_skills.Skill_ID=careers_req_skills.Skill_ID
         join courses on courses.Course_ID=course_skills.Course_ID
-        where user_career.User_ID = 1";
+        where user_career.User_ID = ".$_SESSION['userID']."";
 
 $rs = mysqli_query($con, $qry);
 
@@ -132,7 +132,7 @@ $qry = "SELECT courses.Course_ID, Department, Course_Num
         from students_will_take
         join students on students.userID=students_will_take.User_ID
         join courses on courses.Course_ID=students_will_take.Course_ID
-        where User_ID = 1";
+        where User_ID = ".$_SESSION['userID']."";
     
 $rs = mysqli_query($con, $qry);
 
@@ -180,7 +180,7 @@ $qry = "SELECT courses.Course_ID, Department, Course_Num
         FROM students_have_taken
         join students on students.userID=students_have_taken.User_ID
         join courses on students_have_taken.Course_ID=courses.Course_ID
-        where User_ID = 1";
+        where User_ID = ".$_SESSION['userID']."";
     
 $rs = mysqli_query($con, $qry);
 
@@ -418,7 +418,7 @@ $qry = "SELECT degree_categories.CategoryID, degree_categories.Category, degree_
         from user_degree 
         join degree_category_req on user_degree.DegreeID=degree_category_req.DegreeID
         join degree_categories on degree_categories.CategoryID=degree_category_req.CategoryID
-        where user_degree.userID=1";
+        where user_degree.userID=".$_SESSION['userID']."";
 
 $rs1 = mysqli_query($con, $qry);
 

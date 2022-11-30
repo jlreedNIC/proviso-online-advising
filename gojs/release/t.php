@@ -23,28 +23,17 @@ if ($mysqli->connect_error) {
 	$mysqli->connect_error);
 }
 
-
-//-----query 1-----careers table
-$users = $mysqli->query("SELECT * FROM careers");
+//No Idea why I need this, but I assume an empty array needs to be initialized in php. 
 $data = array();
 
-while ($result = $users->fetch_assoc())
-{
-$row = array (
-    "key" => $result['Position_Name'],
 
-);
-
-array_push($data, $row);
-}
-//echo json_encode($data);
-
-
-//-----query 2----- skills table
-$my = $mysqli->query("SELECT * FROM job1_skills");
+//-----query 1----- skills table
+$users = $mysqli->query("SELECT * FROM  skills 
+JOIN job1_skills ON job1_skills.job1_skill_ID =skills.Skill_ID
+");
 $dataa = array();
 
-while ($resultt = $my->fetch_assoc())
+while ($resultt = $users->fetch_assoc())
 {
 $roww = array (
     "key" => $resultt['Skill_Name'],
@@ -56,8 +45,10 @@ array_push($dataa, $roww);
 //echo json_encode($dataa);
 
 
-//-----query 3----- job1 table
-$job1 = $mysqli->query("SELECT * FROM job1");
+//-----query 2----- job1 table
+$job1 = $mysqli->query("SELECT * FROM job1
+where job1_ID = 1
+");
 $data3 = array();
 
 while ($result3 = $job1->fetch_assoc())
@@ -81,31 +72,38 @@ $row6 = array (
 	"key" => $result3['Des3']
 );
 
+$row7 = array (
+    
+	"key" => $result3['Pos1']
+);
 
 array_push($data3, $row3);
 array_push($data3, $row4);
 array_push($data3, $row5);
 array_push($data3, $row6);
+array_push($data3, $row7);
 }
 
 //echo json_encode($data3);
 
 
-//----query 4---- all tables for linking to array. 
-$my = $mysqli->query("SELECT * FROM careers,job1_skills,job1");
+//----query 3---- all tables for linking to array. 
+$my = $mysqli->query("SELECT * FROM skills,job1
+where job1_ID = 1
+");
 $dat = array();
 
 while ($res = $my->fetch_assoc())
 {
 $ro = array (
     
-	"from" => $res['Position_Name'],
+	"from" => $res['Pos1'],
 	"to" => $res['Skill_Name']
 );
 $ro2 = array (
     
 	"from" => $res['Pos2'],
-	"to" => $res['Position_Name'],
+	"to" => $res['Pos1'],
 
 );
 

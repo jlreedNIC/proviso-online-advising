@@ -132,6 +132,7 @@ button:hover {
   display: table;
 }
 
+
 /* Change styles for cancel button and signup button on extra small screens */
 @media screen and (max-width: 300px) {
   .cancelbtn, .signupbtn {
@@ -174,6 +175,12 @@ button:hover {
        <p>
        Salary: Around $105,000, according to the U.S. Bureau of Labor Statistics.
        </p>
+
+        <canvas  width="10" height="20"></canvas>
+        <h2> Career Graph: </h2></br>   
+        <h3> (Software Developer for Micron) </h3></br>       
+        <p align="center"><iframe src="gojs/release/t.php" height="950" style="width:100%"  title="Iframe Example"></iframe></p>
+
     </div>
   </form>
 </div>
@@ -212,6 +219,7 @@ button:hover {
       and a collaborative mindset while working with other designers on projects.</p>
       <p>Salary: Around $69,000.</P>
       
+
     </div>
   </form>
 </div>
@@ -221,8 +229,11 @@ button:hover {
                 <div class="card-body">
                     <h2> Most commonly chosen: </h2></br>
                     <h3> Software Developer Career Graph </h3></br>
+                    
                     <canvas  width="10" height="20"></canvas>
-                    <iframe src="gojs/release/t.php" height="950" style="width:100%"  title="Iframe Example"></iframe>
+                   
+                    <p align="center">  <iframe src="gojs/release/t.php" height="950" style="width:100%"  title="Iframe Example"></iframe></p>
+                   
                 </div>
             </div>
         </div>

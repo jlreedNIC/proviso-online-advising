@@ -221,27 +221,14 @@ button:hover {
       It’s also important to have knowledge of graphic design 
       and a collaborative mindset while working with other designers on projects.</p>
       <p>Salary: Around $69,000.</P>
-      
+      <h2> Career Graph: </h2></br>   
+        <h3> (Web Developer for Prosoft) </h3></br>       
+        <p align="center"><iframe src="gojs/release/t3.php" height="950" style="width:100%"  title="Iframe Example"></iframe></p>
 
     </div>
   </form>
 </div>
-
-<div class="container-fluid" style="width:100%">
-            <div class="card my-card shadow p-3 mb-5 bg-white rounded">
-                <div class="card-body">
-                    <h2> Most commonly chosen: </h2></br>
-                    <h3> Software Developer Career Graph </h3></br>
-                    
-                    <canvas  width="10" height="20"></canvas>
-                   
-                    <p align="center">  <iframe src="gojs/release/t.php" height="950" style="width:100%"  title="Iframe Example"></iframe></p>
-                   
-                </div>
-            </div>
-        </div>
-
-        
+    
       
 		<?php
         include('templates/footer.php');

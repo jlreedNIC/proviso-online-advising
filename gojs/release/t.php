@@ -169,7 +169,7 @@ function goIntro(){
 	diagram.nodeTemplate =
   $(go.Node, go.Panel.Auto,
 	$(go.Shape, { fill: "gold" },
-	 { figure: "Ellipse"},
+	 { figure: "RoundedRectangle"},
 	
 	 new go.Binding("fill", "color")),
 	 

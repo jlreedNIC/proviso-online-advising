@@ -1,140 +1,31 @@
 <?php
 
+
 require("php_scripts/db_connection.php");
-// query for course table
-$con = OpenCon();
 
-// can get all courses req
-// can get prereqs of all courses req
-// if coursesID is in prereqs, then add path(prereq, course)
-// else add path(course)
+//first query
+$sql = " SELECT * FROM adv_students
+where Student_ID = 1; 
+";
 
-// query to grab all specified course requirements
-$req_courses_qry = "select DegreeID, courses.Course_ID, Course_Name, Department, Course_Num
-                    from degree_classes_req
-                    join courses on degree_classes_req.Course_ID=courses.Course_ID
-                    where DegreeID=1
-                    order by Course_Num";
+$result = $mysqli->query($sql);
 
-$req_prereqs_qry = "select dc.Course_Name as dcName, dc.Department as dcDept, dc.Course_Num as dcNum, c.Course_Name as pName, c.Course_Num as pNum, c.Department as pDept
-                    from
-                    (select DegreeID, courses.Course_ID, Course_Name, Department, Course_Num
-                    from degree_classes_req
-                    join courses on degree_classes_req.Course_ID=courses.Course_ID
-                    where DegreeID=1) as dc
-                    join prereq as p on dc.Course_ID=p.Course_ID
-                    join courses as c on p.Prereq_ID=c.Course_ID";
+//second query
+$sql2 = " SELECT * FROM adv_students
+where Student_ID = 2; 
+";
 
-$rs1 = mysqli_query($con, $req_courses_qry);
-$rs2 = mysqli_query($con, $req_prereqs_qry);
+$result2 = $mysqli->query($sql2);
 
-$size = 0;
-while($row = mysqli_fetch_array($rs1, MYSQLI_ASSOC))
-{
-    $rCourses[$size] = $row;
-    $size++;
-}
+//third query
+$sql3 = " SELECT * FROM adv_students
+where Student_ID = 3; 
+";
 
-$size = 0;
-while($row = mysqli_fetch_array($rs2, MYSQLI_ASSOC))
-{
-    $rPrereqs[$size] = $row;
-    $size++;
-}
+$result3 = $mysqli->query($sql3);
 
-$i = 0;
-$min = 100;
-$max = 200;
-while($max < 600)
-// for($num = 200; $num < 600; $num += 100)
-{
-    $req_courses = "select Course_Name, Department, Course_Num
-                    from degree_classes_req
-                    join courses on degree_classes_req.Course_ID=courses.Course_ID
-                    where DegreeID=1 and Course_Num < ".$max." and Course_Num > ".$min."
-                    order by Course_Num";
-    
-    $req_prereqs = "select dc.Course_Name as dcName, dc.Department as dcDept, dc.Course_Num as dcNum, c.Course_Name as pName, c.Course_Num as pNum, c.Department as pDept
-                    from
-                    (select DegreeID, courses.Course_ID, Course_Name, Department, Course_Num
-                    from degree_classes_req
-                    join courses on degree_classes_req.Course_ID=courses.Course_ID
-                    where DegreeID=1) as dc
-                    join prereq as p on dc.Course_ID=p.Course_ID
-                    join courses as c on p.Prereq_ID=c.Course_ID
-                    where dc.Course_Num < ".$max." and dc.Course_Num > ".$min." and c.Course_Num > ".$min;
-    
-    $courses[$i] = mysqli_query($con, $req_courses);
-    $prereqs[$i] = mysqli_query($con, $req_prereqs);
+$mysqli->close();
 
-    $i += 1;
-    $min += 100;
-    $max += 100;
-}
-
-
-$size = 0;
-while($row = mysqli_fetch_array($courses[0], MYSQLI_ASSOC))
-{
-    $freshman_courses[$size] = $row;
-    $size++;
-}
-
-$size = 0;
-while($row = mysqli_fetch_array($prereqs[0], MYSQLI_ASSOC))
-{
-    $freshman_prereqs[$size] = $row;
-    $size++;
-}
-
-$size = 0;
-while($row = mysqli_fetch_array($courses[1], MYSQLI_ASSOC))
-{
-    $sophomore_courses[$size] = $row;
-    $size++;
-}
-
-$size = 0;
-$sophomore_prereqs = [];
-while($row = mysqli_fetch_array($prereqs[1], MYSQLI_ASSOC))
-{
-    $sophomore_prereqs[$size] = $row;
-    $size++;
-}
-if($sophomore_prereqs == null) echo "empty";
-
-
-$size = 0;
-while($row = mysqli_fetch_array($courses[2], MYSQLI_ASSOC))
-{
-    $junior_courses[$size] = $row;
-    $size++;
-}
-
-$size = 0;
-$junior_prereqs = [];
-while($row = mysqli_fetch_array($prereqs[2], MYSQLI_ASSOC))
-{
-    $junior_prereqs[$size] = $row;
-    $size++;
-}
-
-$size = 0;
-while($row = mysqli_fetch_array($courses[3], MYSQLI_ASSOC))
-{
-    $senior_courses[$size] = $row;
-    $size++;
-}
-
-$size = 0;
-$senior_prereqs = [];
-while($row = mysqli_fetch_array($prereqs[3], MYSQLI_ASSOC))
-{
-    $senior_prereqs[$size] = $row;
-    $size++;
-}
-
-CloseCon($con);
 
 ?>
 
@@ -166,6 +57,78 @@ CloseCon($con);
             body {
                 background-color: white;
             }
+			
+			tr:hover { 
+                background: gray; 
+            }
+            
+            td a { 
+                display: block; 
+                border: 1px solid black;
+                padding: 16px; 
+            }
+
+            /* Extra styles for the cancel button */
+            .cancelbtn {
+            padding: 14px 20px;
+            background-color: #f44336;
+            }
+
+            /* Float cancel and signup buttons and add an equal width */
+            .cancelbtn, .signupbtn {
+            float: left;
+            width: 50%;
+            }
+
+            /* Add padding to container elements */
+            .container {
+            padding: 16px;
+            }
+
+            /* The Modal (background) */
+            .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: #474e5d;
+            padding-top: 50px;
+            }
+
+            /* Modal Content/Box */
+            .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+            border: 1px solid #888;
+            width: 80%; /* Could be more or less, depending on screen size */
+            }
+
+            /* The Close Button (x) */
+            .close {
+            position: absolute;
+            right: 35px;
+            top: 15px;
+            font-size: 40px;
+            font-weight: bold;
+            color: #f1f1f1;
+            }
+
+            .close:hover,
+            .close:focus {
+            color: #f44336;
+            cursor: pointer;
+            }
+
+            /* Clear floats */
+            .clearfix::after {
+            content: "";
+            clear: both;
+            display: table;
+            }
         </style>
     </head>
 
@@ -180,78 +143,137 @@ CloseCon($con);
 
         <header style="padding:80px; text-align: center;">
             <h1>
-                Sample Course Timeline
+                My Students
             </h1>
             <hr style="border: 1px solid black;">
         </header>
-
        
-        
-        <div class="container-fluid" style="width:80%">
+ <!-- recommended courses  -->
+ <div class="container-fluid" style="width: 80%">
             <div class="card my-card shadow p-3 mb-5 bg-white rounded">
                 <div class="card-body">
-                    <div> <h2>Four Year Plan</h2> </div>
-                        <canvas id="allyears" width="1200" height="600"></canvas>
+                    <h2>Student List</h2></br>
+                   
+						
+                    <table class="table bg-white" id="myTable">
+                        <thead class="bg-dark text-light">
+                            <tr>
+                                <th>Student ID</th>
+                                <th>Student Name</th>
+                                <th>Phone #</th>
+                                <th>Email</th>
+                                <th>Career Graph</th>
+                            
+                            </tr>
+                        </thead>
+                        <tbody>
+                           
+                              
+                               
+                            <?php
+                                // LOOP TILL END OF DATA
+                                while($rows=$result->fetch_assoc())
+                                {
+                            ?>
+                            <tr onclick="document.getElementById('id01').style.display='block'" style="padding:10px;">
+                         
+                                <td><?php echo $rows['Student_ID'];?></td>
+                                <td><?php echo $rows['Name'];?></td>
+                                <td><?php echo $rows['Phone'];?></td>
+                                <td><?php echo $rows['Email'];?></td>
+                                <td > Click me </td>
+
+                            </tr>
+
+                            <?php
+				                }
+		                    ?>
+
+
+                            <?php
+                                // LOOP TILL END OF DATA
+                                while($rows=$result2->fetch_assoc())
+                                {
+                            ?>
+                            <tr onclick="document.getElementById('id02').style.display='block'" style="padding:10px;">
+                                
+                                <td><?php echo $rows['Student_ID'];?></td>
+                                <td><?php echo $rows['Name'];?></td>
+                                <td><?php echo $rows['Phone'];?></td>
+                                <td><?php echo $rows['Email'];?></td>
+                                <td > Click me </td>
+
+                            </tr>
+
+                            <?php
+				                }
+		                    ?>
+
+
+                            <?php
+                                // LOOP TILL END OF DATA
+                                while($rows=$result3->fetch_assoc())
+                                {
+                            ?>
+                            <tr onclick="document.getElementById('id03').style.display='block'" style="padding:10px;">
+                                
+                                <td><?php echo $rows['Student_ID'];?></td>
+                                <td><?php echo $rows['Name'];?></td>
+                                <td><?php echo $rows['Phone'];?></td>
+                                <td><?php echo $rows['Email'];?></td>
+                                <td > Click me </td>
+
+                            </tr>
+
+                            <?php
+				                }
+		                    ?>
+		                   
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
 
-        <div class="container-fluid" style="width:80%">
-            <div class="card my-card shadow p-3 mb-5 bg-white rounded">
-                <div class="card-body">
-                    <!-- <div class="row"> -->
-                        <div> <h2>Freshman Year</h2> </div>
-                            <canvas id="freshman" width="1200" height="300"></canvas>
-                    <!-- </div> -->
 
-                    <div class="row">
-                        <div> <h2>Sophomore Year</h2> </div>
-                        <div class="col-md-6">
-                            <h4> Fall</h4>
-                            <canvas id="sfall" width="500" height="300">
-                            </canvas>
-                        </div>
+  <div id="id01" class="modal">
+  <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal"  >&times;</span>
+  <form class="modal-content" action="/action_page.php">
+    <div class="container">
+      <h1>Software Developer:</h1></br>
+        <canvas  width="10" height="20"></canvas>
+        <h2> Career Graph: </h2></br>        
+        <p align="center"><iframe src="gojs/release/t.php" height="950" style="width:100%"  title="Iframe Example"></iframe></p>
 
-                        <div class="col-md-6">
-                            <h4> Spring</h4>
-                            <canvas id="sspring" width="500" height="300">
-                            </canvas>
-                        </div>
-                    </div>
+    </div>
+  </form>
+</div>
 
-                    <div class="row">
-                        <div> <h2>Junior Year</h2> </div>
-                        <div class="col-md-6">
-                            <h4> Fall</h4>
-                            <canvas id="jfall" width="500" height="300">
-                            </canvas>
-                        </div>
+<div id="id02" class="modal">
+  <span onclick="document.getElementById('id02').style.display='none'" class="close" title="Close Modal"  >&times;</span>
+  <form class="modal-content" action="/action_page.php">
+    <div class="container">
+      <h1>Information Security Analyst:</h1></br>
+      <h2> Career Graph: </h2></br>   
+             
+        <p align="center"><iframe src="gojs/release/t2.php" height="950" style="width:100%"  title="Iframe Example"></iframe></p>
 
-                        <div class="col-md-6">
-                            <h4> Spring</h4>
-                            <canvas id="jspring" width="500" height="300">
-                            </canvas>
-                        </div>
-                    </div>
+    </div>
+  </form>
+</div>
 
-                    <div class="row">
-                        <div> <h2>Senior Year</h2> </div>
-                        <div class="col-md-6">
-                            <h4> Fall</h4>
-                            <canvas id="srfall" width="500" height="300">
-                            </canvas>
-                        </div>
 
-                        <div class="col-md-6">
-                            <h4> Spring</h4>
-                            <canvas id="srspring" width="500" height="300">
-                            </canvas>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<div id="id03" class="modal">
+  <span onclick="document.getElementById('id03').style.display='none'" class="close" title="Close Modal"  >&times;</span>
+  <form class="modal-content" action="/action_page.php">
+    <div class="container">
+      <h1>Web Developer:</h1></br>
+      <h2> Career Graph: </h2></br>       
+        <p align="center"><iframe src="gojs/release/t3.php" height="950" style="width:100%"  title="Iframe Example"></iframe></p>
 
+    </div>
+  </form>
+</div>
     
         <?php
             include('templates/footer.php');
@@ -262,122 +284,4 @@ CloseCon($con);
     </body>  
 </html>  
 
-<!-- Tooltip enable script  -->
-<script>
-    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {return new bootstrap.Tooltip(tooltipTriggerEl)})
-</script>
 
-<script>
-    // $courses $prereqs
-    var courseArray = <?php echo json_encode($freshman_courses); ?>;
-    var prereqArray = <?php echo json_encode($freshman_prereqs); ?>;
-
-    var g = new flowjs.DiGraph();
-    
-    i=0;
-    for(i=0; i<courseArray.length; i++)
-    {
-        g.addPaths([ [courseArray[i]['Department'] + courseArray[i]['Course_Num']] ]);
-    }
-    
-    if(prereqArray != undefined)
-    {
-        for(i=0; i<prereqArray.length; i++)
-        {
-            g.addPaths([
-                [prereqArray[i]['pDept'] + prereqArray[i]['pNum'], prereqArray[i]['dcDept'] + prereqArray[i]['dcNum'], "Sophomore"]
-            ]);
-        }
-    }
-
-    var courseArray = <?php echo json_encode($sophomore_courses); ?>;
-    var prereqArray = <?php echo json_encode($sophomore_prereqs); ?>;
-    
-    if(prereqArray.length > 0)
-    {
-        g.addPaths([ [ "testing2"] ]);
-        for(i=0; i<prereqArray.length; i++)
-        {
-            g.addPaths([
-                [ "Sophomore", prereqArray[i]['pDept'] + prereqArray[i]['pNum'], prereqArray[i]['dcDept'] + prereqArray[i]['dcNum'], "Junior"]
-            ]);
-        }
-    }
-    else
-    {
-        for(i=0; i<courseArray.length; i++)
-        {
-            g.addPaths([ [ "Sophomore", courseArray[i]['Department'] + courseArray[i]['Course_Num'], "Junior"] ]);
-        }
-    }
-
-    var courseArray = <?php echo json_encode($junior_courses); ?>;
-    var prereqArray = <?php echo json_encode($junior_prereqs); ?>;
-    
-    if(prereqArray.length > 0)
-    {
-        for(i=0; i<prereqArray.length; i++)
-        {
-            g.addPaths([
-                [ "Junior", prereqArray[i]['pDept'] + prereqArray[i]['pNum'], prereqArray[i]['dcDept'] + prereqArray[i]['dcNum'], "Senior"]
-            ]);
-        }
-        for(i=0; i<courseArray.length; i++)
-        {
-            if(g.getNode(courseArray[i]['Department'] + courseArray[i]['Course_Num']) == null)
-            {
-                g.addPaths([ [ "Junior", courseArray[i]['Department'] + courseArray[i]['Course_Num'], "Senior"] ]);
-            }
-        }
-    }
-    else
-    {
-        for(i=0; i<courseArray.length; i++)
-        {
-            g.addPaths([ [ "Junior", courseArray[i]['Department'] + courseArray[i]['Course_Num'], "Senior"] ]);
-        }
-    }
-
-    var courseArray = <?php echo json_encode($senior_courses); ?>;
-    var prereqArray = <?php echo json_encode($senior_prereqs); ?>;
-    
-    if(prereqArray.length > 0)
-    {
-        g.addPaths([ [ "testing2"] ]);
-        for(i=0; i<prereqArray.length; i++)
-        {
-            g.addPaths([
-                [ "Senior", prereqArray[i]['pDept'] + prereqArray[i]['pNum'], prereqArray[i]['dcDept'] + prereqArray[i]['dcNum']]
-            ]);
-        }
-    }
-    else
-    {
-        for(i=0; i<courseArray.length; i++)
-        {
-            g.addPaths([ [ "Senior", courseArray[i]['Department'] + courseArray[i]['Course_Num']] ]);
-        }
-    }
-    
-
-    new flowjs.DiFlowChart("freshman", g).draw();
-
-    // all courses with no breakup
-    var courseArray = <?php echo json_encode($rCourses); ?>;
-    var prereqArray = <?php echo json_encode($rPrereqs); ?>;
-    var a = new flowjs.DiGraph();
-    for(i=0; i<courseArray.length; i++)
-    {
-        a.addPaths([ [courseArray[i]['Department'] + courseArray[i]['Course_Num']] ]);
-    }
-    for(i=0; i<prereqArray.length; i++)
-    {
-        a.addPaths([
-            [prereqArray[i]['pDept'] + prereqArray[i]['pNum'], prereqArray[i]['dcDept'] + prereqArray[i]['dcNum']]
-        ]);
-    }
-    
-    new flowjs.DiFlowChart("allyears", a).draw();
-
-</script>

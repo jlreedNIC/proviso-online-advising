@@ -6,8 +6,9 @@ if(!isset($_SESSION['userName']))
     header("Location: login.php");
     exit();
 }
+require("php_scripts/course_mapper_queries.php");
 
-require("php_scripts/db_connection.php");
+// require("php_scripts/db_connection.php");
 $con = OpenCon(); // open connection to database
 
 $sql = " SELECT * FROM student_take";
@@ -35,9 +36,23 @@ while($row = mysqli_fetch_array($rs, MYSQLI_ASSOC))
     $size++;
 }
 
+for($i=0; $i<count($courses_master_list); $i++)
+{
+    $qry = "SELECT Skill_Name
+            from course_skills
+            join skills on skills.Skill_ID=course_skills.Skill_ID
+            where course_skills.Course_ID = ".$courses_master_list[$i]['Course_ID']."";
+    
+    $rs = mysqli_query($con, $qry);
+    $size = 0;
+    if(mysqli_num_rows($rs) == 0) $skills[$i] = [];
+    while($row = mysqli_fetch_array($rs, MYSQLI_ASSOC))
+    {
+        $skills[$i][$size] = $row;
+        $size++;
+    }
+}
 
-//require("php_scripts/db_connection.php");
-// query for course table
 
 // $con = OpenCon();
 $qry = "select * from courses
@@ -52,6 +67,23 @@ while($row = mysqli_fetch_array($rs, MYSQLI_ASSOC))
     $data[$size] = $row;
     $size++;
 }
+
+
+// ((select courses.Course_ID, courses.Department, courses.Course_Num, courses.Course_Name
+// from degree_classes_req
+// join user_degree on user_degree.DegreeID=degree_classes_req.DegreeID
+// join students on students.userID=user_degree.userID
+// join courses on degree_classes_req.Course_ID=courses.Course_ID)
+// union distinct
+// (select courses.Course_ID, courses.Department, courses.Course_Num, courses.Course_Name
+// from prereq
+// join degree_classes_req on degree_classes_req.Course_ID=prereq.Course_ID
+// join user_degree on user_degree.DegreeID=degree_classes_req.DegreeID
+// join students on students.userID=user_degree.userID
+// join courses on prereq.Prereq_ID=courses.Course_ID))
+// order by Department, Course_Num
+
+
 
 // query for graph
 $qry = "select prereq.Prereq_ID, p.Department as pdept, p.Course_Num as pnum, p.Course_Name as pname, p.Credits as pcred, 
@@ -156,8 +188,8 @@ CloseCon($con);
                     <div class="row">
                         <div class="col-md-6">
                             Legend:
-                            <!--<i class="fa fa-square-o" aria-hidden="true"></i> Not Completed -->
-                            <i class="fa fa-check-square-o" aria-hidden="true"></i> Completed
+                            <i class="fa fa-square-o" aria-hidden="true"></i> Not Completed
+                            <!-- <i class="fa fa-check-square-o" aria-hidden="true"></i> Completed -->
                             <!--<i class="fa fa-plus-square-o" aria-hidden="true"></i> Added by Career Goal -->
                         </div>
                         <div class="col-md-6" style="text-align: right">
@@ -179,17 +211,32 @@ CloseCon($con);
                             <?php
                                 // LOOP TILL END OF DATA
                                 // while($rows=$result->fetch_assoc())
-                                for($i=0; $i<$size; $i++)
+                                // for($i=0; $i<$size; $i++)
+                                // {
+                                for($i=0; $i<count($courses_master_list); $i++)
                                 {
+                                    
 			                ?>
                             <tr>
-                                <td><i class="fa fa-check-square-o" aria-hidden="true"></i></td>
-                                <td><?php echo $data[$i]['Department']." ".$data[$i]['Course_Num'];?></td>
-                                <td><?php echo $data[$i]['Course_Name']." (".$data[$i]['Credits'].")";?></td>
+                                <td><i class="fa fa-square-o" aria-hidden="true"></i></td>
+                                <td><?php echo $courses_master_list[$i]['Department']." ".$courses_master_list[$i]['Course_Num'];?></td>
+                                <td><?php echo $courses_master_list[$i]['Course_Name']." (".$courses_master_list[$i]['Credits'].")";?></td>
                                 <td>
-                                    <span class="badge badge-info" style="background-color:black">
-                                    <?php echo $data[$i]['Skill_Name']?>
-                                    </span>
+                                    <?php
+                                    if($skills[$i] != null)
+                                    {
+                                        for($j=0; $j<count($skills[$i]); $j++)
+                                        {
+                                            ?>
+                                            <span class="badge badge-info" style="background-color:black">
+                                            <?php echo $skills[$i][$j]['Skill_Name']?>
+                                            </span>
+                                            <?php
+                                        }
+                                    }
+                                    
+                                    ?>
+                                    
                                 </td>
 
                             </tr>

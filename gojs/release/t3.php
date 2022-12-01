@@ -29,7 +29,7 @@ $data = array();
 
 //-----query 1----- skills table
 $users = $mysqli->query("SELECT * FROM  skills 
-JOIN job1_skills ON job1_skills.job1_skill_ID =skills.Skill_ID
+JOIN job1_skills ON job1_skills.job2_skill_ID =skills.Skill_ID
 ");
 $dataa = array();
 
@@ -47,7 +47,7 @@ array_push($dataa, $roww);
 
 //-----query 2----- job1 table
 $job1 = $mysqli->query("SELECT * FROM job1
-where job1_ID = 1
+where job1_ID = 3
 ");
 $data3 = array();
 
@@ -89,7 +89,7 @@ array_push($data3, $row7);
 
 //----query 3---- all tables for linking to array. 
 $my = $mysqli->query("SELECT * FROM skills,job1
-where job1_ID = 1
+where job1_ID = 3
 ");
 $dat = array();
 

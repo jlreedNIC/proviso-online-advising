@@ -132,6 +132,7 @@ button:hover {
   display: table;
 }
 
+
 /* Change styles for cancel button and signup button on extra small screens */
 @media screen and (max-width: 300px) {
   .cancelbtn, .signupbtn {
@@ -174,6 +175,12 @@ button:hover {
        <p>
        Salary: Around $105,000, according to the U.S. Bureau of Labor Statistics.
        </p>
+
+        <canvas  width="10" height="20"></canvas>
+        <h2> Career Graph: </h2></br>   
+        <h3> (Software Developer for Micron) </h3></br>       
+        <p align="center"><iframe src="gojs/release/t.php" height="950" style="width:100%"  title="Iframe Example"></iframe></p>
+
     </div>
   </form>
 </div>
@@ -193,6 +200,9 @@ button:hover {
         as a whole organization’s security is on the line. 
         Being able to predict outcomes and adjust security accordingly is also key.</p>
       <p>Salary: Around $98,000.</P>
+      <h2> Career Graph: </h2></br>   
+        <h3> (Security Analyst for Micron) </h3></br>       
+        <p align="center"><iframe src="gojs/release/t2.php" height="950" style="width:100%"  title="Iframe Example"></iframe></p>
 
     </div>
   </form>
@@ -211,23 +221,14 @@ button:hover {
       It’s also important to have knowledge of graphic design 
       and a collaborative mindset while working with other designers on projects.</p>
       <p>Salary: Around $69,000.</P>
-      
+      <h2> Career Graph: </h2></br>   
+        <h3> (Web Developer for Prosoft) </h3></br>       
+        <p align="center"><iframe src="gojs/release/t3.php" height="950" style="width:100%"  title="Iframe Example"></iframe></p>
+
     </div>
   </form>
 </div>
-
-<div class="container-fluid" style="width:100%">
-            <div class="card my-card shadow p-3 mb-5 bg-white rounded">
-                <div class="card-body">
-                    <h2> Most commonly chosen: </h2></br>
-                    <h3> Software Developer Career Graph </h3></br>
-                    <canvas  width="10" height="20"></canvas>
-                    <iframe src="gojs/release/t.php" height="950" style="width:100%"  title="Iframe Example"></iframe>
-                </div>
-            </div>
-        </div>
-
-        
+    
       
 		<?php
         include('templates/footer.php');

@@ -296,7 +296,10 @@ CloseCon($con);
                 </div>
 
                 <div class="card-body">
-                    <div id ="myDiagramDiv" style = "border: solid 1px black; width:1320px; height:900px"></div>
+                    <h5>Legend</h5>
+                    <div id ="LegendDiagram" style = "border: solid 1px black; width:1320px; height:300px"></div>
+                    <br>
+                    <div id ="myDiagramDiv" style = "border: solid 1px black; width:1320px; height:700px"></div>
                 </div>
             </div>
         </div>
@@ -326,6 +329,7 @@ CloseCon($con);
             $(go.Node, go.Panel.Auto,
                 $(go.Shape,
                 { figure: "RoundedRectangle"},
+                new go.Binding("figure", "fig"),
                 
                 new go.Binding("fill", "color")),
                 
@@ -350,11 +354,22 @@ CloseCon($con);
 
         // load all courses
 
+        temp_figure = "RoundedRectangle";
         for(i=0; i<courses_master_list.length; i++)
         {
-            nodeDataArray.push({key: courses_master_list[i]['Department'] + " " + courses_master_list[i]['Course_Num'], 
-                                color: courses_master_list[i]['color']});
+            
+            if(courses_master_list[i]['group'] == "Freshman") temp_figure = "RoundedRectangle";
+            else if(courses_master_list[i]['group'] == "Sophomore") temp_figure = "Ellipse";
+            else if(courses_master_list[i]['group'] == "Junior") temp_figure = "Rectangle";
+            else if(courses_master_list[i]['group'] == "Senior") temp_figure = "Diamond";
+            else temp_figure = "RoundedRectangle";
+            console.log("figure: " + temp_figure);
+
+            nodeDataArray.push({ key: courses_master_list[i]['Department'] + " " + courses_master_list[i]['Course_Num'], 
+                                color: courses_master_list[i]['color'], fig: temp_figure });
         }
+
+        
 
         // load all prereqs
 
@@ -365,5 +380,57 @@ CloseCon($con);
         }
         
         diagram.model = new go.GraphLinksModel(nodeDataArray, linkDataArray); 
+
+        // ------------------------------------------
+        // second diagram for legend
+
+        var d2 = new go.Diagram("LegendDiagram");
+        d2.initialContentAlignment = go.Spot.Center; 
+        
+        d2.nodeTemplate =
+            $(go.Node, go.Panel.Auto,
+                $(go.Shape,
+                { figure: "RoundedRectangle"},
+                new go.Binding("figure", "fig"),
+                
+                new go.Binding("fill", "color")),
+                
+                $(go.TextBlock,
+                { margin: 5 },
+                
+                new go.Binding("text", "key"))
+            ); 
+        
+        
+            d2.layout = $(go.LayeredDigraphLayout,
+            {
+                direction: 90,
+            }
+        );
+
+
+        var nodeDataArray = [
+            {key: "Current Year", isGroup: true},
+            {key: "Completed", color: "green", fig: "RoundedRectangle", group: "Current Year"},
+            {key: "Available", color: "gold", fig: "RoundedRectangle", group: "Current Year"},
+            {key: "Career Recommended", color: "blue", fig: "RoundedRectangle", group: "Current Year"},
+
+            {key: "Other Years", isGroup: true},
+            {key: "Completed", color: "lightgreen", fig: "RoundedRectangle", group: "Other Years"},
+            {key: "Available", color: "lightyellow", fig: "RoundedRectangle", group: "Other Years"},
+            {key: "Career Recommended", color: "lightblue", fig: "RoundedRectangle", group: "Other Years"},
+
+            {key: "Standing", isGroup: true},
+            {key: "Freshman", color: "gray", fig: "RoundedRectangle", group: "Standing"},
+            {key: "Sophomore", color: "gray", fig: "Ellipse", group: "Standing"},
+            {key: "Junior", color: "gray", fig: "Rectangle", group: "Standing"},
+            {key: "Senior", color: "gray", fig: "Diamond", group: "Standing"},
+        ];
+        var linkDataArray = [];
+
+
+        
+        
+        d2.model = new go.GraphLinksModel(nodeDataArray, linkDataArray); 
     }
 </script>

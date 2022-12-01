@@ -28,7 +28,7 @@ $con = OpenCon();
 
 // ------------------------------------------------------------
 // get courses required by degree for given student
-$qry = "SELECT courses.Course_ID, Department, Course_Num
+$qry = "SELECT courses.Course_ID, Department,  Course_Num, Course_Name, Credits
         from degree_classes_req
         join user_degree on user_degree.DegreeID=degree_classes_req.DegreeID
         join courses on degree_classes_req.Course_ID=courses.Course_ID
@@ -57,7 +57,7 @@ while($row = mysqli_fetch_array($rs, MYSQLI_ASSOC))
 
 // ------------------------------------------
 // career selected courses
-$qry = "SELECT distinct courses.Course_ID, Department, Course_Num
+$qry = "SELECT distinct courses.Course_ID, Department, Course_Num, Course_Name, Credits
         from user_career
         join careers_req_skills on user_career.Career_ID=careers_req_skills.Career_ID
         join course_skills on course_skills.Skill_ID=careers_req_skills.Skill_ID
@@ -128,7 +128,7 @@ while($row = mysqli_fetch_array($rs, MYSQLI_ASSOC))
 
 // ----------------------------
 // get courses student will take
-$qry = "SELECT courses.Course_ID, Department, Course_Num
+$qry = "SELECT courses.Course_ID, Department,  Course_Num, Course_Name, Credits
         from students_will_take
         join students on students.userID=students_will_take.User_ID
         join courses on courses.Course_ID=students_will_take.Course_ID
@@ -176,7 +176,7 @@ while($row = mysqli_fetch_array($rs, MYSQLI_ASSOC))
 
 // --------------------------------------------
 // get courses student has taken
-$qry = "SELECT courses.Course_ID, Department, Course_Num 
+$qry = "SELECT courses.Course_ID, Department,  Course_Num, Course_Name, Credits
         FROM students_have_taken
         join students on students.userID=students_have_taken.User_ID
         join courses on students_have_taken.Course_ID=courses.Course_ID
@@ -255,7 +255,7 @@ $size = count($courses_master_list);
 $prereqSize = 0;
 for($i=0; $i<$size; $i++)
 {
-    $qry = "SELECT pre.Course_ID as pID, pre.Department as preDept, pre.Course_Num as preNum, courses.Course_ID as cID, courses.Department as dept, courses.Course_Num as num
+    $qry = "SELECT pre.Course_ID as pID, pre.Department as preDept, pre.Course_Num as preNum, pre.Course_Name as preName, pre.Credits as preCredits, courses.Course_ID as cID, courses.Department as dept, courses.Course_Num as num, courses.Course_Name as cName, courses.Credits as credits
             from prereq
             join courses as pre on prereq.Prereq_ID=pre.Course_ID
             join courses on prereq.Course_ID=courses.Course_ID
@@ -277,6 +277,8 @@ for($i=0; $i<$size; $i++)
             $newClass['Course_ID'] = $prereqs_req[$prereqSize]['pID'];
             $newClass['Department'] = $prereqs_req[$prereqSize]['preDept'];
             $newClass['Course_Num'] = $prereqs_req[$prereqSize]['preNum'];
+            $newClass['Course_Name'] = $prereqs_req[$prereqSize]['preName'];
+            $newClass['Credits'] = $prereqs_req[$prereqSize]['preCredits'];
             $newClass['color'] = "gray";
 
             // echo "----------now checking color variations in master list of: ";
@@ -341,6 +343,8 @@ function search_for_all_parents($dept, $courseNum, $prereqArr)
             $course['Course_ID'] = $prereqArr[$i]['pID'];
             $course['Department'] = $prereqArr[$i]['preDept'];
             $course['Course_Num'] = $prereqArr[$i]['preNum'];
+            $course['Course_Name'] = $prereqArr[$i]['preName'];
+            $course['Credits'] = $prereqArr[$i]['preCredits'];
             array_push($courses, $course);
         }
     }
@@ -381,6 +385,9 @@ for($i=0; $i<count($courses_master_list); $i++)
         {
             $dept = $prereqs_req[$indexes[$j]]['dept'];
             $courseNum = $prereqs_req[$indexes[$j]]['num'];
+            $credits = $prereqs_req[$indexes[$j]]['credits'];
+            $courseName = $prereqs_req[$indexes[$j]]['cName'];
+            $cID = $prereqs_req[$indexes[$j]]['cID'];
             
             // echo "-----searching for all parents of: ".$dept." ".$courseNum."<br>";
             $parentI = search_for_all_parents($dept, $courseNum, $prereqs_req);
@@ -409,6 +416,8 @@ for($i=0; $i<count($courses_master_list); $i++)
                 $c['Course_ID'] = $prereqs_req[$indexes[$j]]['cID'];
                 $c['Department'] = $dept;
                 $c['Course_Num'] = $courseNum;
+                $c['Course_Name'] = $courseName;
+                $c['Credits'] = $credits;
 
                 $index = search_master_for_course($c, $courses_master_list);
                 if($courses_master_list[$index]['color'] != "green") $courses_master_list[$index]['color'] = "pink";
@@ -433,6 +442,15 @@ for($i=0; $i<count($courses_master_list); $i++)
     }
 }
 
+// ----------------
+// put into correct groups based on course number
+for($i=0; $i<count($courses_master_list); $i++)
+{
+    if($courses_master_list[$i]['Course_Num'] < 200) $courses_master_list[$i]['group'] = "Freshman";
+    else if($courses_master_list[$i]['Course_Num'] < 300) $courses_master_list[$i]['group'] = "Sophomore";
+    else if($courses_master_list[$i]['Course_Num'] < 400) $courses_master_list[$i]['group'] = "Junior";
+    else if($courses_master_list[$i]['Course_Num'] < 500) $courses_master_list[$i]['group'] = "Senior";
+}
 
 
 

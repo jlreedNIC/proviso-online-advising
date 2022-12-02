@@ -297,11 +297,17 @@ CloseCon($con);
 
                 <div class="card-body">
 
-                    <h5>Legend
-                        <span class="badge badge-info" style="background-color: green; color: black">Completed</span> 
-                        <span class="badge badge-info" style="background-color: pink; color: black">Available</span>
-                        <span class="badge badge-info" style="background-color: lightblue; color: black">Career Recommended</span>
-                        <span class="badge badge-info" style="background-color: indianred; color: black">Courses Behind</span>
+                    <h5>Legend:
+                        <span class="badge badge-info" style="background-color: gray; color: black">Course Not Available</span>
+                        <span class="badge badge-info" style="background-color: aquamarine; color: black">Course Available</span>
+                        <span class="badge badge-info" style="background-color: green; color: black">Course Completed</span> 
+                        <span class="badge badge-info" style="background-color: deepskyblue; color: black">Course Recommended by Career</span> |
+                        
+                        <span class="badge badge-info" style="background-color: lightgray; color: black">Grade Not Available</span>
+                        <span class="badge badge-info" style="background-color: lightskyblue; color: black">Grade Available</span>
+                        <span class="badge badge-info" style="background-color: palegreen; color: black">Grade Completed</span>
+                        <span class="badge badge-info" style="background-color: salmon; color: black">Grade Behind</span>
+                        
                     </h5>
 
                     <div id ="myDiagramDiv" class="container-fluid" style = "border: solid 1px black; height:700px"></div>
@@ -372,6 +378,12 @@ CloseCon($con);
         var nodeDataArray = [];
         var linkDataArray = [];
 
+        // colors
+        completed_group = "palegreen";
+        behind_group = "salmon";
+        blank_group = "lightgray";
+        avail_group = "lightskyblue";
+
         // load all courses
 
         temp_figure = "RoundedRectangle";
@@ -437,19 +449,19 @@ CloseCon($con);
             var boolean = grades[i][0] == userGrade;
             console.log("boolean: " + boolean);
             if(grades[i][0] == userGrade) gradeIndex = i;
-            if(grades[i][1] == false)
+            if(grades[i][1] == false) // all classes in group are not done
             {
-                grades[i][2] = "lightpink";
+                grades[i][2] = avail_group;
                 
                 for(j=i+1; j<4; j++)
                 {
-                    grades[j][2] = "lightgray";
+                    grades[j][2] = blank_group;
                 }
                 // continue;
             }
             else
             {
-                grades[i][2] = "lightgreen";
+                grades[i][2] = completed_group;
             }
         }
         console.log("grade found at index: " + gradeIndex);
@@ -459,12 +471,12 @@ CloseCon($con);
             console.log("grade: " + grades[i][0] + " == " + userGrade);
             if(grades[i][0] != userGrade && grades[i][1] == false)
             {
-                grades[i][2] = "indianred";
+                grades[i][2] = behind_group;
             }
         }
         for(i=gradeIndex+1; i<4; i++)
         {
-            grades[i][2] = "lightgray";
+            grades[i][2] = blank_group;
         }
         console.log(grades);
 

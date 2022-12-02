@@ -23,6 +23,12 @@ $cat_courses = [];
 $courses_master_list = [];  // complete list of courses student will take, or has taken
 // course_ID, Department, Num
 
+// colors
+$complete_col = "green";
+$avail_col = "aquamarine";
+$blank_col = "gray";
+$career_col = "deepskyblue";
+
 
 $con = OpenCon();
 
@@ -41,7 +47,7 @@ $size = 0;
 while($row = mysqli_fetch_array($rs, MYSQLI_ASSOC))
 {
     $courses_req[$size] = $row;
-    $courses_req[$size]['color'] = "gray";
+    $courses_req[$size]['color'] = $blank_col;
     array_push($courses_master_list, $courses_req[$size]);
     $size++;
 }
@@ -70,13 +76,13 @@ $size = 0;
 while($row = mysqli_fetch_array($rs, MYSQLI_ASSOC))
 {
     $career_rec_courses[$size] = $row;
-    $career_rec_courses[$size]['color'] = "lightblue"; // add query to array
+    $career_rec_courses[$size]['color'] = $career_col; // add query to array
 
     // check if row is in master list
     // if it is in master list and the color is wrong, then fix the color
     $color1 = $career_rec_courses[$size];
     $color2 = $career_rec_courses[$size];
-    $color2['color'] = "gray";
+    $color2['color'] = $blank_col;
     // echo " to search for: ";
     // print_r($career_rec_courses[$size]);
     // echo "<br>color 1:";
@@ -90,7 +96,7 @@ while($row = mysqli_fetch_array($rs, MYSQLI_ASSOC))
         // echo "......gray color found at ".$index."<br>";
         // print_r($courses_master_list[$index]);
         // echo "<br> new color: ";
-        $courses_master_list[$index]['color'] = "lightblue";
+        $courses_master_list[$index]['color'] = $career_col;
         // print_r($courses_master_list[$index]);
         // echo "<br>";
 
@@ -140,12 +146,12 @@ $size = 0;
 while($row = mysqli_fetch_array($rs, MYSQLI_ASSOC))
 {
     $will_take[$size] = $row;
-    $will_take[$size]['color'] = "gray";
+    $will_take[$size]['color'] = $blank_col;
 
     // check for each color variation
     $color1 = $will_take[$size];
     $color2 = $will_take[$size];
-    $color1['color'] = "lightblue";
+    $color1['color'] = $career_col;
     if($index = array_search($color2, $courses_master_list) == false && in_array($color1, $courses_master_list) == false)
     {
         array_push($courses_master_list, $will_take[$size]);
@@ -188,14 +194,14 @@ $size = 0;
 while($row = mysqli_fetch_array($rs, MYSQLI_ASSOC))
 {
     $have_taken[$size] = $row;
-    $have_taken[$size]['color'] = "green";
+    $have_taken[$size]['color'] = $complete_col;
 
     // check for each color variation
     $color1 = $have_taken[$size]; // green
     $color2 = $have_taken[$size]; // lightblue
     $color3 = $have_taken[$size]; // gray
-    $color2['color'] = "lightblue";
-    $color3['color'] = "gray";
+    $color2['color'] = $career_col;
+    $color3['color'] = $blank_col;
 
     $i3 = array_search($color3, $courses_master_list); // look for gray
     $i2 = array_search($color2, $courses_master_list); // look for lightblue
@@ -208,12 +214,12 @@ while($row = mysqli_fetch_array($rs, MYSQLI_ASSOC))
     if($i3 !== false) // gray found
     {
         // echo "---gray found<br>";
-        $courses_master_list[$i3]['color'] = "green";
+        $courses_master_list[$i3]['color'] = $complete_col;
     }
     else if($i2 !== false)
     {
         // echo "-----lightblue found<br>";
-        $courses_master_list[$i2]['color'] = "green";
+        $courses_master_list[$i2]['color'] = $complete_col;
     }
     else if($i1 === false) // green not found
     {
@@ -279,7 +285,7 @@ for($i=0; $i<$size; $i++)
             $newClass['Course_Num'] = $prereqs_req[$prereqSize]['preNum'];
             $newClass['Course_Name'] = $prereqs_req[$prereqSize]['preName'];
             $newClass['Credits'] = $prereqs_req[$prereqSize]['preCredits'];
-            $newClass['color'] = "gray";
+            $newClass['color'] = $blank_col;
 
             // echo "----------now checking color variations in master list of: ";
             // print_r($newClass);
@@ -288,8 +294,8 @@ for($i=0; $i<$size; $i++)
             $color1 = $newClass;
             $color2 = $newClass;
             $color3 = $newClass;
-            $color2['color'] = "lightblue";
-            $color3['color'] = "green";
+            $color2['color'] = $career_col;
+            $color3['color'] = $complete_col;
 
             $i3 = in_array($color3, $courses_master_list); // look for gray
             $i2 = in_array($color2, $courses_master_list); // look for lightblue
@@ -311,20 +317,21 @@ for($i=0; $i<$size; $i++)
 
 function search_master_for_course($course, $masterArr)
 {
+    global $complete_col, $avail_col, $career_col, $blank_col;
     $index = -1;
-    $course['color'] = "gray";
+    $course['color'] = $blank_col;
     $index = array_search($course, $masterArr);
     if($index != false) return $index;
 
-    $course['color'] = "green";
+    $course['color'] = $complete_col;
     $index = array_search($course, $masterArr);
     if($index != false) return $index;
 
-    $course['color'] = "lightblue";
+    $course['color'] = $career_col;
     $index = array_search($course, $masterArr);
     if($index != false) return $index;
 
-    $course['color'] = "pink";
+    $course['color'] = $avail_col;
     $index = array_search($course, $masterArr);
     if($index != false) return $index;
 
@@ -372,7 +379,7 @@ function search_for_all_children($course, $prereqArr)
 // echo "starting to mark available classes<br>";
 for($i=0; $i<count($courses_master_list); $i++)
 {
-    if($courses_master_list[$i]['color'] == "green")
+    if($courses_master_list[$i]['color'] == $complete_col)
     {
         // echo "completed class: ";
         // print_r($courses_master_list[$i]);
@@ -403,7 +410,7 @@ for($i=0; $i<count($courses_master_list); $i++)
                 // echo "-------------checking color of parent node: ";
                 // print_r($courses_master_list[$index]);
                 // echo "<br>";
-                if($courses_master_list[$index]['color'] != "green") 
+                if($courses_master_list[$index]['color'] != $complete_col) 
                 {
                     // echo "====condition failed. parent not completed<br>";
                     $available = false;
@@ -420,7 +427,7 @@ for($i=0; $i<count($courses_master_list); $i++)
                 $c['Credits'] = $credits;
 
                 $index = search_master_for_course($c, $courses_master_list);
-                if($courses_master_list[$index]['color'] != "green") $courses_master_list[$index]['color'] = "pink";
+                if($courses_master_list[$index]['color'] != $complete_col) $courses_master_list[$index]['color'] = $avail_col;
             }
         }
     }
@@ -436,9 +443,9 @@ for($i=0; $i<count($courses_master_list); $i++)
 
 
     $indexes = search_for_all_parents($dept, $courseNum, $prereqs_req);
-    if(count($indexes) == 0 && $courses_master_list[$i]['color'] != "green")
+    if(count($indexes) == 0 && $courses_master_list[$i]['color'] != $complete_col)
     {
-        $courses_master_list[$i]['color'] = "pink";
+        $courses_master_list[$i]['color'] = $avail_col;
     }
 }
 

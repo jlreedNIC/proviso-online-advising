@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 30, 2022 at 05:54 AM
+-- Generation Time: Dec 02, 2022 at 12:42 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -20,6 +20,29 @@ SET time_zone = "+00:00";
 --
 -- Database: `proviso`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `adv_students`
+--
+
+CREATE TABLE `adv_students` (
+  `Student_ID` int(11) NOT NULL,
+  `Name` text NOT NULL,
+  `Phone` text NOT NULL,
+  `Email` text NOT NULL,
+  `Career_ID` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `adv_students`
+--
+
+INSERT INTO `adv_students` (`Student_ID`, `Name`, `Phone`, `Email`, `Career_ID`) VALUES
+(1, 'John Doe Jr', '208-123-1234', 'John@gmail.com', 1),
+(2, 'Jane Doe ', '208-123-4321', 'Jane@gmail.com', 2),
+(3, 'Bob Joe', '509-222-3333', 'Bob@gmail.com', 3);
 
 -- --------------------------------------------------------
 
@@ -608,6 +631,12 @@ INSERT INTO `user_degree` (`User_Degree_ID`, `userID`, `DegreeID`) VALUES
 --
 
 --
+-- Indexes for table `adv_students`
+--
+ALTER TABLE `adv_students`
+  ADD PRIMARY KEY (`Student_ID`);
+
+--
 -- Indexes for table `careers`
 --
 ALTER TABLE `careers`
@@ -756,6 +785,12 @@ ALTER TABLE `user_degree`
 --
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `adv_students`
+--
+ALTER TABLE `adv_students`
+  MODIFY `Student_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `careers`

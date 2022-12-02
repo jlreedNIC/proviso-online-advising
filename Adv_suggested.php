@@ -5,21 +5,24 @@ require("php_scripts/db_connection.php");
 
 //first query
 $sql = " SELECT * FROM adv_students
-where Student_ID = 1; 
+where Career_ID = 1 
+order by Name;
 ";
 
 $result = $mysqli->query($sql);
 
 //second query
 $sql2 = " SELECT * FROM adv_students
-where Student_ID = 2; 
+where Career_ID = 2
+order by Name; 
 ";
 
 $result2 = $mysqli->query($sql2);
 
 //third query
 $sql3 = " SELECT * FROM adv_students
-where Student_ID = 3; 
+where Career_ID = 3
+order by Name; 
 ";
 
 $result3 = $mysqli->query($sql3);

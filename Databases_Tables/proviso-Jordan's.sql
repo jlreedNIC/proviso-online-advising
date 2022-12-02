@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 28, 2022 at 09:25 AM
+-- Generation Time: Dec 02, 2022 at 10:59 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.0.19
 
@@ -20,6 +20,30 @@ SET time_zone = "+00:00";
 --
 -- Database: `proviso`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `adv_students`
+--
+
+CREATE TABLE `adv_students` (
+  `Adv_Students_ID` int(11) NOT NULL,
+  `Student_ID` int(11) NOT NULL,
+  `Name` text NOT NULL,
+  `Phone` text NOT NULL,
+  `Email` text NOT NULL,
+  `Career_ID` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `adv_students`
+--
+
+INSERT INTO `adv_students` (`Adv_Students_ID`, `Student_ID`, `Name`, `Phone`, `Email`, `Career_ID`) VALUES
+(7, 1, 'John Doe Jr', '208-123-1234', 'John@gmail.com', 1),
+(8, 2, 'Jane Doe ', '208-123-4321', 'Jane@gmail.com', 2),
+(9, 3, 'Bob Joe', '509-222-3333', 'Bob@gmail.com', 3);
 
 -- --------------------------------------------------------
 
@@ -103,7 +127,11 @@ INSERT INTO `courses` (`Course_ID`, `Course_Name`, `Course_Num`, `Department`, `
 (16, 'Organisms and Environments', 114, 'BIOL', 4),
 (17, 'General Chemistry I', 111, 'CHEM', 4),
 (18, 'Python for Machine Learning', 477, 'CS', 3),
-(19, 'Analysis of Algorithms', 395, 'CS', 3);
+(19, 'Analysis of Algorithms', 395, 'CS', 3),
+(20, 'Technical Writing', 317, 'ENGL', 3),
+(21, 'CS Senior Capstone Design I', 480, 'CS', 3),
+(22, 'Writing and Rhetoric II', 102, 'ENGL', 3),
+(23, 'Writing and Rhetoric I', 101, 'ENGL', 3);
 
 -- --------------------------------------------------------
 
@@ -272,7 +300,9 @@ INSERT INTO `degree_classes_req` (`Degree_CourseID`, `DegreeID`, `Course_ID`) VA
 (14, 1, 15),
 (15, 1, 14),
 (16, 1, 10),
-(17, 1, 19);
+(17, 1, 19),
+(18, 1, 21),
+(19, 1, 20);
 
 -- --------------------------------------------------------
 
@@ -369,6 +399,7 @@ CREATE TABLE `job1` (
   `CareerID` int(11) NOT NULL,
   `Company` text NOT NULL,
   `Pay` int(11) NOT NULL,
+  `Pos1` text NOT NULL,
   `Pos2` text NOT NULL,
   `Pos3` text NOT NULL,
   `Des2` text NOT NULL,
@@ -379,8 +410,10 @@ CREATE TABLE `job1` (
 -- Dumping data for table `job1`
 --
 
-INSERT INTO `job1` (`job1_ID`, `CareerID`, `Company`, `Pay`, `Pos2`, `Pos3`, `Des2`, `Des3`) VALUES
-(1, 1, 'Micron', 59000, 'SR. Software Developer\r\n', 'Lead Developer', 'Experience:5+ years as a Software Developer. ', 'Experience: 8+ Years hands on experience.');
+INSERT INTO `job1` (`job1_ID`, `CareerID`, `Company`, `Pay`, `Pos1`, `Pos2`, `Pos3`, `Des2`, `Des3`) VALUES
+(1, 1, 'Micron', 59000, 'Software Developer', 'SR. Software Developer\r\n', 'Lead Developer', 'Experience:5+ years as a Software Developer. ', 'Experience: 8+ Years hands on experience.'),
+(2, 2, 'Micron', 40000, 'Information Security analyst (IT Engineer) ', 'SR. Security Analyst', 'Lead Security Analyst ', 'M.S.C.S, B.S.C.S, 5+ years experience', '8+ years experience as SR. Security\r\nAnalyst'),
+(3, 3, 'Prosoft', 60000, 'Entry Level Web Developer', 'Web/Application Developer', 'Lead Web/Application Developer', '6+ years of web application development skills', '10+ Years experience, and 2+ team management experience ');
 
 -- --------------------------------------------------------
 
@@ -389,22 +422,23 @@ INSERT INTO `job1` (`job1_ID`, `CareerID`, `Company`, `Pay`, `Pos2`, `Pos3`, `De
 --
 
 CREATE TABLE `job1_skills` (
+  `job1_skill_PrimaryKey` int(11) NOT NULL,
   `job1_skill_ID` int(11) NOT NULL,
-  `Skill_ID` int(11) NOT NULL,
-  `Skill_Name` text NOT NULL
+  `job2_skill_ID` int(11) NOT NULL,
+  `job3_skill_ID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `job1_skills`
 --
 
-INSERT INTO `job1_skills` (`job1_skill_ID`, `Skill_ID`, `Skill_Name`) VALUES
-(1, 1, 'C'),
-(2, 2, 'C++'),
-(3, 3, 'C#'),
-(4, 4, 'Python'),
-(5, 5, 'Java'),
-(6, 6, 'Bachelors in computer science');
+INSERT INTO `job1_skills` (`job1_skill_PrimaryKey`, `job1_skill_ID`, `job2_skill_ID`, `job3_skill_ID`) VALUES
+(1, 1, 6, 6),
+(2, 2, 7, 7),
+(3, 3, 9, 8),
+(4, 4, 2, 9),
+(5, 5, 10, 10),
+(6, 12, 12, 12);
 
 -- --------------------------------------------------------
 
@@ -442,7 +476,11 @@ INSERT INTO `prereq` (`PreID`, `Prereq_ID`, `Course_ID`) VALUES
 (18, 15, 18),
 (19, 3, 18),
 (20, 12, 19),
-(21, 3, 19);
+(21, 3, 19),
+(22, 20, 21),
+(23, 1, 21),
+(24, 22, 20),
+(25, 23, 22);
 
 -- --------------------------------------------------------
 
@@ -497,7 +535,8 @@ CREATE TABLE `students` (
 INSERT INTO `students` (`userID`, `userName`, `password`, `email`, `firstName`, `lastName`, `gender`, `role`, `grade`) VALUES
 (1, 'reed5204', 'hellothere', 'reed5204@vandals.uidaho.edu', 'Jordan', 'Reed', 'Female', 'Student', 'Junior'),
 (12, 'treed', 'hellothere', 'jfkdls@fjdksl', 'Travis', 'Reed', 'Male', 'Advisor', NULL),
-(13, 'kreed', 'hi', 'fjkdls@jfdkls', 'Katie', 'Reed', 'Female', 'Student', NULL);
+(13, 'kreed', 'hi', 'fjkdls@jfdkls', 'Katie', 'Reed', 'Female', 'Student', NULL),
+(14, 'kreed', 'hello', 'jkfds@jfkdls', 'Katie', 'Reed', 'Female', 'Advisor', NULL);
 
 -- --------------------------------------------------------
 
@@ -523,7 +562,13 @@ INSERT INTO `students_have_taken` (`Have_Taken_ID`, `User_ID`, `Course_ID`, `Sem
 (3, 1, 1, 'Fall', 2022),
 (4, 1, 15, 'Spring', 2015),
 (5, 1, 2, 'Fall', 2011),
-(6, 1, 6, 'Spring', 2022);
+(6, 1, 6, 'Spring', 2022),
+(7, 1, 4, 'Fall', 2020),
+(8, 1, 3, 'Fall', 2020),
+(9, 1, 13, 'Spring', 2015),
+(10, 1, 23, 'Summer', 2019),
+(11, 1, 17, 'Fall', 2014),
+(12, 1, 22, 'Fall', 2013);
 
 -- --------------------------------------------------------
 
@@ -600,6 +645,14 @@ INSERT INTO `user_degree` (`User_Degree_ID`, `userID`, `DegreeID`) VALUES
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `adv_students`
+--
+ALTER TABLE `adv_students`
+  ADD PRIMARY KEY (`Adv_Students_ID`),
+  ADD KEY `Career_ID` (`Career_ID`),
+  ADD KEY `Student_ID` (`Student_ID`);
 
 --
 -- Indexes for table `careers`
@@ -692,7 +745,7 @@ ALTER TABLE `job1`
 -- Indexes for table `job1_skills`
 --
 ALTER TABLE `job1_skills`
-  ADD PRIMARY KEY (`job1_skill_ID`);
+  ADD PRIMARY KEY (`job1_skill_PrimaryKey`);
 
 --
 -- Indexes for table `prereq`
@@ -752,6 +805,12 @@ ALTER TABLE `user_degree`
 --
 
 --
+-- AUTO_INCREMENT for table `adv_students`
+--
+ALTER TABLE `adv_students`
+  MODIFY `Adv_Students_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
 -- AUTO_INCREMENT for table `careers`
 --
 ALTER TABLE `careers`
@@ -767,7 +826,7 @@ ALTER TABLE `careers_req_skills`
 -- AUTO_INCREMENT for table `courses`
 --
 ALTER TABLE `courses`
-  MODIFY `Course_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `Course_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `course_skills`
@@ -803,7 +862,7 @@ ALTER TABLE `degree_category_req`
 -- AUTO_INCREMENT for table `degree_classes_req`
 --
 ALTER TABLE `degree_classes_req`
-  MODIFY `Degree_CourseID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `Degree_CourseID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `degree_min_grade_req`
@@ -821,19 +880,19 @@ ALTER TABLE `full_degree`
 -- AUTO_INCREMENT for table `job1`
 --
 ALTER TABLE `job1`
-  MODIFY `job1_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `job1_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `job1_skills`
 --
 ALTER TABLE `job1_skills`
-  MODIFY `job1_skill_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `job1_skill_PrimaryKey` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `prereq`
 --
 ALTER TABLE `prereq`
-  MODIFY `PreID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `PreID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `skills`
@@ -845,13 +904,13 @@ ALTER TABLE `skills`
 -- AUTO_INCREMENT for table `students`
 --
 ALTER TABLE `students`
-  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `students_have_taken`
 --
 ALTER TABLE `students_have_taken`
-  MODIFY `Have_Taken_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `Have_Taken_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `students_will_take`

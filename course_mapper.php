@@ -296,10 +296,15 @@ CloseCon($con);
                 </div>
 
                 <div class="card-body">
-                    <h5>Legend</h5>
-                    <div id ="LegendDiagram" style = "border: solid 1px black; width:1320px; height:300px"></div>
-                    <br>
-                    <div id ="myDiagramDiv" style = "border: solid 1px black; width:1320px; height:700px"></div>
+
+                    <h5>Legend
+                        <span class="badge badge-info" style="background-color: green; color: black">Completed</span> 
+                        <span class="badge badge-info" style="background-color: pink; color: black">Available</span>
+                        <span class="badge badge-info" style="background-color: lightblue; color: black">Career Recommended</span>
+                        <span class="badge badge-info" style="background-color: indianred; color: black">Courses Behind</span>
+                    </h5>
+
+                    <div id ="myDiagramDiv" class="container-fluid" style = "border: solid 1px black; height:700px"></div>
                 </div>
             </div>
         </div>
@@ -338,6 +343,20 @@ CloseCon($con);
                 
                 new go.Binding("text", "key"))
             ); 
+            
+        diagram.groupTemplate =
+        $(go.Group, "Vertical", 
+            $(go.Panel, "Auto",
+            $(go.Shape, "RoundedRectangle",  // surrounds the Placeholder
+                { parameter1: 14 },
+                new go.Binding("fill", "color")),
+            $(go.Placeholder,    // represents the area of all member parts,
+                { padding: 5})  // with some extra padding around them
+            ),
+            $(go.TextBlock,         // group title
+            {font: "Bold 12pt Sans-Serif" },
+            new go.Binding("text", "key"))
+        );
         
         
         diagram.layout = $(go.LayeredDigraphLayout,
@@ -348,6 +367,7 @@ CloseCon($con);
 
         var courses_master_list = <?php echo json_encode($courses_master_list); ?>;
         var prereqs_req = <?php echo json_encode($prereqs_req); ?>;
+        var userGrade = <?php echo json_encode($_SESSION['grade']); ?>;
 
         var nodeDataArray = [];
         var linkDataArray = [];
@@ -358,15 +378,15 @@ CloseCon($con);
         for(i=0; i<courses_master_list.length; i++)
         {
             
-            if(courses_master_list[i]['group'] == "Freshman") temp_figure = "RoundedRectangle";
-            else if(courses_master_list[i]['group'] == "Sophomore") temp_figure = "Ellipse";
-            else if(courses_master_list[i]['group'] == "Junior") temp_figure = "Rectangle";
-            else if(courses_master_list[i]['group'] == "Senior") temp_figure = "Diamond";
-            else temp_figure = "RoundedRectangle";
+            // if(courses_master_list[i]['group'] == "Freshman") temp_figure = "RoundedRectangle";
+            // else if(courses_master_list[i]['group'] == "Sophomore") temp_figure = "Ellipse";
+            // else if(courses_master_list[i]['group'] == "Junior") temp_figure = "Rectangle";
+            // else if(courses_master_list[i]['group'] == "Senior") temp_figure = "Diamond";
+            // else temp_figure = "RoundedRectangle";
             console.log("figure: " + temp_figure);
 
             nodeDataArray.push({ key: courses_master_list[i]['Department'] + " " + courses_master_list[i]['Course_Num'], 
-                                color: courses_master_list[i]['color'], fig: temp_figure });
+                                color: courses_master_list[i]['color'], fig: temp_figure, group: courses_master_list[i]['group']});
         }
 
         
@@ -375,62 +395,89 @@ CloseCon($con);
 
         for(i=0; i<prereqs_req.length; i++)
         {
-            linkDataArray.push({from: prereqs_req[i]['preDept'] + " " + prereqs_req[i]['preNum'], 
+            prenum = Math.floor(prereqs_req[i]['preNum'] / 100);
+            num = Math.floor(prereqs_req[i]['num'] / 100);
+            console.log("prenum: " + prenum + " num: " + num);
+            if(prenum == num)
+            {
+                linkDataArray.push({from: prereqs_req[i]['preDept'] + " " + prereqs_req[i]['preNum'], 
                                 to: prereqs_req[i]['dept'] + " " + prereqs_req[i]['num']});
+            }
+            
         }
+        linkDataArray.push( {from: "Freshman", to: "Sophomore"} );
+        linkDataArray.push( {from: "Sophomore", to: "Junior"} );
+        linkDataArray.push( {from: "Junior", to: "Senior"} );
+
+        // check if all grade level courses are done
+        grades = [["Freshman",true, "lightgray"], ["Sophomore", true, "lightgray"], ["Junior", true, "lightgray"], ["Senior", true, "lightgray"]];
+        
+        freshDone = true;
+        sophDone = true;
+        junDone = true;
+        senDone=true;
+        for(i=0; i<nodeDataArray.length; i++)
+        {
+            for(j=0; j<4; j++)
+            {
+                if(nodeDataArray[i]['group'] == grades[j][0] && nodeDataArray[i]['color'] != "green")
+                {
+                    grades[j][1] = false;
+                }
+            }
+        }
+        console.log(grades);
+
+        gradeIndex = 0;
+        console.log("grade user is at: " + userGrade);
+
+        for(i=0; i<4; i++)
+        {
+            console.log("grades[i][0] " + grades[i][0]);
+            var boolean = grades[i][0] == userGrade;
+            console.log("boolean: " + boolean);
+            if(grades[i][0] == userGrade) gradeIndex = i;
+            if(grades[i][1] == false)
+            {
+                grades[i][2] = "lightpink";
+                
+                for(j=i+1; j<4; j++)
+                {
+                    grades[j][2] = "lightgray";
+                }
+                // continue;
+            }
+            else
+            {
+                grades[i][2] = "lightgreen";
+            }
+        }
+        console.log("grade found at index: " + gradeIndex);
+
+        for(i=0; i<gradeIndex; i++)
+        {
+            console.log("grade: " + grades[i][0] + " == " + userGrade);
+            if(grades[i][0] != userGrade && grades[i][1] == false)
+            {
+                grades[i][2] = "indianred";
+            }
+        }
+        for(i=gradeIndex+1; i<4; i++)
+        {
+            grades[i][2] = "lightgray";
+        }
+        console.log(grades);
+
+        for(i=0; i<4; i++)
+        {
+            nodeDataArray.push({key: grades[i][0], isGroup: true, color: grades[i][2]});
+        }
+        
+
+
         
         diagram.model = new go.GraphLinksModel(nodeDataArray, linkDataArray); 
 
-        // ------------------------------------------
-        // second diagram for legend
-
-        var d2 = new go.Diagram("LegendDiagram");
-        d2.initialContentAlignment = go.Spot.Center; 
         
-        d2.nodeTemplate =
-            $(go.Node, go.Panel.Auto,
-                $(go.Shape,
-                { figure: "RoundedRectangle"},
-                new go.Binding("figure", "fig"),
-                
-                new go.Binding("fill", "color")),
-                
-                $(go.TextBlock,
-                { margin: 5 },
-                
-                new go.Binding("text", "key"))
-            ); 
-        
-        
-            d2.layout = $(go.LayeredDigraphLayout,
-            {
-                direction: 90,
-            }
-        );
-
-
-        var nodeDataArray = [
-            {key: "Current Year", isGroup: true},
-            {key: "Completed", color: "green", fig: "RoundedRectangle", group: "Current Year"},
-            {key: "Available", color: "gold", fig: "RoundedRectangle", group: "Current Year"},
-            {key: "Career Recommended", color: "blue", fig: "RoundedRectangle", group: "Current Year"},
-
-            {key: "Other Years", isGroup: true},
-            {key: "Completed", color: "lightgreen", fig: "RoundedRectangle", group: "Other Years"},
-            {key: "Available", color: "lightyellow", fig: "RoundedRectangle", group: "Other Years"},
-            {key: "Career Recommended", color: "lightblue", fig: "RoundedRectangle", group: "Other Years"},
-
-            {key: "Standing", isGroup: true},
-            {key: "Freshman", color: "gray", fig: "RoundedRectangle", group: "Standing"},
-            {key: "Sophomore", color: "gray", fig: "Ellipse", group: "Standing"},
-            {key: "Junior", color: "gray", fig: "Rectangle", group: "Standing"},
-            {key: "Senior", color: "gray", fig: "Diamond", group: "Standing"},
-        ];
-        var linkDataArray = [];
-
-
-        
-        
-        d2.model = new go.GraphLinksModel(nodeDataArray, linkDataArray); 
     }
 </script>

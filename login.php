@@ -52,7 +52,7 @@
                     $password = mysqli_real_escape_string($con, $password);
                     
                     // Check user is exist in the database
-                    $query = "SELECT userName, firstName, lastName, role, userID
+                    $query = "SELECT userName, firstName, lastName, role, userID, grade
                             FROM students
                             WHERE username='$username' AND password='$password'";
 
@@ -71,6 +71,7 @@
                         $_SESSION['lastName'] = $row['lastName'];
                         $_SESSION['role'] = $row['role'];
                         $_SESSION['userID'] = $row['userID'];
+                        $_SESSION['grade'] = $row['grade'];
 
                         // Redirect to user dashboard page
                         if($_SESSION['role'] == "Student")

@@ -32,7 +32,7 @@ $mysqli->close();
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Career Goal</title>
+        <title>Job Descriptions</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -160,7 +160,11 @@ button:hover {
             <hr style="border: 1px solid black;">
         </header>
 
-        <button onclick="document.getElementById('id01').style.display='block'" style="padding:10px;">Software Developer</button>
+        <div class="container-fluid" style="width:80%">
+          <button onclick="document.getElementById('id01').style.display='block'" style="padding:10px;">Software Developer</button>
+          <button onclick="document.getElementById('id02').style.display='block'" style="padding:10px;">Information Security Analyst</button>
+          <button onclick="document.getElementById('id03').style.display='block'" style="padding:10px;">Web Developer</button>
+        </div>
 
 <div id="id01" class="modal">
   <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal"  >&times;</span>
@@ -187,7 +191,7 @@ button:hover {
 
 
 
-<button onclick="document.getElementById('id02').style.display='block'" style="padding:10px;">Information Security Analyst</button>
+
 <div id="id02" class="modal">
   <span onclick="document.getElementById('id02').style.display='none'" class="close" title="Close Modal"  >&times;</span>
   <form class="modal-content" action="/action_page.php">
@@ -208,7 +212,7 @@ button:hover {
   </form>
 </div>
 
-<button onclick="document.getElementById('id03').style.display='block'" style="padding:10px;">Web Developer</button>
+
 <div id="id03" class="modal">
   <span onclick="document.getElementById('id03').style.display='none'" class="close" title="Close Modal"  >&times;</span>
   <form class="modal-content" action="/action_page.php">

@@ -1,6 +1,12 @@
 <?php
 
-    require 'php_scripts/db_connection.php';
+    session_start();
+    if(!isset($_SESSION['userName']))
+    {
+        header("Location: login.php");
+        exit();
+    }
+    require("php_scripts/course_mapper_queries.php");
 
     // open connection to database and check for errors
     $mysqli = OpenCon();
@@ -46,6 +52,11 @@
                 padding: 50px;  
                 background-color: rgb(231, 200, 25);  
             }  
+
+            .container-fluid {  
+                padding: 50px;  
+                background-color: rgb(231, 200, 25);  
+            }  
             
             input[type=text], input[type=password], textarea {  
                 width: 100%;  
@@ -63,7 +74,7 @@
                 padding: 10px 0;  
             }  
             hr {  
-                border: 1px solid #f1f1f1;  
+                border: 1px solid black;  
                 margin-bottom: 25px;  
             }  
             .registerbtn {  
@@ -86,106 +97,82 @@
         include('templates/header.php');
         include('templates/navbar.php');
         Navbar("course_register");
-        NameHeader("Jane Doe");
+        NameHeader($_SESSION['firstName']." ".$_SESSION['lastName']);
     ?>
 
-    
-<form>  
-  <div class="container">  
-  <center>  <h1> Student Registration</h1> </center>  
-  <hr>  
-  <label> Firstname </label>   
-<input type="text" name="firstname" placeholder= "Firstname" size="15" required />   
-  
-<label> Lastname: </label>    
-<input type="text" name="lastname" placeholder="Lastname" size="15"required />   
-<div>  
-<label>   
-Course :  
-</label>   
-  
-<select>  
-<option value="Course">Course</option>  
-<option value="BSCS">BSCS</option>  
-<option value="MSCS">MSCS</option> 
-<option value="BSCE">BSCE</option>   
-</select>  
-</div>
-  
-<div>  
-<label>   
-University  
-</label>   
-  
-<select>  
-<option value="UI">University of Idaho</option>  
-<option value="NIC">North Idaho College</option>  
-<option value="Boise">Boise State</option> 
-</select>  
-</div>
- 
-<div>  
-<label>   
-Career 
-</label>   
-  
-<select>  
-<option value="S">Software Engineer</option>  
-<option value="It">Information Technology</option>  
-<option value="Web">Web developer</option> 
-</select>  
-</div> 
+    <div class="container-fluid" style="width:70%">
+        <header style="text-align: center">
+            <h1>Course Registration</h1>
+            <hr>
+        </header>
 
-<div>  
-<label>   
-Gender :  
-</label><br>  
-<input type="radio" value="Male" name="gender" checked > Male   
-<input type="radio" value="Female" name="gender"> Female     
-  
-</div> 
+        <form class="form-inline" method="" action="">  
+            <div class="container-fluid"> 
 
-Semester:   
-</label><br>  
-<input type="radio" value="Fall" name="Semester" checked > Fall   
-<input type="radio" value="Spring" name="Semester"> Spring <br><br>
-<label>
-Phone :  
-</label>  
-<input type="text" name="country code" placeholder="Country Code"  value="+208" size="2"/>   
-<input type="text" name="phone" placeholder="phone no." size="10"/ required>
-    
-Current Address :  
-<textarea cols="80" rows="5" placeholder="Current Address" value="address" required>  
-</textarea>  
- 
-</form> 
+                <div class="row">
+                    <div class="col-md-6">
+                        <label> First Name: </label>   
+                        <input type="text" name="firstname" class="form-control" placeholder= "first name" size="15" required /> 
+                    </div>  
+                
+                    <div class="col-md-6">
+                        <label> Last Name: </label>    
+                        <input type="text" name="lastname" class="form-control" placeholder="last name" size="15"required />
+                    </div>
+                </div>
 
-<div class="row">
+                <div class="row"> 
+                    <label class="col-sm-2 col-form-label">Degree:</label>    
+                    <div class="col-sm-10">
+                        <select class="form-select">  
+                            <option value="BSCS">BSCS</option>  
+                            <option value="MSCS">MSCS</option> 
+                            <option value="BSCE">BSCE</option>   
+                        </select>
+                    </div>
+                </div>
 
-    <div class="column columns">
+                <div class="row">  
+                    <label class="col-sm-2 col-form-label">University:</label>   
+                    <div class="col-sm-10">
+                        <select class="form-select">  
+                            <option value="UI">University of Idaho</option>  
+                            <option value="NIC">North Idaho College</option>  
+                            <option value="Boise">Boise State</option> 
+                        </select> 
+                    </div> 
+                </div>
 
 
-        <form>
+                <div class="row"> 
+                    <label class="col-sm-2 col-form-label"> Semester: </label> 
+                    <div class="col-sm-2">
+                        <input type="radio" value="Fall" name="Semester" checked > Fall   
+                        <input type="radio" value="Spring" name="Semester"> Spring  
+                    </div>  
+                    <div class="col-sm-2">
+                    <select class="form-select">  
+                            <option value="2022">2022</option>  
+                            <option value="2023">2023</option>  
+                            <option value="2024">2024</option> 
+                        </select> 
+                    </div>
+                </div>
 
-            <h2 style="text-align:center">Select courses</h2>
+                <hr>
+                
+                <h2 style="text-align:center">Select courses</h2>
+                <?php
+                for($m=0; $m<4; $m++)
+                {
+                ?>
 
-            <div class="row" style="text-align: center; padding: 10px 5px " >
-
-                <div class="medium-6 columns" >
-                    <select 
-					
+                <div class="medium-6 columns">
+                    <center>
+                        <select 
 						style="height: 50px; width: 500px;"
-					   
-                        name="category"
-                        class="cascadingDropDown "
-                        
-                        data-group="product-1"
-                        data-target="make"
-                        data-url="./assets/data/make.json"
-                        data-replacement="container1"
-
-                        >
+                        class="cascadingDropDown form-select"
+                        name= <?php echo "course_".$m+1; ?> >
 
                         <option value="">No Course</option>
                         <?php
@@ -197,123 +184,26 @@ Current Address :
                                 $i++;
                             }
 						?>
-
                         </select>
+                    </center>
                 </div>
+
+                <?php
+                }
+                ?>
 
             </div>
-		 
-            <form>
-    
-                <div class="row" style="text-align: center; padding: 10px 5px " >
-    
-                    <div class="medium-6 columns" >
-                        <select 
-                        
-                            style="height: 50px; width: 500px;"
-                           
-                            name="category"
-                            class="cascadingDropDown "
-                            
-                            data-group="product-1"
-                            data-target="make"
-                            data-url="./assets/data/make.json"
-                            data-replacement="container1"
-    
-                            >
-                            
-                            <option value="">No Course</option>
-                            <?php
-                                // LOOP TILL END OF DATA
-                                $i = 0;
-                                while($i < $size)
-                                {
-                                    echo "<option value='{$data[$i]['Course_ID']}'>{$data[$i]['Department']} {$data[$i]['Course_Num']}  {$data[$i]['Course_Name']}</option>";
-                                    $i++;
-                                }
-                            ?>
-                            </select>
-                    </div>
-    
-                </div>
 
-                <form>
-        
-                    <div class="row" style="text-align: center; padding: 10px 5px " >
-        
-                        <div class="medium-6 columns" >
-                            <select 
-                            
-                                style="height: 50px; width: 500px;"
-                               
-                                name="category"
-                                class="cascadingDropDown "
-                                
-                                data-group="product-1"
-                                data-target="make"
-                                data-url="./assets/data/make.json"
-                                data-replacement="container1"
-        
-                                >
-                                
-                                <option value="">No Course</option>
-                                <?php
-                                    // LOOP TILL END OF DATA
-                                    $i = 0;
-                                    while($i < $size)
-                                    {
-                                        echo "<option value='{$data[$i]['Course_ID']}'>{$data[$i]['Department']} {$data[$i]['Course_Num']}  {$data[$i]['Course_Name']}</option>";
-                                        $i++;
-                                    }
-                                ?>
-                                </select>
-                        </div>
-        
-                    </div>
+            <button type="submit"  class="registerbtn" onclick="window.location.href='sign_up_success.php';">Continue</button>
+        </form> 
 
-                    <form>
-                        <div class="row" style="text-align: center; padding: 10px 5px " >
-            
-                            <div class="medium-6 columns" >
-                                <select 
-                                
-                                    style="height: 50px; width: 500px;"
-                                   
-                                    name="category"
-                                    class="cascadingDropDown "
-                                    
-                                    data-group="product-1"
-                                    data-target="make"
-                                    data-url="./assets/data/make.json"
-                                    data-replacement="container1"
-            
-                                    >
-                                    
-                                    <option value="">No Course</option>
-                                    <?php
-                                        // LOOP TILL END OF DATA
-                                        $i = 0;
-                                        while($i < $size)
-                                        {
-                                            echo "<option value='{$data[$i]['Course_ID']}'>{$data[$i]['Department']} {$data[$i]['Course_Num']}  {$data[$i]['Course_Name']}</option>";
-                                            $i++;
-                                        }
-                                    ?>
-                                    </select>
-                            </div>
-            
-                        </div>
-        </form>
-
-    </div>
-
-</div>
-<button type="submit"  class="registerbtn" onclick="window.location.href='sign_up_success.php';">Continue</button>
-
-<?php
+        <?php
         include('templates/footer.php');
         Footer();
         ?> 
+    </div>
+
+    
 
 </body>  
 </html>  

@@ -104,7 +104,7 @@ $mysqli->close();
     Navbar("home");
 
     include('templates/header.php');
-    NameHeader("Jane Doe");
+    // NameHeader("Jane Doe");
 ?>
 
  <header class="w3-container w3-cyan w3-center" style="padding:128px 16px; background-color: rgb(231, 200, 25) !important">

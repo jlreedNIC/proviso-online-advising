@@ -10,7 +10,7 @@ https://gojs.net/latest/index.html
 - run XAMPP (may have to run as administrator)
 - start Apache and MySQL
 - navigate to `localhost/phpmyadmin` in your web browser
-- create new database and import the `proviso.sql` file in `Databases` folder
+- create new database and import the `proviso.sql` file in `Databases_Tables` folder
 - can now navigate to `localhost/proviso-online-advising` and run website!
 
 ## Important things to note

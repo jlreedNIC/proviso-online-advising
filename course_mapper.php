@@ -168,7 +168,6 @@ CloseCon($con);
         
         <!-- job info  -->
         <div class="container-fluid" style="width:80%">
-            <a href="#"> Change Career Goal</a>
             <div class="card my-card shadow p-3 mb-5 bg-white rounded">
                 <div class="card-body">
                     <h2><?php echo $data[0]['Position_Name']." - ".$data[0]['Company'];?></h2>

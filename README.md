@@ -5,13 +5,15 @@ An online career centered advising program for the University of Idaho. For CS36
 https://gojs.net/latest/index.html
 
 # Running ProViso on your local machine
-- clone repository on local machine
+- Download the zip containing the repository on local machine
 - Make sure XAMPP is installed
+- Move/Copy, and unzip files into ../C:/xampp/htdocs folder.
 - run XAMPP (may have to run as administrator)
 - start Apache and MySQL
 - navigate to `localhost/phpmyadmin` in your web browser
 - create new database and import the `proviso.sql` file in `Databases_Tables` folder
-- can now navigate to `localhost/proviso-online-advising` and run website!
+- can now navigate to `localhost/index.php` and run website, a login page should appear.
+- In order to login you must use the user: reed5204 and pass: hellothere, this will take you to the student menu. 
 
 ## Important things to note
 - creating a new user does not automatically add a degree choice and a career choice for that user

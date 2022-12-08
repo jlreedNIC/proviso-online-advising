@@ -1,0 +1,5 @@
+This project doesn't contain any python files. There are no requirements for pip, or python.
+All required packages for java/gojs, etc are contained within the project itself.
+
+The project must be installed/unzipped on local machine (or onto a cloud) so that all packages
+are referenced properly from each file.

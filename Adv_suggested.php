@@ -1,6 +1,11 @@
 <?php
 
-
+session_start();
+if(!isset($_SESSION['userName']))
+{
+    header("Location: login.php");
+    exit();
+}
 require("php_scripts/db_connection.php");
 
 //first query
@@ -35,7 +40,7 @@ $mysqli->close();
 <!DOCTYPE html>  
 <html>  
     <head>  
-        <title>Degree</title>
+        <title>Student Management</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">  
         <!-- <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"> -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -139,8 +144,8 @@ $mysqli->close();
         <?php 
             include("templates/Adv_Navbar.php");
             include("templates/header.php");
-            Navbar("NA");
-            NameHeader("Jane Doe");
+            Navbar("student_management");
+            NameHeader($_SESSION['firstName']." ".$_SESSION['lastName']);
         ?>
 
 

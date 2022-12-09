@@ -68,23 +68,6 @@ while($row = mysqli_fetch_array($rs, MYSQLI_ASSOC))
     $size++;
 }
 
-
-// ((select courses.Course_ID, courses.Department, courses.Course_Num, courses.Course_Name
-// from degree_classes_req
-// join user_degree on user_degree.DegreeID=degree_classes_req.DegreeID
-// join students on students.userID=user_degree.userID
-// join courses on degree_classes_req.Course_ID=courses.Course_ID)
-// union distinct
-// (select courses.Course_ID, courses.Department, courses.Course_Num, courses.Course_Name
-// from prereq
-// join degree_classes_req on degree_classes_req.Course_ID=prereq.Course_ID
-// join user_degree on user_degree.DegreeID=degree_classes_req.DegreeID
-// join students on students.userID=user_degree.userID
-// join courses on prereq.Prereq_ID=courses.Course_ID))
-// order by Department, Course_Num
-
-
-
 // query for graph
 $qry = "select prereq.Prereq_ID, p.Department as pdept, p.Course_Num as pnum, p.Course_Name as pname, p.Credits as pcred, 
         prereq.Course_ID, c.Department, c.Course_Num, c.Course_Name, c.Credits

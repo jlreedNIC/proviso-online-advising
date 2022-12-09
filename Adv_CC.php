@@ -1,23 +1,14 @@
 <?php
 
-$user = 'root';
-$password = '';
 
-// Database name is UserDatabase
-$database = 'proviso';
-
-// Server is localhost with
-// port number 3306
-$servername='localhost:3306';
-$mysqli = new mysqli($servername, $user,
-				$password, $database);
-
-// Checking for connections
-if ($mysqli->connect_error) {
-	die('Connect Error (' .
-	$mysqli->connect_errno . ') '.
-	$mysqli->connect_error);
+session_start();
+if(!isset($_SESSION['userName']))
+{
+    header("Location: login.php");
+    exit();
 }
+
+require('php_scripts/db_connection.php');
 
 
 // SQL query to select data from database
@@ -32,7 +23,7 @@ $mysqli->close();
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Career Goal</title>
+        <title>Course Catalog</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -57,8 +48,8 @@ $mysqli->close();
         <?php
         include('templates/header.php');
         include('templates/Adv_Navbar.php');
-        Navbar("career");
-        NameHeader("Jane Doe");
+        Navbar("course_catalog");
+        NameHeader($_SESSION['firstName']." ".$_SESSION['lastName']);
         ?>
       
 	

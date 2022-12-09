@@ -14,13 +14,11 @@ function Navbar($location)
     <div class="collapse navbar-collapse" id="navbarNav">
         <div class="navbar-nav">
             <a href="Adv_Index.php" class=" <?php if($location == "home") echo "active" ?>  nav-item nav-link my-nav-item">Home</a>
-            <a href="Adv_Degree.php" class="<?php if($location == "degree") echo "active" ?>  nav-item nav-link my-nav-item">Degree Map</a>
-            <a href="AdV_CC.php" class= "<?php if($location == "Course_Catalog") echo "active" ?> nav-item nav-link my-nav-item">Course Catalog</a>
+            <a href="Adv_Degree.php" class="<?php if($location == "degree_map") echo "active" ?>  nav-item nav-link my-nav-item">Degree Map</a>
+            <a href="Adv_CC.php" class= "<?php if($location == "course_catalog") echo "active" ?> nav-item nav-link my-nav-item">Course Catalog</a>
 
-            <a href="Adv_suggested.php" class=" <?php if($location == "Suggested") echo "active" ?> nav-item nav-link my-nav-item" >Student Management</a>
-            <a href="Adv_JobD.php" class=" <?php if($location == "Job_Descriptions") echo "active" ?> nav-item nav-link my-nav-item ">Job Description</a>
-            <!-- <a href="Adv_sign_up.php" class="nav-item nav-link my-nav-item">Register</a> -->
-			<!-- <a href="logout.php" class=" <?php if($location == "sign_up") echo "active" ?> nav-item nav-link my-nav-item">Logout</a> -->
+            <a href="Adv_suggested.php" class=" <?php if($location == "student_management") echo "active" ?> nav-item nav-link my-nav-item" >Student Management</a>
+            <a href="Adv_JobD.php" class=" <?php if($location == "job_description") echo "active" ?> nav-item nav-link my-nav-item ">Job Description</a>
         </div>
     </div>
     <div class="navbar-nav form-inline" style="color:white">

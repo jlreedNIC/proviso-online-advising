@@ -124,8 +124,20 @@ $mysqli->close();
                 <div class="card-body">
                     <h2> Career Graph</h2>
                     <canvas id="demo" width="100" height="50"></canvas>
-        
-                    <iframe src="gojs/release/t.php"  height="800" style="width:100%" title="Iframe Example"></iframe>
+
+                    <?php
+                    $graph_source = "gojs/release/t.php";
+                    if($careerInfo[0]['Position_Name'] == "Entry Level Web Developer")
+                    {
+                        $graph_source = "gojs/release/t3.php";
+                    }
+                    else if($careerInfo[0]['Position_Name'] == "Information Security analyst (IT Engineer)")
+                    {
+                        $graph_source = "gojs/release/t2.php";
+                    }
+                    ?>
+
+                    <iframe src=<?php echo $graph_source; ?>  height="800" style="width:100%" title="Iframe Example"></iframe>
                 </div>
             </div>
         </div>

@@ -68,8 +68,11 @@
 
                     $role = stripslashes($_REQUEST['role']);
 
-                    $query    = "INSERT into `students` (userName, password, email, firstName, lastName, gender, role)
-                                VALUES ('$username', '$password', '$email', '$firstname', '$lastname', '$gender', '$role')";
+                    $grade = NULL;
+                    if($role == "Student") $grade = "Freshman";
+
+                    $query    = "INSERT into `students` (userName, password, email, firstName, lastName, gender, role, grade)
+                                VALUES ('$username', '$password', '$email', '$firstname', '$lastname', '$gender', '$role', '$grade')";
                     $result   = mysqli_query($con, $query);
 
                     if($result) // able to insert

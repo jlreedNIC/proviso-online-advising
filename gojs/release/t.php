@@ -1,27 +1,6 @@
 <?php
 
-// Username is root
-// Riley Walsh
-// lab_5
-// 10/07/2022
-$user = 'root';
-$password = '';
-
-// Database name is UserDatabase
-$database = 'proviso';
-
-// Server is localhost with
-// port number 3306
-$servername='localhost:3306';
-$mysqli = new mysqli($servername, $user,
-				$password, $database);
-
-// Checking for connections
-if ($mysqli->connect_error) {
-	die('Connect Error (' .
-	$mysqli->connect_errno . ') '.
-	$mysqli->connect_error);
-}
+require('../../php_scripts/db_connection.php');
 
 //No Idea why I need this, but I assume an empty array needs to be initialized in php. 
 $data = array();

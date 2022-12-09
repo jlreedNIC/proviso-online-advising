@@ -13,7 +13,7 @@ https://gojs.net/latest/index.html
 - navigate to `localhost/phpmyadmin` in your web browser
 - create new database and import the `proviso.sql` file in `Databases_Tables` folder
 - If localhost isn't the main host: go into the file ../php_scripts/db_connection.php
-  and change $servername='(host)' line 10, and change $dbhost = "(host)" on line 26.
+  and change `$servername='(host)'` line 10, and change `$dbhost = "(host)"` on line 26.
 - can now navigate to `localhost/index.php` and run website, a login page should appear.
 - In order to login you must use the user: reed5204 and pass: hellothere, this will take you to the student menu. 
 

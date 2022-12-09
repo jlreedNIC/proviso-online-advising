@@ -17,7 +17,7 @@ $qry = "SELECT Position_Name, Company, Pay, Des, firstName, lastName
         from user_career 
         join careers on user_career.Career_ID=careers.CareerID
         join students on students.userID=user_career.User_ID
-        where User_Career_ID=".$_SESSION['userID']."";
+        where User_ID=".$_SESSION['userID']."";
 
 $rs = mysqli_query($con, $qry);
 
@@ -51,7 +51,7 @@ $qry = "SELECT courses.Course_Name, courses.Course_Num, courses.Department, cour
         join course_skills on careers_req_skills.Skill_ID=course_skills.Skill_ID
         join courses on courses.Course_ID=course_skills.Course_ID
         join skills on course_skills.Skill_ID=skills.Skill_ID
-        where user_career.User_Career_ID=".$_SESSION['userID']."
+        where user_career.User_ID=".$_SESSION['userID']."
         order by courses.Department, courses.Course_Num";
 
 $rs = mysqli_query($con, $qry);

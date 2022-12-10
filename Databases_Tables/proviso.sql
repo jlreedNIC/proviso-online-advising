@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 02, 2022 at 10:59 PM
+-- Generation Time: Dec 10, 2022 at 06:21 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.0.19
 
@@ -64,7 +64,8 @@ CREATE TABLE `careers` (
 --
 
 INSERT INTO `careers` (`CareerID`, `Company`, `Pay`, `Position_Name`, `Des`) VALUES
-(1, 'Micron', 59000, 'Software Developer', 'Software developers conceive of, design, and build computer programs. Some develop new applications for mobile or desktop use, while others build underlying operating systems. Either way, software developers identify user needs, build programs, test out new software, and make improvements.');
+(1, 'Micron', 59000, 'Software Developer', 'Software developers conceive of, design, and build computer programs. Some develop new applications for mobile or desktop use, while others build underlying operating systems. Either way, software developers identify user needs, build programs, test out new software, and make improvements.'),
+(2, 'Prosoft', 60000, 'Entry Level Web Developer', 'A Web Developer is a professional who is responsible for the design and construction of websites. They ensure that sites meet user expectations by ensuring they look good, run smoothly and offer easy access points with no loading issues between pages or error messages.\r\n');
 
 -- --------------------------------------------------------
 
@@ -88,7 +89,13 @@ INSERT INTO `careers_req_skills` (`CRS_ID`, `Career_ID`, `Skill_ID`) VALUES
 (3, 1, 9),
 (4, 1, 10),
 (5, 1, 11),
-(6, 1, 4);
+(6, 1, 4),
+(9, 2, 17),
+(10, 2, 6),
+(11, 2, 18),
+(12, 2, 7),
+(13, 2, 9),
+(14, 2, 10);
 
 -- --------------------------------------------------------
 
@@ -158,7 +165,15 @@ INSERT INTO `course_skills` (`Course_Skill_ID`, `Course_ID`, `Skill_ID`) VALUES
 (6, 18, 4),
 (7, 7, 1),
 (8, 6, 1),
-(9, 8, 9);
+(9, 8, 9),
+(10, 3, 20),
+(11, 3, 13),
+(12, 5, 13),
+(13, 4, 14),
+(14, 8, 6),
+(15, 8, 7),
+(16, 8, 17),
+(17, 3, 10);
 
 -- --------------------------------------------------------
 
@@ -508,7 +523,14 @@ INSERT INTO `skills` (`Skill_ID`, `Skill_Name`) VALUES
 (8, 'Perl'),
 (9, 'SQL'),
 (10, 'Git'),
-(11, 'Linux');
+(11, 'Linux'),
+(12, 'Bachelor\'s in Computer Science'),
+(13, 'Object Oriented Programming'),
+(14, 'Assembly'),
+(17, 'CSS'),
+(18, 'JavaScript'),
+(19, 'Bootstrap'),
+(20, 'Data Structures');
 
 -- --------------------------------------------------------
 
@@ -535,8 +557,7 @@ CREATE TABLE `students` (
 INSERT INTO `students` (`userID`, `userName`, `password`, `email`, `firstName`, `lastName`, `gender`, `role`, `grade`) VALUES
 (1, 'reed5204', 'hellothere', 'reed5204@vandals.uidaho.edu', 'Jordan', 'Reed', 'Female', 'Student', 'Junior'),
 (12, 'treed', 'hellothere', 'jfkdls@fjdksl', 'Travis', 'Reed', 'Male', 'Advisor', NULL),
-(13, 'kreed', 'hi', 'fjkdls@jfdkls', 'Katie', 'Reed', 'Female', 'Student', NULL),
-(14, 'kreed', 'hello', 'jkfds@jfkdls', 'Katie', 'Reed', 'Female', 'Advisor', NULL);
+(15, 'billy2', 'hi', 'billy@bob.com', 'Billy', 'Bob', 'Male', 'Student', 'Freshman');
 
 -- --------------------------------------------------------
 
@@ -621,7 +642,8 @@ CREATE TABLE `user_career` (
 --
 
 INSERT INTO `user_career` (`User_Career_ID`, `User_ID`, `Career_ID`) VALUES
-(1, 1, 1);
+(1, 1, 1),
+(2, 15, 2);
 
 -- --------------------------------------------------------
 
@@ -640,7 +662,8 @@ CREATE TABLE `user_degree` (
 --
 
 INSERT INTO `user_degree` (`User_Degree_ID`, `userID`, `DegreeID`) VALUES
-(1, 1, 1);
+(1, 1, 1),
+(2, 15, 1);
 
 --
 -- Indexes for dumped tables
@@ -814,13 +837,13 @@ ALTER TABLE `adv_students`
 -- AUTO_INCREMENT for table `careers`
 --
 ALTER TABLE `careers`
-  MODIFY `CareerID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `CareerID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `careers_req_skills`
 --
 ALTER TABLE `careers_req_skills`
-  MODIFY `CRS_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `CRS_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `courses`
@@ -832,7 +855,7 @@ ALTER TABLE `courses`
 -- AUTO_INCREMENT for table `course_skills`
 --
 ALTER TABLE `course_skills`
-  MODIFY `Course_Skill_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `Course_Skill_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `degrees`
@@ -898,13 +921,13 @@ ALTER TABLE `prereq`
 -- AUTO_INCREMENT for table `skills`
 --
 ALTER TABLE `skills`
-  MODIFY `Skill_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `Skill_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `students`
 --
 ALTER TABLE `students`
-  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `students_have_taken`
@@ -922,13 +945,13 @@ ALTER TABLE `students_will_take`
 -- AUTO_INCREMENT for table `user_career`
 --
 ALTER TABLE `user_career`
-  MODIFY `User_Career_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `User_Career_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `user_degree`
 --
 ALTER TABLE `user_degree`
-  MODIFY `User_Degree_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `User_Degree_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Constraints for dumped tables

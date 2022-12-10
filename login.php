@@ -80,7 +80,7 @@
                         }
                         else
                         {
-                            header("Location: adv_index.php");
+                            header("Location: Adv_Index.php");
                         }
                         
                     } 
